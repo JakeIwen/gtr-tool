@@ -1,0 +1,49 @@
+<section class="row" ng-model="caged">
+<!-- <p>{{caged.guitar.frets}}</p> -->
+
+
+<!-- <div class="freboardContainer">
+  <div class="fretboard" ng-repeat="note in caged.guitar.notes">
+    <div class="normFret" ng-repeat="note in caged.guitar.notes">
+      <span>{{fret.pos}}</span>
+    </div>
+  </div>
+</div> -->
+
+
+
+  <!-- <div class="freboardContainer">
+    <div class="fretboard" ng-repeat="fret in caged.guitar.frets">
+      <div class="normFret" ng-repeat="note in caged.guitar.notes">
+        <span>{{fret.pos}}</span>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="freboardContainer">
+    <div class="fretboard" ng-repeat="fret in caged.guitar.frets">
+      <div class="normFret" ng-repeat="string in caged.guitar.strings | orderBy:'':true">
+        <span ng-class="note.className(tonic)">{{string.base + fret.pos}}</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</section>
+<!--
+
+<div class="guitar-neck hidden-phone">
+    <div class="guitar-fret" ng-class="fret.className()" ng-repeat="fret in frets">
+
+        <div class="guitar-fret-note" ng-repeat="note in fret.notes().reverse()">
+            <a  ng-class="note.className(tonic)"
+                ng-click="toggleNote(note)"
+                title="{{note.notation(tonic.signature()) + '/' + selectedMatch.tonic.interval(note).name()}}"
+                ><div class="marker">{{note.simple(tonic.signature())}}</div></a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div> -->
