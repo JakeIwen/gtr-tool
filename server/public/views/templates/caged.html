@@ -1,29 +1,41 @@
 <section class="row" ng-model="caged">
-<!-- <p>{{caged.guitar.frets}}</p> -->
+
+  <div class="cagedOptions row">
+  <form>
+
+      <p>CAGED Chord to map:</p>
+      <select id=cagedChord ng-model="caged.cagedChord">
+        <option value="badvalue" ng-selected="true" ng-disabled="true">Choose Chord</option>
+        <option value="0">C</option>
+        <option value="1">C#</option>
+        <option value="2">D</option>
+        <option value="3">D#</option>
+        <option value="4">E</option>
+        <option value="5">F</option>
+        <option value="6">F#</option>
+        <option value="7">G</option>
+        <option value="8">G#</option>
+        <option value="9">A</option>
+        <option value="10">A#</option>
+        <option value="11">B</option>
 
 
-<!-- <div class="freboardContainer">
-  <div class="fretboard" ng-repeat="note in caged.guitar.notes">
-    <div class="normFret" ng-repeat="note in caged.guitar.notes">
-      <span>{{fret.pos}}</span>
-    </div>
+      </select>
+
+
+      <!-- <button class="btn btn-primary" ng-click="peeps.displayCaged()">Add Person</button> -->
+
+  </form>
   </div>
-</div> -->
 
+  <div class="fretboardContainer">
+    <div class="strings" ng-repeat="string in caged.guitar.strings | orderBy:'':true">
+      <div class="fretRow">
+        <div class="fret" ng-class="'fretNum' + fret.pos" val="{{fret.pos}}" ng-repeat="fret in caged.guitar.frets">
 
+          <div class="marker" ng-class="'marker' + fret.pos" id="{{string.base + fret.pos}}">&nbsp&nbsp</div>
 
-  <!-- <div class="freboardContainer">
-    <div class="fretboard" ng-repeat="fret in caged.guitar.frets">
-      <div class="normFret" ng-repeat="note in caged.guitar.notes">
-        <span>{{fret.pos}}</span>
-      </div>
-    </div>
-  </div> -->
-
-  <div class="freboardContainer">
-    <div class="fretboard" ng-repeat="fret in caged.guitar.frets">
-      <div class="normFret" ng-repeat="string in caged.guitar.strings | orderBy:'':true">
-        <span ng-class="note.className(tonic)">{{string.base + fret.pos}}</span>
+        </div>
       </div>
     </div>
   </div>

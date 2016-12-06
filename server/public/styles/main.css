@@ -2,21 +2,10 @@
 body {
   background-color: #c6d5c8;
 }
+/*----------------------------- NAV STYLING------------------------------*/
+
 h3 {
   text-align: center;
-}
-.fretboard {
-  display: inline-block;
-  width: 5%;
-}
-.fretboardContainer {
-  margin:15px;
-  width: 80%;
-  max-width: 1200px;
-  align-self: center;
-}
-.normFret {
-  border: 2px solid black;
 }
 .navMenu {
   border-bottom: 5px solid black;
@@ -32,26 +21,65 @@ h3 {
   border-right: 5px solid black;
   cursor: pointer;
 }
-
-/*------------------------------ TABLE STYLING -------------------------------*/
-
-.table {
-  width: 80%;
-  margin: 50px auto;
-  border-collapse: collapse;
+/*------------------------------ CAGED OPTIONS STYLING -------------------------------*/
+.cagedOptions {
+  margin: 25px;
 }
 
-tr, th, td {border: 1px solid black;}
-tr:nth-of-type(odd) {background-color: #ccc;}
-tr:nth-of-type(even) {background-color: #eee;}
-td:last-child, td:nth-last-child(2) {
-  max-width: 100%;
-  white-space: nowrap;
+/*------------------------------ FRETBOARD STYLING -------------------------------*/
+
+.fretboardContainer {
+  margin:15px;
+  padding: 17px 20px 0 0;
+  background-color: #59442D;
+  display:inline-block;
+  /*max-width: 1200px;*/
+  /*align-self: center;*/
+}
+.strings {
+  border-top: 3px solid #b59b4f;
+  /*width: 100%;*/
+  height: 20px;
+    z-index: 1000;
+    position: relative;
 }
 
-th {
-  background-color: white;
-  font-size: 1.2em;
+.fretRow {
+  /*display: flex;
+  text-align: justify;
+  justify-content: space-between;*/
+  margin-top: -13px;
+  margin-bottom: 10px;
+
+}
+.marker {
+  background-image: url("../img/greencircle.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 16px;
+  min-width: 16px;
+  justify-content: right;
+}
+.fret {
+  /*margin-bottom: -50%;*/
+  display: inline-block;
+  border-right: 3px solid #c1c1c1;
+  min-width: 19px;
+  padding-top: 4px;
+  z-index: -1;
+  position: relative;
+
+}
+
+.borderString{
+  /*same height as tr*/
+  height: 18px;
+  border-top: 2px, solid #bdc19d;
+  margin-right: -3px;
+}
+.fretNum0 {
+  border-right: 9px solid #e0e2c9;
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
