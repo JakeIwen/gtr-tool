@@ -12,7 +12,7 @@
 var numFrets = 16;
 var zeroFretLength = 25;
 var fretWidth = 3;
-var app = angular.module('myApp', ['ngRoute']);
+var app = angular.module('app', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -23,84 +23,53 @@ app.config(['$routeProvider', function($routeProvider) {
   })
   .when('/caged' ,{
     templateUrl: '/views/templates/caged.html',
-    controller: 'CagedController',
-    controllerAs: 'caged'
+    controller: 'GuitarController',
+    controllerAs: 'guitar'
+  })
+  .when('/triad' ,{
+    templateUrl: '/views/templates/triad.html',
+    controller: 'GuitarController',
+    controllerAs: 'guitar'
   })
   .otherwise({
     redirectTo: 'home'
   });
 
 }]);
+
+app.factory('Factory', ["$http", function($http){
+  console.log('factory running');
+  var fretLocations = [];
+  var fretSpacings = [];
+
+  function fretMap() {
+    var fretName = '.fretNum0'
+    var i=0;
+    console.log('fretNum0', $(fretName).width());
+    while ($(fretName).width()) {
+      fretLocations[i] = 0;
+      fretSpacings[i] = $(fretName).width();
+      for (var j = 0; j < fretSpacings.length; j++) {
+        //fret locations are the sum of fret spacings up to the given fret (index)
+        fretLocations[i] += fretSpacings[j];
+      }
+      i++;
+      fretName = '.fretNum' + i;
+      console.log('Factory fretlocations:', fretLocations[i]);
+      console.log('fretNum', i, $(fretName).width());
+    }
+    return fretLocations;
+  }
+  return {
+    fretMap: function() {return fretMap();},
+    fretLocations: function() {return fretLocations;}
+  }
+
+
+}]);
+
 // Home controller
 app.controller('HomeController', function() {
   console.log('home controller running');
   var self = this;
-  self.message = "Home controller is the bestest!";
-
 });
-
-
-// Caged controller
-app.controller('CagedController', ["$http", function($http) {
-
-  console.log('caged controller running');
-  var self = this;
-  self.guitar = new Guitar();
-  console.log('this guitar:', self.guitar);
-  var fretLocation = [0];
-  self.cagedChord = {};
-  console.log('C chord', chord('C7'));
-
-
-  $(document).ready(function() {
-    console.log('up and running!');
-
-  });
-
-  self.newChord = function() {
-    console.log('cagedChord:', self.cagedChord);
-
-
-    var selectedChord = chord(self.cagedChord);
-    console.log('selectedChord', selectedChord);
-    $('.marker').each(function() {
-      $fret = $(this);
-      $fretMidiNote = $(this).data('midi');
-      // if(contains(selectedChord, $fretMidiNote)){
-      var notes = selectedChord.notes;
-      console.log($fretMidiNote);
-      switch($fretMidiNote % 12) {
-        case notes[0]:
-          $fret.attr('src', "../img/root.svg");
-          break;
-        case notes[1]:
-          $fret.attr('src', "../img/third.svg");
-          break;
-        case notes[2]:
-          $fret.attr('src', "../img/fifth.svg");
-          break;
-        default:
-          $fret.attr('src', "../img/empty.svg");
-      }
-    });
-    //   for (var i = 1; i < self.guitar.frets.length; i++) {
-    //     var fretLength = 0;
-    //     var fretNum = ".fretNum" + i;
-    //
-    //     $(fretNum).each(function() {
-    //       var $el = $(this);
-    //       //formula for fret spacing
-    //       fretLength = remainingLength/18;
-    //       //set spacing
-    //       $el.width(fretLength);
-    //       console.log('length of ', $el.attr('class'), $el.width());
-    //     });
-    //     remainingLength -= fretLength;
-    //     fretLocation.push(stringLength - remainingLength + fretWidth);
-    //   }
-    //
-  };
-
-
-
-}]);

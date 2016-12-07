@@ -1,0 +1,32 @@
+app.controller('CagedController', ["$http", function($http) {
+  var self = this;
+  self.cagedChord = {};
+  self.newChord = function() {
+    console.log('cagedChord:', self.cagedChord);
+
+    var selectedChord = chord(self.cagedChord);
+    console.log('selectedChord', selectedChord);
+    $('.marker').each(function() {
+      $fret = $(this);
+      $fretMidiNote = $(this).data('midi');
+      //set notes to array of notes contained in selected chord
+      var notes = selectedChord.notes;
+
+      switch($fretMidiNote % 12) {
+        case notes[0]:
+          $fret.attr('src', "../img/root.svg");
+          break;
+        case notes[1]:
+          $fret.attr('src', "../img/third.svg");
+          break;
+        case notes[2]:
+          $fret.attr('src', "../img/fifth.svg");
+          break;
+        default:
+          $fret.attr('src', "../img/empty.svg");
+      }
+
+    });
+  };
+
+}]);

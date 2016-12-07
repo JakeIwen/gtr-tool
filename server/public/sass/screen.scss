@@ -31,8 +31,11 @@ h3 {
   cursor: pointer;
 }
 /*------------------------------ CAGED OPTIONS STYLING -------------------------------*/
-.cagedOptions {
+.options {
   margin: 25px;
+}
+.select {
+  margin-top: 10px;
 }
 
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
@@ -85,7 +88,7 @@ $used-length: 0%;
   width: $zero-fret;
 }
 
-@for $i from 1 through 16 {  //also need that #15
+@for $i from 1 through 14 {  //also need that #15
     $new-length: (160% - $used-length) / 18;
 
     .fretNum#{$i} {
@@ -157,8 +160,9 @@ button:active {
 .switch {
   position: relative;
   display: inline-block;
-  width: 52px;
-  height: 26px;
+  width: 34px;
+  height: 14px;
+  border-radius: 2px;
 }
 
 /* Hide default HTML checkbox */
@@ -180,10 +184,10 @@ button:active {
 .slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
-  left: 4px;
-  bottom: 4px;
+  height: 8px;
+  width: 12px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -197,7 +201,14 @@ input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
 
+
+form {display: inline-block;}
 
 .buttons {
   align-content: center;

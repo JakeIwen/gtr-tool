@@ -1,48 +1,37 @@
-<section class="row" ng-model="caged">
+<section class="row" ng-controller="CagedController as caged">
 
-  <div class="cagedOptions row">
-  <form>
-
-      <p>CAGED Chord to map:</p>
-      <select id='cagedChord' ng-model="caged.cagedChord" ng-change="caged.newChord()">
-        <option value="badvalue" ng-selected="true" ng-disabled="true">Choose Chord</option>
-        <option>C</option>
-        <option>C#</option>
-        <option>D</option>
-        <option>D#</option>
-        <option>E</option>
-        <option>F</option>
-        <option>F#</option>
-        <option>G</option>
-        <option>G#</option>
-        <option>A</option>
-        <option>A#</option>
-        <option>B</option>
-
-
-      </select>
-
-
-      <!-- <button class="btn btn-primary" ng-click="peeps.displayCaged()">Add Person</button> -->
-
-  </form>
+  <div class="options row">
+    <form>
+        <p>CAGED Chord to map:</p>
+        <select ng-model="caged.cagedChord" ng-change="caged.newChord()">
+          <option ng-selected="true" ng-disabled="true">Choose Chord</option>
+          <option>C</option>
+          <option>C#</option>
+          <option>D</option>
+          <option>D#</option>
+          <option>E</option>
+          <option>F</option>
+          <option>F#</option>
+          <option>G</option>
+          <option>G#</option>
+          <option>A</option>
+          <option>A#</option>
+          <option>B</option>
+        </select>
+    </form>
   </div>
 
   <div class="fretboardContainer col-xs-12">
-    <div class="strings" ng-repeat="string in caged.guitar.strings | orderBy:'':true">
+    <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
       <div class="fretRow">
-        <div class="fret" ng-class="'fretNum' + fret.pos" val="{{fret.pos}}" ng-repeat="fret in caged.guitar.frets">
+        <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
 
-          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/> 
+          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
 
         </div>
       </div>
     </div>
   </div>
-
-
-
-
 
 </section>
 <!--

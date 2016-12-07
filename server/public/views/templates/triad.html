@@ -1,46 +1,56 @@
-<table class="table" ng-model="orders">
-  <thead>
-    <tr>
-      <th>Order Date</th>
-      <th>Description</th>
-      <th>Street</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
-      <th>Address Type</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="item in orders.data">
-        <td>
-          {{item.order_date}}
-        </td>
-        <td>
-          {{item.description}}
-        </td>
-        <td>
-          {{item.street}}
-        </td>
-        <td>
-          {{item.city}}
-        </td>
-        <td>
-          {{item.state}}
-        </td>
-        <td>
-          {{item.Zip}}
-        </td>
-        <td>
-          {{item.address_type}}
-        </td>
-        <td>
-          {{item.first_name}}
-        </td>
-        <td>
-          {{item.last_name}}
-        </td>
-    </tr>
-  </tbody>
-</table>
+<section class="row" ng-controller="TriadController as triad">
+
+
+
+
+  <div class="options row">
+    <div class="col-md-2">
+      <div><img src="../img/root.svg" alt="*" height="16" width="24" /> Root</div>
+      <div><img src="../img/third.svg" alt="*" height="16" width="24" /> Third</div>
+      <div><img src="../img/fifth.svg" alt="*" height="16" width="24" /> Fifth</div>
+    </div>
+
+    <form class="col-md-3">
+        <p>CAGED Chord to map:</p>
+        <select ng-model="triad.triadChord" ng-change="triad.getFrets()">
+          <option ng-selected="true" ng-disabled="true">Choose Chord</option>
+          <option>C</option>
+          <option>C#</option>
+          <option>D</option>
+          <option>D#</option>
+          <option>E</option>
+          <option>F</option>
+          <option>F#</option>
+          <option>G</option>
+          <option>G#</option>
+          <option>A</option>
+          <option>A#</option>
+          <option>B</option>
+        </select>
+    </form>
+    <button type="submit" ng-click="triad.previous()">Previous<br />Variation</button>
+    <button type="submit" ng-click="next()">Next<br />Variation</button>
+  </div>
+
+  <div id="sliderBar" class="noUi-target noUi-ltr noUi-horizontal"></div>
+  <div class="col-xs-1 activateString">
+
+  </div>
+  <div class="fretboardContainer col-xs-11">
+    <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
+
+      <div class="fretRow">
+        <label class="switch">
+          <input type="checkbox"  ng-click="triad.toggleString(string)" ng-checked="string.active">
+          <div class="slider"></div>
+        </label>
+        <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
+
+          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
