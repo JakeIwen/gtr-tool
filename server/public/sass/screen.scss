@@ -9,6 +9,7 @@
 /*----------------------------- GENERAL STYLING ------------------------------*/
 body {
   background-color: #c6d5c8;
+  font-family: "Roboto", Times, Helvetica;
 }
 /*----------------------------- NAV STYLING------------------------------*/
 
@@ -49,7 +50,6 @@ h3 {
   /*width: 100%;*/
   height: 20px;
     z-index: 1000;
-    position: relative;
 }
 
 .fretRow {
@@ -58,16 +58,15 @@ h3 {
   justify-content: space-between;*/
   margin-top: -13px;
   margin-bottom: 10px;
-
 }
 .marker {
-  background-image: url("../img/greencircle.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: right;
-  height: 16px;
-  min-width: 16px;
-  justify-content: right;
+  // background-image: url("../img/greencircle.svg");
+  // background-repeat: no-repeat;
+  // background-image-size: 16px;
+  // background-position: right;
+  // height: 16px;
+  // min-width: 16px;
+
 }
 .fret {
   /*margin-bottom: -50%;*/
@@ -76,7 +75,7 @@ h3 {
   min-width: 19px;
   padding-top: 4px;
   z-index: -1;
-  position: relative;
+  text-align: right;
 }
 
 //should I be linking .sass from html file instead of .css
@@ -91,6 +90,9 @@ $used-length: 0%;
 
     .fretNum#{$i} {
         width: $new-length;
+
+
+
     }
     $used-length: $used-length + $new-length;
 

@@ -33,7 +33,7 @@
       <div class="fretRow">
         <div class="fret" ng-class="'fretNum' + fret.pos" val="{{fret.pos}}" ng-repeat="fret in caged.guitar.frets">
 
-          <div class="marker" id="{{string.base + fret.pos}}">&nbsp&nbsp</div>
+          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/> 
 
         </div>
       </div>

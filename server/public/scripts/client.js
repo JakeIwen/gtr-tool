@@ -16,19 +16,19 @@ var app = angular.module('myApp', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
-    .when('/home', {
-      templateUrl: '/views/templates/home.html',
-      controller: 'HomeController',
-      controllerAs: 'home'
-    })
-    .when('/caged' ,{
-      templateUrl: '/views/templates/caged.html',
-      controller: 'CagedController',
-      controllerAs: 'caged'
-    })
-    .otherwise({
-      redirectTo: 'home'
-    });
+  .when('/home', {
+    templateUrl: '/views/templates/home.html',
+    controller: 'HomeController',
+    controllerAs: 'home'
+  })
+  .when('/caged' ,{
+    templateUrl: '/views/templates/caged.html',
+    controller: 'CagedController',
+    controllerAs: 'caged'
+  })
+  .otherwise({
+    redirectTo: 'home'
+  });
 
 }]);
 // Home controller
@@ -61,40 +61,44 @@ app.controller('CagedController', ["$http", function($http) {
     console.log('cagedChord:', self.cagedChord);
 
 
-      var selectedChord = chord(self.cagedChord);
-      console.log('selectedChord', selectedChord);
-      $('.marker').each(function() {
-        $fret = $(this);
-        $fretMidiNote = $(this).attr('id');
-        // if(contains(selectedChord, $fretMidiNote)){
-        var notes = selectedChord.notes;
-        if($fretMidiNote % 12 == notes[0] || $fretMidiNote % 12 == notes[1] || $fretMidiNote % 12 == notes[2]) {
-          $fret.style.backgroundImage = "url('../img/greencircle.svg')";
-
-          console.log(" good $fretMidiNote", $fretMidiNote);
-        } else {
-          console.log();
-          //remove marker
-          console.log(" bad $fretMidiNote", $fretMidiNote);
-          $fret.style.backgroundImage = "url('../img/empty.svg')";
+    var selectedChord = chord(self.cagedChord);
+    console.log('selectedChord', selectedChord);
+    $('.marker').each(function() {
+      $fret = $(this);
+      $fretMidiNote = $(this).data('midi');
+      // if(contains(selectedChord, $fretMidiNote)){
+      var notes = selectedChord.notes;
+      console.log($fretMidiNote);
+      switch($fretMidiNote % 12) {
+        case notes[0]:
+          $fret.attr('src', "../img/root.svg");
+          break;
+        case notes[1]:
+          $fret.attr('src', "../img/third.svg");
+          break;
+        case notes[2]:
+          $fret.attr('src', "../img/fifth.svg");
+          break;
+        default:
+          $fret.attr('src', "../img/empty.svg");
       }
     });
-  //   for (var i = 1; i < self.guitar.frets.length; i++) {
-  //     var fretLength = 0;
-  //     var fretNum = ".fretNum" + i;
-  //
-  //     $(fretNum).each(function() {
-  //       var $el = $(this);
-  //       //formula for fret spacing
-  //       fretLength = remainingLength/18;
-  //       //set spacing
-  //       $el.width(fretLength);
-  //       console.log('length of ', $el.attr('class'), $el.width());
-  //     });
-  //     remainingLength -= fretLength;
-  //     fretLocation.push(stringLength - remainingLength + fretWidth);
-  //   }
-  //
+    //   for (var i = 1; i < self.guitar.frets.length; i++) {
+    //     var fretLength = 0;
+    //     var fretNum = ".fretNum" + i;
+    //
+    //     $(fretNum).each(function() {
+    //       var $el = $(this);
+    //       //formula for fret spacing
+    //       fretLength = remainingLength/18;
+    //       //set spacing
+    //       $el.width(fretLength);
+    //       console.log('length of ', $el.attr('class'), $el.width());
+    //     });
+    //     remainingLength -= fretLength;
+    //     fretLocation.push(stringLength - remainingLength + fretWidth);
+    //   }
+    //
   };
 
 

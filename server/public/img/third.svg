@@ -2,7 +2,7 @@
  <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
  <g>
   <title>background</title>
-  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+  <rect fill="none" id="canvas_background" height="400" width="600" y="-1" x="-1"/>
   <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
    <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
   </g>
@@ -13,6 +13,7 @@
  </g>
  <g>
   <title>Layer 2</title>
-  <ellipse stroke="#000" ry="200" rx="200" id="svg_1" cy="180" cx="180" stroke-width="1.5" fill="#007f00"/>
+  <ellipse stroke="#000" ry="190" rx="190" id="svg_2" cy="190" cx="190" stroke-width="1.5" fill="#ff6b00"/>
  </g>
+ <text xmlns="http://www.w3.org/2000/svg" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="280" id="svg_3" y="270" x="100" stroke-opacity="null" stroke-width="0" fill="#FFFFFF">3</text>
 </svg>
