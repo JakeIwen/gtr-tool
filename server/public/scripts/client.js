@@ -49,44 +49,36 @@ app.controller('CagedController', ["$http", function($http) {
   console.log('this guitar:', self.guitar);
   var fretLocation = [0];
   self.cagedChord = {};
+  console.log('C chord', chord('C7'));
+
 
   $(document).ready(function() {
     console.log('up and running!');
-    // $('body').click(function() {
-      spaceFrets();
-    // });
 
-    function spaceFrets() {
-      console.log('spacing frets');
-      //find better formula for frets/string length
-      var stringLength = $('body').width();
-      console.log('string length in px:', stringLength);
-      //spacebehind he zero fret
-      $('.fretNum0').width(zeroFretLength);
-      var remainingLength = stringLength;
-
-      for (var i = 1; i < self.guitar.frets.length; i++) {
-        var fretLength = 0;
-        var fretNum = ".fretNum" + i;
-
-        $(fretNum).each(function() {
-          var $el = $(this);
-          //formula for fret spacing
-          fretLength = remainingLength/18;
-          //set spacing
-          $el.width(fretLength);
-          console.log('length of ', $el.attr('class'), $el.width());
-        });
-        remainingLength -= fretLength;
-        fretLocation.push(stringLength - remainingLength + fretWidth);
-      }
-      console.log('marker locations', fretLocation);
-    }
   });
 
-  $('#cagedChord').change( function() {
+  self.newChord = function() {
     console.log('cagedChord:', self.cagedChord);
 
+
+      var selectedChord = chord(self.cagedChord);
+      console.log('selectedChord', selectedChord);
+      $('.marker').each(function() {
+        $fret = $(this);
+        $fretMidiNote = $(this).attr('id');
+        // if(contains(selectedChord, $fretMidiNote)){
+        var notes = selectedChord.notes;
+        if($fretMidiNote % 12 == notes[0] || $fretMidiNote % 12 == notes[1] || $fretMidiNote % 12 == notes[2]) {
+          $fret.style.backgroundImage = "url('../img/greencircle.svg')";
+
+          console.log(" good $fretMidiNote", $fretMidiNote);
+        } else {
+          console.log();
+          //remove marker
+          console.log(" bad $fretMidiNote", $fretMidiNote);
+          $fret.style.backgroundImage = "url('../img/empty.svg')";
+      }
+    });
   //   for (var i = 1; i < self.guitar.frets.length; i++) {
   //     var fretLength = 0;
   //     var fretNum = ".fretNum" + i;
@@ -103,7 +95,7 @@ app.controller('CagedController', ["$http", function($http) {
   //     fretLocation.push(stringLength - remainingLength + fretWidth);
   //   }
   //
-  });
+  };
 
 
 

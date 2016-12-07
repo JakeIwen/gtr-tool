@@ -7,11 +7,4 @@
    <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
   </g>
  </g>
- <title>Layer 1</title>
- <ellipse stroke="#000" ry="200" rx="200" id="svg_1" cy="200" cx="200" stroke-width="1.5" fill="#000000"/>
-</g>
-<g>
- <title>Layer 2</title>
- <ellipse stroke="#000" ry="200" rx="200" id="svg_1" cy="180" cx="180" stroke-width="1.5" fill="#e6a310"/>
-</g>
 </svg>

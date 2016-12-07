@@ -4,20 +4,20 @@
   <form>
 
       <p>CAGED Chord to map:</p>
-      <select id=cagedChord ng-model="caged.cagedChord">
+      <select id='cagedChord' ng-model="caged.cagedChord" ng-change="caged.newChord()">
         <option value="badvalue" ng-selected="true" ng-disabled="true">Choose Chord</option>
-        <option value="0">C</option>
-        <option value="1">C#</option>
-        <option value="2">D</option>
-        <option value="3">D#</option>
-        <option value="4">E</option>
-        <option value="5">F</option>
-        <option value="6">F#</option>
-        <option value="7">G</option>
-        <option value="8">G#</option>
-        <option value="9">A</option>
-        <option value="10">A#</option>
-        <option value="11">B</option>
+        <option>C</option>
+        <option>C#</option>
+        <option>D</option>
+        <option>D#</option>
+        <option>E</option>
+        <option>F</option>
+        <option>F#</option>
+        <option>G</option>
+        <option>G#</option>
+        <option>A</option>
+        <option>A#</option>
+        <option>B</option>
 
 
       </select>
@@ -28,12 +28,12 @@
   </form>
   </div>
 
-  <div class="fretboardContainer">
+  <div class="fretboardContainer col-xs-12">
     <div class="strings" ng-repeat="string in caged.guitar.strings | orderBy:'':true">
       <div class="fretRow">
         <div class="fret" ng-class="'fretNum' + fret.pos" val="{{fret.pos}}" ng-repeat="fret in caged.guitar.frets">
 
-          <div class="marker" ng-class="'marker' + fret.pos" id="{{string.base + fret.pos}}">&nbsp&nbsp</div>
+          <div class="marker" id="{{string.base + fret.pos}}">&nbsp&nbsp</div>
 
         </div>
       </div>
