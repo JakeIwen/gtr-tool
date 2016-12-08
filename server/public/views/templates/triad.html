@@ -29,8 +29,9 @@
         </select>
       </form>
       <div class="row">
-        <button class="customBtn" type="submit" ng-click="triad.triadIndex++; triad.previous()">Previous<br />Variation</button>
-        <button class="customBtn" type="submit" ng-click="next()">Next<br />Variation</button>
+        Number of variations: {{triad.variations}}
+        <button class="customBtn" type="submit" ng-click=" triad.prevVar()">Previous</button>
+        <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
       </div>
 
     </div>
@@ -45,8 +46,9 @@
     </div>
 
     <div class="col-md-2">
-      Max Fret Span<br />
-      <select ng-options="chordSpan.span as chordSpan.span for chordSpan in triad.chordSpan.spans" ng-model="triad.chordSpan.selectedSpan.span">
+      Max Hand-Stretch (frets)<br />
+      <select ng-options="chordSpan.span as chordSpan.span for chordSpan in triad.chordSpan.spans" ng-model="triad.chordSpan.selectedSpan.span"
+      ng-change="triad.filter()">
       </select>
     </div>
 
