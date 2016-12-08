@@ -1,16 +1,17 @@
 app.controller('CagedController', ["$http", function($http) {
   var self = this;
   self.cagedChord = {};
+
   self.newChord = function() {
     console.log('cagedChord:', self.cagedChord);
 
-    var selectedChord = chord(self.cagedChord);
-    console.log('selectedChord', selectedChord);
+    self.selectedChord = chord(self.cagedChord);
+    console.log('selectedChord', self.selectedChord);
     $('.marker').each(function() {
       $fret = $(this);
       $fretMidiNote = $(this).data('midi');
       //set notes to array of notes contained in selected chord
-      var notes = selectedChord.notes;
+      var notes = self.selectedChord.notes;
 
       switch($fretMidiNote % 12) {
         case notes[0]:

@@ -10,9 +10,9 @@
       <div><img src="../img/fifth.svg" alt="*" height="16" width="24" /> Fifth</div>
     </div>
 
-    <form class="col-md-3">
-        <p>CAGED Chord to map:</p>
-        <select ng-model="triad.triadChord" ng-change="triad.getFrets()">
+    <div class="col-md-3">
+      <form class="row">
+        <select ng-model="triad.triadChord" ng-change="triad.newChord()">
           <option ng-selected="true" ng-disabled="true">Choose Chord</option>
           <option>C</option>
           <option>C#</option>
@@ -27,9 +27,29 @@
           <option>A#</option>
           <option>B</option>
         </select>
-    </form>
-    <button type="submit" ng-click="triad.previous()">Previous<br />Variation</button>
-    <button type="submit" ng-click="next()">Next<br />Variation</button>
+      </form>
+      <div class="row">
+        <button class="customBtn" type="submit" ng-click="triad.triadIndex++; triad.previous()">Previous<br />Variation</button>
+        <button class="customBtn" type="submit" ng-click="next()">Next<br />Variation</button>
+      </div>
+
+    </div>
+    <div class="col-md-2">
+      <h4>Show Inversions:</h4>
+      <ul>
+        <li><input type="checkbox" name="" value="" checked> None</li>
+        <li><input type="checkbox" name="" value="" checked> First</li>
+        <li><input type="checkbox" name="" value="" checked> Second</li>
+        <li><input type="checkbox" name="" value="" checked> Third</li>
+      </ul>
+    </div>
+
+    <div class="col-md-2">
+      Max Fret Span<br />
+      <select ng-options="chordSpan.span as chordSpan.span for chordSpan in triad.chordSpan.spans" ng-model="triad.chordSpan.selectedSpan.span">
+      </select>
+    </div>
+
   </div>
 
   <div id="sliderBar" class="noUi-target noUi-ltr noUi-horizontal"></div>
@@ -40,13 +60,17 @@
     <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
 
       <div class="fretRow">
-        <label class="switch">
-          <input type="checkbox"  ng-click="triad.toggleString(string)" ng-checked="string.active">
-          <div class="slider"></div>
-        </label>
+        <div class="preFret">
+
+          <label class="switch">
+            <input type="checkbox"  ng-click="triad.toggleString(string)" ng-checked="string.active">
+            <div class="slider"></div>
+          </label>
+        </div>
+
         <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
 
-          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
+          <img src="../img/empty.svg" alt="*" class="marker" data-stringfret="[{{string.pos}}, {{fret.pos}}]" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
 
         </div>
       </div>

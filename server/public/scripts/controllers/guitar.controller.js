@@ -6,6 +6,4 @@ app.controller('GuitarController', ["$http", function($http) {
   console.log('this guitar:', self.neck);
 
 
-
-
 }]);
