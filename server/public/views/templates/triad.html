@@ -29,7 +29,7 @@
         </select>
       </form>
       <div class="row">
-        Number of variations: {{triad.variations}}
+        <h4>Variation {{triad.triadIndex + 1}} of {{triad.variations}} </h4>
         <button class="customBtn" type="submit" ng-click=" triad.prevVar()">Previous</button>
         <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
       </div>
@@ -45,19 +45,19 @@
       </ul>
     </div>
 
-    <div class="col-md-2">
-      Max Hand-Stretch (frets)<br />
+    <div class="col-md-3">
       <select ng-options="chordSpan.span as chordSpan.span for chordSpan in triad.chordSpan.spans" ng-model="triad.chordSpan.selectedSpan.span"
       ng-change="triad.filter()">
       </select>
+      Max Fret-Stretch
+      <br /><br />
+      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen">
+      Allow open strings
     </div>
 
   </div>
 
   <div id="sliderBar" class="noUi-target noUi-ltr noUi-horizontal"></div>
-  <div class="col-xs-1 activateString">
-
-  </div>
   <div class="fretboardContainer col-xs-11">
     <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
 
@@ -65,7 +65,7 @@
         <div class="preFret">
 
           <label class="switch">
-            <input type="checkbox"  ng-click="triad.toggleString(string)" ng-checked="string.active">
+            <input type="checkbox"  ng-click="triad.toggleString(string)" ng-model="string.active">
             <div class="slider"></div>
           </label>
         </div>
