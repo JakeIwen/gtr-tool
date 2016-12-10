@@ -29,7 +29,8 @@
         </select>
       </form>
       <div class="row">
-        <h4>Variation {{triad.triadIndex + 1}} of {{triad.variations}} </h4>
+        <br>
+        <p ng-if="triad.triadChord">Variation {{triad.triadIndex + 1}} of {{triad.variations}} </p>
         <button class="customBtn" type="submit" ng-click=" triad.prevVar()">Previous</button>
         <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
       </div>
@@ -38,7 +39,7 @@
     <div class="col-md-2">
       <h4>Show Inversions:</h4>
       <ul>
-        <li><input type="checkbox" name="" value="" checked> None</li>
+        <li><input type="checkbox" name="" value="" checked> Root</li>
         <li><input type="checkbox" name="" value="" checked> First</li>
         <li><input type="checkbox" name="" value="" checked> Second</li>
         <li><input type="checkbox" name="" value="" checked> Third</li>
@@ -53,6 +54,9 @@
       <br /><br />
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen">
       Allow open strings
+      <br />
+      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.onlyClusters">
+      Only show clusters
     </div>
 
   </div>

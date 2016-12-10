@@ -5,11 +5,174 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   var self = this;
   var slider = document.getElementById('slider');
   var fretNoteRelation = [];
-  var fretElementSets = [];
+  var activeDOMSets = [];
   var masterSet = [];
   self.triadIndex = 0;
 
-  //finger-stretch for
+  //finger-stretch dropdown menu
+
+
+  self.newChord = function() {
+    //self.getFrets();
+    console.log('Chord:', self.triadChord);
+
+    self.selectedChord = chord(self.triadChord);
+    console.log('selectedChord', self.selectedChord);
+    var i=0;
+    $('.marker').each(function() {
+      $fretMidiNote = $(this).data('midi');
+      fretNoteRelation[i] = {
+        stringFret: $(this).data('stringfret');,
+        midiNote: $fretMidiNote,
+      }
+      //set notes to array of notes contained in selected chord
+      var notes = self.selectedChord.notes;
+      for (var j = 0; j < notes.length; j++) {
+        if(notes[j] == $fretMidiNote % 12) {
+          fretNoteRelation[i].relation = svgRelations[j];
+          i++;
+        }
+      }
+    });
+
+    self.findTriads();
+    self.filter();
+
+  };
+
+  self.findTriads = function() {
+    activeDOMSets = [];
+    //the if statements check to make sure the notes are on different strings
+    console.log('frind triads; fretNoteRelation', fretNoteRelation);
+    var numRelations = self.selectedChord.notes;
+    for (var i = 0; i < fretNoteRelation.length; i++) {
+      if(fretNoteRelation[i].relation == 'root'){
+        for (var j = 0; j < fretNoteRelation.length; j++) {
+          if(fretNoteRelation[j].relation == 'third' && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[j].stringFret[0])){
+            for (var k = 0; k < fretNoteRelation.length; k++) {
+              if(fretNoteRelation[k].relation == 'fifth' && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[k].stringFret[0]) && (fretNoteRelation[j].stringFret[0] != fretNoteRelation[k].stringFret[0])) {
+                  activeDOMSets.push([fretNoteRelation[i].stringFret, fretNoteRelation[j].stringFret, fretNoteRelation[k].stringFret]);
+              }
+            }
+          }
+        }
+      }
+    }
+    masterSet = cloneTwoDimArray(activeDOMSets);
+  };
+
+  self.filter = function() {
+    var stretch = self.chordSpan.selectedSpan.span;
+    var clusters = [];
+    console.log('stretch', stretch);
+    activeDOMSets = cloneTwoDimArray(masterSet);
+    for (var i = 0; i < activeDOMSets.length; i++) {
+      //string each note is on
+      var triadFrets = [];
+      var triadStrings = [];
+
+      //store fret and string arrangement of this note group into seperate arrays
+      for (var j = 0; j < activeDOMSets[i].length; j++) {
+        //the strings to be played
+        triadStrings.push(activeDOMSets[i][j][0]);
+        //dont include open strings if user has selected allowOpen
+        if(!(self.allowOpen && (activeDOMSets[i][j][1] == 0))) {
+          triadFrets.push(activeDOMSets[i][j][1]);
+        }
+      }
+      //will not include open strings if self.allowOpen checkbox == true (see above)
+      var fretSpan = Math.max(...triadFrets) - Math.min(...triadFrets);
+      //the span of played strings (smaller is more desireable because there are no open strings to mute in between the strings to be played)
+      var clusterSize = Math.max(...triadStrings) - Math.min(...triadStrings);
+        if (fretSpan <= stretch){
+          //if within range of user-specified fret span
+          //populate array of triad formations AND corresponding string-spans
+          clusters.push({
+            clusterSize: clusterSize,
+            elementSet: activeDOMSets[i]
+           });
+        }
+    }
+    //add 3-string clusters to beginning of list
+    activeDOMSets = [];
+    //organize variations by tightest set of strings
+    //(no unplayed strings within triad)
+    //number of notes in chord ('triad') (-1 for array notation)
+    smallestCluster = self.selectedChord.notes.length - 1;
+    if(self.onlyClusters) {
+      //only one iteration of outer loop below avoids string-gaps
+      maxCluster = smallestCluster;
+    } else {
+      maxCluster = 6; //max span = number of strings on guitar
+    }
+      //push configurations to
+      for (var clusterSize = smallestCluster; clusterSize <= maxCluster; clusterSize++) {
+        for (var i = 0; i < clusters.length; i++) {
+          if(clusters[i].clusterSize == clusterSize) {
+            //search whole cluster array and push to elementSet array, smallest clusters first
+            activeDOMSets.push(clusters[i].elementSet);
+          }
+        }
+      }
+    //DOM binding listing number of chord variations
+    self.variations = activeDOMSets.length;
+    //console.log('activeDOMSets', activeDOMSets);
+    self.triadIndex = 0;
+    self.displayTriad();
+  };
+
+  self.displayTriad = function() {
+    //the variation dictated by prev/next buttions
+    if(activeDOMSets[0] == undefined) {
+      //TODO: choose way to back out of error state
+      alert('No Chord Configurations Available');
+      return 0; //exit function
+    }
+    var thisTriad = activeDOMSets[self.triadIndex];
+    console.log('This triad:', thisTriad);
+    $('.marker').each(function() {
+      $fret = $(this);
+      $fretCoord = $(this).data('stringfret');
+      $fret.attr('src', svgSources[svgSources.length - 1]);
+      for (var i = 0; i < thisTriad.length; i++) {
+        if(thisTriad[i] == $fretCoord) {
+          $fret.attr('src', svgSources[i]);
+          break;
+        }
+      }
+    });
+  };
+
+  self.nextVar = function() {
+    self.triadIndex++;
+    if (self.triadIndex > activeDOMSets.length - 1) {
+      self.triadIndex = 0;
+    }
+    self.displayTriad();
+  }
+
+  self.prevVar = function() {
+    self.triadIndex--;
+    if (self.triadIndex < 0) {
+      self.triadIndex = activeDOMSets.length - 1;
+    }
+    self.displayTriad();
+  }
+  var svgSources = [
+    //indicies correspond with that of thisTriad, activeDOMSets[];
+    "../img/root.svg",
+    "../img/third.svg",
+    "../img/fifth.svg",
+    "../img/alt.svg",
+    "../img/empty.svg"
+  ]
+  var svgRelations = [
+    'root',
+    'third',
+    'fifth',
+    'alt',
+    'empty'
+  ]
   self.chordSpan = {
     spans: [
       {span: 0},
@@ -21,179 +184,6 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
       selectedSpan: {span: 3}
       };
 
-  self.newChord = function() {
-    self.getFrets();
-    console.log('triadChord:', self.triadChord);
-
-    self.selectedChord = chord(self.triadChord);
-    console.log('selectedChord', self.selectedChord);
-    var i=0;
-    $('.marker').each(function() {
-      $fret = $(this);
-      $fretCoord = $(this).data('stringfret');
-      $fretMidiNote = $(this).data('midi');
-      //set notes to array of notes contained in selected chord
-      var notes = self.selectedChord.notes;
-      fretNoteRelation[i] = {
-        stringFret: $fretCoord,
-        midiNote: $fretMidiNote,
-      }
-      switch($fretMidiNote % 12) {
-        case notes[0]:
-          $fret.attr('src', "../img/root.svg");
-          fretNoteRelation[i].relation = 'R';
-          i++;
-          break;
-        case notes[1]:
-          $fret.attr('src', "../img/third.svg");
-          fretNoteRelation[i].relation = '3';
-          i++;
-          break;
-        case notes[2]:
-          $fret.attr('src', "../img/fifth.svg");
-          fretNoteRelation[i].relation = '5';
-          i++;
-          break;
-        default:
-          $fret.attr('src', "../img/empty.svg");
-      }
-    });
-
-    self.findTriads();
-    self.filter();
-
-  };
-
-  self.findTriads = function() {
-    //the if statements check to make sure the notes are on different strings
-    console.log('frind triads; fretNoteRelation', fretNoteRelation);
-    for (var i = 0; i < fretNoteRelation.length; i++) {
-      if(fretNoteRelation[i].relation == 'R'){
-        for (var j = 0; j < fretNoteRelation.length; j++) {
-          if(fretNoteRelation[j].relation == '3' && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[j].stringFret[0])){
-            for (var k = 0; k < fretNoteRelation.length; k++) {
-              if(fretNoteRelation[k].relation == '5' && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[k].stringFret[0]) && (fretNoteRelation[j].stringFret[0] != fretNoteRelation[k].stringFret[0])) {
-                  fretElementSets.push([fretNoteRelation[i].stringFret, fretNoteRelation[j].stringFret, fretNoteRelation[k].stringFret]);
-              }
-            }
-          }
-        }
-      }
-    }
-    masterSet = cloneTwoDimArray(fretElementSets);
-  };
-
-  self.filter = function() {
-    var stretch = self.chordSpan.selectedSpan.span;
-    var allowOpen = self.allowOpen;
-    var clusters = [];
-    console.log('stretch', stretch);
-    fretElementSets = cloneTwoDimArray(masterSet);
-    for (var i = 0; i < fretElementSets.length; i++) {
-        //fret position of each triad note
-        var fret1 = fretElementSets[i][0][1];
-        var fret2 = fretElementSets[i][1][1];
-        var fret3 = fretElementSets[i][2][1];
-
-        //compare distances between frets of note-set to user selected span
-        var overSpan12 = (Math.abs(fret1 - fret2) > stretch);
-        var overSpan23 = (Math.abs(fret2 - fret3) > stretch);
-        var overSpan31 = (Math.abs(fret3 - fret1) > stretch);
-
-        //string each note is on
-        var string1 = fretElementSets[i][0][0];
-        var string2 = fretElementSets[i][1][0];
-        var string3 = fretElementSets[i][2][0];
-        var lowestString = Math.min(string1, string2, string3);
-
-        //nomalize to lowest string
-        string1 -= lowestString;
-        string2 -= lowestString;
-        string3 -= lowestString;
-
-        //Bools representing note-pairs on consecutive strings
-        var stringSpan12 = (Math.abs(string1 - string2) == 1);
-        var stringSpan23 = (Math.abs(string2 - string3) == 1);
-        var stringSpan31 = (Math.abs(string3 - string1) == 1);
-
-        if(allowOpen){
-          //if user allows open strings
-          //fret values of 0 will be allowed in any triad configuration
-          switch (0) {
-            case fret1:
-              overSpan12 = false;
-              overSpan31 = false;
-              break;
-            case fret2:
-              overSpan12 = false;
-              overSpan23 = false;
-              break;
-            case fret3:
-              overSpan23 = false;
-              overSpan31 = false;
-              break;
-          }
-        }
-        var spanTooLarge = (overSpan12 || overSpan23 || overSpan31);
-        var clusterBool = (Math.max(string1, string2, string3) == 2 );
-      if(spanTooLarge || clusterBool) {
-        if (!spanTooLarge){
-          //save 3-string clusters to be pushed to top of array afterwards
-          clusters.push(fretElementSets[i]);
-        }
-        //remove clusters and sets that have a span too large
-        fretElementSets.splice(i--, 1);
-      }
-    }
-    //add 3-string clusters to beginning of list
-    for (var i = 0; i < clusters.length; i++) {
-      fretElementSets.unshift(clusters[i]);
-    }
-    //DOM binding listing number of chord variations
-    self.variations = fretElementSets.length;
-    if(self.triadIndex > fretElementSets.length - 1) {
-      self.triadIndex = 0;
-    }
-    self.displayTriad();
-
-  };
-
-  self.nextVar = function() {
-    self.triadIndex++;
-    if (self.triadIndex > fretElementSets.length - 1) {
-      self.triadIndex = 0;
-    }
-    self.filter();
-  }
-
-  self.prevVar = function() {
-    self.triadIndex--;
-    if (self.triadIndex < 0) {
-      self.triadIndex = fretElementSets.length - 1;
-    }
-    self.filter();
-  }
-
-  self.displayTriad = function() {
-    var thisTriad = fretElementSets[self.triadIndex];
-    console.log('elementsets', fretElementSets);
-    console.log('self.triadIndex', self.triadIndex);
-    console.log('This triad:', thisTriad);
-    $('.marker').each(function() {
-      $fret = $(this);
-      $fretCoord = $(this).data('stringfret');
-        if(thisTriad[0] == $fretCoord) {
-          $fret.attr('src', "../img/root.svg");
-        } else if (thisTriad[1] == $fretCoord) {
-          $fret.attr('src', "../img/third.svg");
-        } else if (thisTriad[2] == $fretCoord) {
-          $fret.attr('src', "../img/fifth.svg");
-        } else {
-          $fret.attr('src', "../img/empty.svg");
-        }
-    });
-  };
-
   noUiSlider.create(sliderBar, {
   	start: [20, 80],
   	connect: true,
@@ -204,11 +194,10 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   });
 
   //x-position of each fret for slider-bar functionality
-  self.getFrets = function() {
-        self.sliderSnaps = Factory.fretMap();
-        console.log('self.sliderSnaps:', self.sliderSnaps);
-      };
-
+  // self.getFrets = function() {
+  //       self.sliderSnaps = Factory.fretMap();
+  //       console.log('self.sliderSnaps:', self.sliderSnaps);
+  //     };
 
   function cloneTwoDimArray(arr) {
     // Deep copy arrays. Going one level deep seems to be enough.
