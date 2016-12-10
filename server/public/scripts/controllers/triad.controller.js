@@ -43,6 +43,23 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
 
   self.findTriads = function() {
     activeDOMSets = [];
+    //fretNoteRelation contains every DOM '.marker' element that is contained in the selected chord
+    //this function seperates them into single playable chords
+
+    //Find the first 'root' note in fretNoteRelations at fretNoteRelations[i]
+    //Find the first 'third' note in fretNoteRelations at fretNoteRelations[j]
+    //Find the first 'fifth' note in fretNoteRelations at fretNoteRelations[k]
+    //First triad has been identified. Save the triad [fretNoteRelations[i], fretNoteRelations[j], fretNoteRelations[k]].
+
+    //Find the next 'fifth' at fretNoteRelations[k]. Save this triad.
+    //Find all remaining fifths and save each.
+
+    //Find next third. Find all fifths and save.
+    //find all remaining thirds and fifths and save
+
+    //find next root. repeat 
+
+
     //create an array activeDOMSets containing sets of 3 or more notes representing the chord/triad
     //these are the sets that will be displayed, one-at-a-time on the DOM
     //the if statements check to make sure the notes are on different strings
