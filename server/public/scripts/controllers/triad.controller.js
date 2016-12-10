@@ -7,6 +7,7 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   var fretNoteRelation = [];
   var activeDOMSets = [];
   var masterSet = [];
+  var notes = [];
   self.triadIndex = 0;
 
   //finger-stretch dropdown menu
@@ -22,11 +23,11 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
     $('.marker').each(function() {
       $fretMidiNote = $(this).data('midi');
       fretNoteRelation[i] = {
-        stringFret: $(this).data('stringfret');,
+        stringFret: $(this).data('stringfret'),
         midiNote: $fretMidiNote,
       }
       //set notes to array of notes contained in selected chord
-      var notes = self.selectedChord.notes;
+      notes = self.selectedChord.notes;
       for (var j = 0; j < notes.length; j++) {
         if(notes[j] == $fretMidiNote % 12) {
           fretNoteRelation[i].relation = svgRelations[j];
@@ -42,15 +43,22 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
 
   self.findTriads = function() {
     activeDOMSets = [];
+    //create an array activeDOMSets containing sets of 3 or more notes representing the chord/triad
+    //these are the sets that will be displayed, one-at-a-time on the DOM
     //the if statements check to make sure the notes are on different strings
     console.log('frind triads; fretNoteRelation', fretNoteRelation);
     var numRelations = self.selectedChord.notes;
+    //loops will be nested for numRelations.length levels. this is the number of notes in the chosen chord
     for (var i = 0; i < fretNoteRelation.length; i++) {
-      if(fretNoteRelation[i].relation == 'root'){
+      if(fretNoteRelation[i].relation == svgRelations[0]){
         for (var j = 0; j < fretNoteRelation.length; j++) {
-          if(fretNoteRelation[j].relation == 'third' && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[j].stringFret[0])){
+            //IF the note relation is 'fifth' AND it is on a different string than the root note from above loop
+          if(fretNoteRelation[j].relation == svgRelations[1] && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[j].stringFret[0])){
             for (var k = 0; k < fretNoteRelation.length; k++) {
-              if(fretNoteRelation[k].relation == 'fifth' && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[k].stringFret[0]) && (fretNoteRelation[j].stringFret[0] != fretNoteRelation[k].stringFret[0])) {
+              //IF the note relation is 'third' AND it is on a different string than both the root and third notes from above loops
+              if(fretNoteRelation[k].relation == svgRelations[2] && (fretNoteRelation[i].stringFret[0] != fretNoteRelation[k].stringFret[0]) && (fretNoteRelation[j].stringFret[0] != fretNoteRelation[k].stringFret[0])) {
+                  //I would like to add one or more nested loops for more complex chords (7ths etc)
+                  //send DOM corrdinates which get matched with $('marker').data(stringfret) in displayTriad().
                   activeDOMSets.push([fretNoteRelation[i].stringFret, fretNoteRelation[j].stringFret, fretNoteRelation[k].stringFret]);
               }
             }
@@ -59,6 +67,7 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
       }
     }
     masterSet = cloneTwoDimArray(activeDOMSets);
+    console.log('masterSet', masterSet);
   };
 
   self.filter = function() {
@@ -122,12 +131,13 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   };
 
   self.displayTriad = function() {
-    //the variation dictated by prev/next buttions
     if(activeDOMSets[0] == undefined) {
       //TODO: choose way to back out of error state
       alert('No Chord Configurations Available');
       return 0; //exit function
     }
+
+    //the thisTriad variation dictated by prev/next buttions
     var thisTriad = activeDOMSets[self.triadIndex];
     console.log('This triad:', thisTriad);
     $('.marker').each(function() {

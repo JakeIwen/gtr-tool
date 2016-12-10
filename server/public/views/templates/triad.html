@@ -8,6 +8,7 @@
       <div><img src="../img/root.svg" alt="*" height="16" width="24" /> Root</div>
       <div><img src="../img/third.svg" alt="*" height="16" width="24" /> Third</div>
       <div><img src="../img/fifth.svg" alt="*" height="16" width="24" /> Fifth</div>
+      <div><img src="../img/alt.svg" alt="*" height="16" width="24" /> Other</div>
     </div>
 
     <div class="col-md-3">
@@ -30,7 +31,7 @@
       </form>
       <div class="row">
         <br>
-        <p ng-if="triad.triadChord">Variation {{triad.triadIndex + 1}} of {{triad.variations}} </p>
+        <p> {{triad.triadIndex + 1}} of {{triad.variations}} </p>
         <button class="customBtn" type="submit" ng-click=" triad.prevVar()">Previous</button>
         <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
       </div>
