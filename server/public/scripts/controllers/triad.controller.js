@@ -15,6 +15,7 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   var fretPositions = [0, 11, 20.5, 29, 37, 44.5, 52, 58.5, 64, 71, 77, 82, 87.5, 92, 96.5, 100];
   var lowLimit = 0;
   var highLimit = 100;
+  self.numNotes = 0;
 
   self.triadIndex = 0;
   self.allowedInversions = [true, true, true, true];
@@ -47,6 +48,7 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
 
     self.selectedChord = chord(self.triadChord);
     notes = self.selectedChord.notes;
+    self.numNotes = notes.length;
     console.log('selectedChord', self.selectedChord);
     var i=0;
     $('.marker').each(function() {
@@ -264,7 +266,7 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
         var fretNum = chordSets[i].stringFretMidis[j][1];
         console.log('fretnum, position', fretNum, fretPositions[fretNum]);
         if(lowLimit > fretPositions[fretNum] || highLimit < fretPositions[fretNum]) {
-          
+
           if(!(self.allowOpen && !fretNum)) {
             console.log("slider splice", chordSets[i]);
             chordSets.splice(i,1);
@@ -287,10 +289,10 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
     //the thisTriad variation dictated by prev/next buttions
     var thisTriad = filteredConfigs[self.triadIndex];
     console.log('This triad:', thisTriad);
+    $('.marker').attr('src', "../img/empty.svg");
     $('.marker').each(function() {
       $fret = $(this);
       $fretCoord = $(this).data('stringfretmidi');
-      $fret.attr('src', svgSources[svgSources.length - 1]);
       for (var i = 0; i < thisTriad.stringFretMidis.length; i++) {
         if(thisTriad.stringFretMidis[i] == $fretCoord) {
           $fret.attr('src', svgSources[i]);
@@ -319,9 +321,9 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   }
   var svgSources = [
     //indicies correspond with that of thisTriad, filteredConfigs[];
-    "../img/root.svg",
-    "../img/third.svg",
-    "../img/fifth.svg",
+    "../img/1.svg",
+    "../img/3.svg",
+    "../img/5.svg",
     "../img/alt.svg",
     "../img/empty.svg"
   ]

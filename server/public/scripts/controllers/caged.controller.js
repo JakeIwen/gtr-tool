@@ -1,33 +1,53 @@
 app.controller('CagedController', ["$http", function($http) {
   var self = this;
   self.cagedChord = {};
+  self.chosenScale = '';
+  self.scaleTypes = [
+    'CAGED Major Chord',
+    'Dorian (Major)',
+    'Pentatonic',
+  ];
+  self.scale = self.scaleTypes[0];
+
+self.changeScaleType = function() {
+  console.log('change self.scaletype', self.scale);
+};
 
   self.newChord = function() {
+    console.log('self.scaletype', self.scale);
+
     console.log('cagedChord:', self.cagedChord);
 
-    self.selectedChord = chord(self.cagedChord);
-    console.log('selectedChord', self.selectedChord);
+    self.selected = note(self.cagedChord);
+    scale = MUSIQ.notePositions;
+    console.log('scale', scale);
+    console.log('selectedChord', self.selected);
+    $('.marker').attr('src', "../img/empty.svg");
+
     $('.marker').each(function() {
       $fret = $(this);
       $fretMidiNote = $(this).data('midi');
       //set notes to array of notes contained in selected chord
-      var notes = self.selectedChord.notes;
+      for (var i = 0; i < scale.length; i++) {
+        var thisNote = (scale[i] + self.selected.pos) % 12;
 
-      switch($fretMidiNote % 12) {
-        case notes[0]:
-          $fret.attr('src', "../img/root.svg");
-          break;
-        case notes[1]:
-          $fret.attr('src', "../img/third.svg");
-          break;
-        case notes[2]:
-          $fret.attr('src', "../img/fifth.svg");
-          break;
-        default:
-          $fret.attr('src', "../img/empty.svg");
+        if (thisNote == $fretMidiNote % 12) {
+          console.log('note found');
+          $fret.attr('src', "../img/" + (i + 1) + ".svg");
+        }
       }
-
     });
   };
 
+  var svgSources = [
+    //indicies correspond with that of thisTriad, filteredConfigs[];
+    "../img/root.svg",
+    "../img/second.svg",
+    "../img/third.svg",
+    "../img/fourth.svg",
+    "../img/fifth.svg",
+    "../img/sixth.svg",
+    "../img/seventh.svg",
+    "../img/empty.svg"
+  ]
 }]);

@@ -5,10 +5,10 @@
 
   <div class="options row">
     <div class="col-md-2">
-      <div><img src="../img/root.svg" alt="*" height="16" width="24" /> Root</div>
-      <div><img src="../img/third.svg" alt="*" height="16" width="24" /> Third</div>
-      <div><img src="../img/fifth.svg" alt="*" height="16" width="24" /> Fifth</div>
-      <div><img src="../img/alt.svg" alt="*" height="16" width="24" /> Other</div>
+      <div><img src="../img/1.svg" alt="*" height="16" width="24" /> Root</div>
+      <div><img src="../img/3.svg" alt="*" height="16" width="24" /> Third</div>
+      <div><img src="../img/5.svg" alt="*" height="16" width="24" /> Fifth</div>
+      <div ng-if="triad.numNotes > 3"><img src="../img/alt.svg" alt="*" height="16" width="24" /> Other</div>
     </div>
 
     <div class="col-md-3">
@@ -28,6 +28,15 @@
           <option>A#</option>
           <option>B</option>
         </select>
+        <select ng-model="triad.triadAddendum" ng-change="triad.newChord()">
+          <option ng-selected="true">maj</option>
+          <option>min</option>
+          <option>dom7</option>
+          <option>min7</option>
+          <option>maj7</option>
+          <option>sus2</option>
+          <option>sus4</option>
+        </select>
       </form>
       <div class="row">
         <br>
@@ -43,7 +52,7 @@
         <li><input type="checkbox" ng-checked="triad.allowedInversions[0]" ng-click="triad.toggleInversion(0)"> Root</li>
         <li><input type="checkbox" ng-checked="triad.allowedInversions[1]" ng-click="triad.toggleInversion(1)"> First</li>
         <li><input type="checkbox" ng-checked="triad.allowedInversions[2]" ng-click="triad.toggleInversion(2)"> Second</li>
-        <li><input type="checkbox" ng-checked="triad.allowedInversions[3]" ng-click="triad.toggleInversion(3)"> Third</li>
+        <li ng-if="triad.numNotes > 3"><input type="checkbox" ng-checked="triad.allowedInversions[3]" ng-click="triad.toggleInversion(3)"> Third</li>
       </ul>
     </div>
 

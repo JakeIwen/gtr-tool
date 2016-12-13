@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var table = require('./modules/tables')
 
 
 // serve static files
@@ -19,5 +18,3 @@ app.get('/', function(req, res) {
 app.listen(3000, function() {
   console.log("server running, check localhost:3000");
 });
-
-app.use('/tables', table);

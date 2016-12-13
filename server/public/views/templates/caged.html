@@ -2,12 +2,19 @@
 
   <div class="options row">
     <div class="col-md-2">
-      <div><img src="../img/root.svg" alt="*" height="16" width="24" /> Root</div>
-      <div><img src="../img/third.svg" alt="*" height="16" width="24" /> Third</div>
-      <div><img src="../img/fifth.svg" alt="*" height="16" width="24" /> Fifth</div>
+      <div><img src="../img/1.svg" alt="*" height="16" width="24" /> Root</div>
+      <div><img src="../img/3.svg" alt="*" height="16" width="24" /> Third</div>
+      <div><img src="../img/5.svg" alt="*" height="16" width="24" /> Fifth</div>
+      <div><img src="../img/7.svg" alt="*" height="16" width="24" /> Seventh</div>
+
     </div>
 
-    <form>
+    <div class="col-md-2">
+      <div><img src="../img/2.svg" alt="*" height="16" width="24" /> Second</div>
+      <div><img src="../img/4.svg" alt="*" height="16" width="24" /> Fourth</div>
+      <div><img src="../img/6.svg" alt="*" height="16" width="24" /> Sixth</div>
+    </div>
+    <form class="col-sm-3">
         <p>CAGED Chord to map:</p>
         <select ng-model="caged.cagedChord" ng-change="caged.newChord()">
           <option ng-selected="true" ng-disabled="true">Choose Chord</option>
@@ -25,7 +32,16 @@
           <option>B</option>
         </select>
     </form>
+  <div class="col-sm-3">
+    <h4>Scale type:</h4>
+    <ul >
+      <li ng-repeat="scaleType in caged.scaleTypes">
+        <input type="radio" ng-change="caged.changeScaleType()" ng-model="caged.scale" name="scaleType" value="{{scaleType}}">
+        {{scaleType}}
+      </li>
+    </ul>
   </div>
+</div>
 
   <div class="fretboardContainer col-xs-12">
     <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
@@ -40,17 +56,3 @@
   </div>
 
 </section>
-<!--
-
-<div class="guitar-neck hidden-phone">
-    <div class="guitar-fret" ng-class="fret.className()" ng-repeat="fret in frets">
-
-        <div class="guitar-fret-note" ng-repeat="note in fret.notes().reverse()">
-            <a  ng-class="note.className(tonic)"
-                ng-click="toggleNote(note)"
-                title="{{note.notation(tonic.signature()) + '/' + selectedMatch.tonic.interval(note).name()}}"
-                ><div class="marker">{{note.simple(tonic.signature())}}</div></a>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-</div> -->
