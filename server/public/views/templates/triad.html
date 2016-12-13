@@ -31,19 +31,19 @@
       </form>
       <div class="row">
         <br>
-        <p> {{triad.triadIndex + 1}} of {{triad.variations}} </p>
-        <button class="customBtn" type="submit" ng-click=" triad.prevVar()">Previous</button>
+        <p> Variation {{triad.triadIndex + 1}} of {{triad.variations}} </p>
+        <button class="customBtn" type="submit" ng-click="triad.prevVar()">Previous</button>
         <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
       </div>
 
     </div>
     <div class="col-md-2">
       <h4>Show Inversions:</h4>
-      <ul>
-        <li><input type="checkbox" name="" value="" checked> Root</li>
-        <li><input type="checkbox" name="" value="" checked> First</li>
-        <li><input type="checkbox" name="" value="" checked> Second</li>
-        <li><input type="checkbox" name="" value="" checked> Third</li>
+      <ul ng-model="triad.allowedInversions">
+        <li><input type="checkbox" ng-checked="triad.allowedInversions[0]" ng-click="triad.toggleInversion(0)"> Root</li>
+        <li><input type="checkbox" ng-checked="triad.allowedInversions[1]" ng-click="triad.toggleInversion(1)"> First</li>
+        <li><input type="checkbox" ng-checked="triad.allowedInversions[2]" ng-click="triad.toggleInversion(2)"> Second</li>
+        <li><input type="checkbox" ng-checked="triad.allowedInversions[3]" ng-click="triad.toggleInversion(3)"> Third</li>
       </ul>
     </div>
 
@@ -62,26 +62,27 @@
 
   </div>
 
-  <div id="sliderBar" class="noUi-target noUi-ltr noUi-horizontal"></div>
-  <div class="fretboardContainer col-xs-11">
-    <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
+    <div class="fretboardContainer col-xs-11">
+      <div id="sliderBar" class="noUi-target noUi-ltr noUi-horizontal"></div>
+      <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
 
-      <div class="fretRow">
-        <div class="preFret">
+        <div class="fretRow">
+          <div class="preFret">
 
-          <label class="switch">
-            <input type="checkbox"  ng-click="triad.toggleString(string)" ng-model="string.active">
-            <div class="slider"></div>
-          </label>
-        </div>
+            <label class="switch" ng-model="triad.allowedStrings">
+              <input type="checkbox" ng-checked="triad.allowedStrings[string.pos]" ng-click="triad.toggleString(string.pos)">
+              <div class="slider"></div>
+            </label>
+          </div>
 
-        <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
+          <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
 
-          <img src="../img/empty.svg" alt="*" class="marker" data-stringfret="[{{string.pos}}, {{fret.pos}}]" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
+            <img src="../img/empty.svg" alt="*" class="marker" data-stringfretmidi="[{{string.pos}}, {{fret.pos}}, {{string.base + fret.pos}}]"  height="16" width="24"/>
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
 
 </section>

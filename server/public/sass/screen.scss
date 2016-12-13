@@ -40,6 +40,14 @@ h3 {
 
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
 
+#sliderBar {
+  margin-top: -55px;
+  margin-bottom: 40px;
+  top: 10px;
+  left: 6%;
+  width: 93%;
+}
+
 .fretboardContainer {
   margin:15px;
   padding: 17px 20px 0 0;
@@ -61,6 +69,7 @@ h3 {
   justify-content: space-between;*/
   margin-top: -13px;
   margin-bottom: 10px;
+  white-space: nowrap;
 }
 .marker {
   // background-image: url("../img/greencircle.svg");

@@ -109,6 +109,15 @@ h3 {
 
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
 /* line 43, ../sass/screen.scss */
+#sliderBar {
+  margin-top: -55px;
+  margin-bottom: 40px;
+  top: 10px;
+  left: 6%;
+  width: 93%;
+}
+
+/* line 51, ../sass/screen.scss */
 .fretboardContainer {
   margin: 15px;
   padding: 17px 20px 0 0;
@@ -118,7 +127,7 @@ h3 {
   /*align-self: center;*/
 }
 
-/* line 51, ../sass/screen.scss */
+/* line 59, ../sass/screen.scss */
 .strings {
   border-top: 3px solid #b59b4f;
   /*width: 100%;*/
@@ -126,16 +135,17 @@ h3 {
   z-index: 1000;
 }
 
-/* line 58, ../sass/screen.scss */
+/* line 66, ../sass/screen.scss */
 .fretRow {
   /*display: flex;
   text-align: justify;
   justify-content: space-between;*/
   margin-top: -13px;
   margin-bottom: 10px;
+  white-space: nowrap;
 }
 
-/* line 74, ../sass/screen.scss */
+/* line 83, ../sass/screen.scss */
 .fret {
   /*margin-bottom: -50%;*/
   display: inline-block;
@@ -146,88 +156,88 @@ h3 {
   text-align: right;
 }
 
-/* line 83, ../sass/screen.scss */
+/* line 92, ../sass/screen.scss */
 .preFret {
   display: inline-block;
   overflow: none;
 }
 
-/* line 90, ../sass/screen.scss */
+/* line 99, ../sass/screen.scss */
 .fretNum0 {
   width: 30px;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum1 {
   width: 8.88889%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum2 {
   width: 8.39506%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum3 {
   width: 7.92867%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum4 {
   width: 7.48819%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum5 {
   width: 7.07218%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum6 {
   width: 6.67928%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum7 {
   width: 6.30821%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum8 {
   width: 5.95775%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum9 {
   width: 5.62677%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum10 {
   width: 5.31417%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum11 {
   width: 5.01894%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum12 {
   width: 4.74011%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum13 {
   width: 4.47677%;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .fretNum14 {
   width: 4.22806%;
 }
 
-/* line 107, ../sass/screen.scss */
+/* line 116, ../sass/screen.scss */
 .borderString {
   /*same height as tr*/
   height: 18px;
@@ -235,13 +245,13 @@ h3 {
   margin-right: -3px;
 }
 
-/* line 113, ../sass/screen.scss */
+/* line 122, ../sass/screen.scss */
 .fretNum0 {
   border-right: 9px solid #e0e2c9;
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
-/* line 119, ../sass/screen.scss */
+/* line 128, ../sass/screen.scss */
 nav ul {
   margin: 0 auto;
   width: 80%;
@@ -249,18 +259,18 @@ nav ul {
   text-align: center;
 }
 
-/* line 126, ../sass/screen.scss */
+/* line 135, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 128, ../sass/screen.scss */
+/* line 137, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
 }
 
-/* line 133, ../sass/screen.scss */
+/* line 142, ../sass/screen.scss */
 .customBtn {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
@@ -280,21 +290,21 @@ form {
   margin-top: 10px;
 }
 
-/* line 152, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .customBtn:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-/* line 158, ../sass/screen.scss */
+/* line 167, ../sass/screen.scss */
 .customBtn:active {
   position: relative;
   top: 1px;
 }
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 163, ../sass/screen.scss */
+/* line 172, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -304,13 +314,13 @@ form {
 }
 
 /* Hide default HTML checkbox */
-/* line 172, ../sass/screen.scss */
+/* line 181, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 175, ../sass/screen.scss */
+/* line 184, ../sass/screen.scss */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -323,7 +333,7 @@ form {
   transition: .4s;
 }
 
-/* line 187, ../sass/screen.scss */
+/* line 196, ../sass/screen.scss */
 .slider:before {
   position: absolute;
   content: "";
@@ -336,29 +346,29 @@ form {
   transition: .4s;
 }
 
-/* line 199, ../sass/screen.scss */
+/* line 208, ../sass/screen.scss */
 input:checked + .slider {
   background-color: #2196F3;
 }
 
-/* line 203, ../sass/screen.scss */
+/* line 212, ../sass/screen.scss */
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 207, ../sass/screen.scss */
+/* line 216, ../sass/screen.scss */
 input:checked + .slider:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 214, ../sass/screen.scss */
+/* line 223, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 216, ../sass/screen.scss */
+/* line 225, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
