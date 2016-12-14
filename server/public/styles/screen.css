@@ -76,7 +76,7 @@ body {
 
 /*----------------------------- NAV STYLING------------------------------*/
 /* line 16, ../sass/screen.scss */
-h3 {
+h2, h3 {
   text-align: center;
 }
 

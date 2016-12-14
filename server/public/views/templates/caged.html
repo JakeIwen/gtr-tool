@@ -1,22 +1,27 @@
 <section class="row" ng-controller="CagedController as caged">
 
   <div class="options row">
-    <div class="col-md-2">
-      <div><img src="../img/1.svg" alt="*" height="16" width="24" /> Root</div>
-      <div><img src="../img/3.svg" alt="*" height="16" width="24" /> Third</div>
-      <div><img src="../img/5.svg" alt="*" height="16" width="24" /> Fifth</div>
-      <div><img src="../img/7.svg" alt="*" height="16" width="24" /> Seventh</div>
+    <div class="noteMap col-md-5">
 
+      <h2 ng-show="caged.tonic && caged.scale">{{caged.tonic}} {{caged.scale.name}} Scale</h2>
+
+      <div class="col-md-6">
+        <div><img src="../img/1.svg" alt="*" height="16" width="24" /> Root</div>
+        <div><img src="../img/3.svg" alt="*" height="16" width="24" /> Third</div>
+        <div><img src="../img/5.svg" alt="*" height="16" width="24" /> Fifth</div>
+        <div><img src="../img/7.svg" alt="*" height="16" width="24" /> Seventh</div>
+      </div>
+
+      <div class="col-md-6">
+        <div><img src="../img/2.svg" alt="*" height="16" width="24" /> Second</div>
+        <div><img src="../img/4.svg" alt="*" height="16" width="24" /> Fourth</div>
+        <div><img src="../img/6.svg" alt="*" height="16" width="24" /> Sixth</div>
+      </div>
     </div>
 
-    <div class="col-md-2">
-      <div><img src="../img/2.svg" alt="*" height="16" width="24" /> Second</div>
-      <div><img src="../img/4.svg" alt="*" height="16" width="24" /> Fourth</div>
-      <div><img src="../img/6.svg" alt="*" height="16" width="24" /> Sixth</div>
-    </div>
     <form class="col-sm-3">
         <p>CAGED Chord to map:</p>
-        <select ng-model="caged.cagedChord" ng-change="caged.newChord()">
+        <select ng-model="caged.tonic" ng-change="caged.init()">
           <option ng-selected="true" ng-disabled="true">Choose Chord</option>
           <option>C</option>
           <option>C#</option>
@@ -32,16 +37,13 @@
           <option>B</option>
         </select>
     </form>
-  <div class="col-sm-3">
-    <h4>Scale type:</h4>
-    <ul >
-      <li ng-repeat="scaleType in caged.scaleTypes">
-        <input type="radio" ng-change="caged.changeScaleType($index)" ng-model="caged.scale" name="scaleType" value="{{scaleType}}">
-        {{scaleType}}
-      </li>
-    </ul>
+
+    <div class="col-sm-3">
+      <h4>Scale type:</h4>
+      <select ng-options="scales as scales.name for scales in caged.scales" ng-model="caged.scale" ng-change="caged.init()">
+      </select>
+    </div>
   </div>
-</div>
 
   <div class="fretboardContainer col-xs-12">
     <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">

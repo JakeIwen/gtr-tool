@@ -23,13 +23,12 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.allowedStrings = [true, true, true, true, true, true];
 
   $('#slider').on("mouseup", function () {
+
     if(self.selectedChord){
       self.filter();
     }
     $scope.$apply();
-
   });
-
 
   self.toggleInversion = function(index) {
     self.allowedInversions[index] = !(self.allowedInversions[index]);
@@ -70,41 +69,20 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
     });
 
-    self.findTriads();
+    findTriads();
     self.filter();
 
   };
 
-  // function findNote() {
-  //   noteIndex = usedStrings.length;
-  //   pushedChord = false;
-  //   for (var i = noteIndex; i < fretNotes.length; i++) {
-  //     if(fretNotes[i].relation == noteIndex && usedStrings.indexOf(fretNotes[i].stringFretMidi[0]) == -1) {
-  //       usedStrings.push(fretNotes[i].stringFretMidi[0]);
-  //       chordFrets.push(fretNotes[i]);
-  //       noteIndex++;
-  //       if (notes.length == usedStrings.length) {
-  //         possibleConfigs.push(chordFrets);
-  //         noteIndex = 0;
-  //         pushedChord = true;
-  //         chordFrets.pop();
-  //       }
-  //       break;
-  //     }
-  //   }
-  //   return pushedChord;
-  // }
-
-  self.findTriads = function() {
+  function findTriads() {
     masterSet = [];
     console.log('frind triads; fretNotes', fretNotes);
-
     var noteIdx = 0;
     var tmp = [];
     var index = [];
     var strings = [];
     var notes = [];
-    
+
     for (var i = 0; i < fretNotes.length; i++) {
       //if the string and note are not already used in the chord being constructed
       if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && notes.indexOf(fretNotes[i].relation) == -1){
@@ -115,7 +93,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         masterSet.push(tmp.slice());
         i = notePop();
       }
-
+      //traverse back to lower strings
+      //if temp arrays are empty the for loop will conditionally terminate
       while(i > fretNotes.length -2) {
         i = notePop();
       }
@@ -135,7 +114,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       index.push(i);
       notes.push(fretNotes[i].relation);
     }
-
     console.log('masterSet', masterSet);
   };
 
@@ -328,7 +306,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       {span: 3},
       {span: 4},
       {span: 5}],
-      selectedSpan: {span: 3}
+    selectedSpan:
+      {span: 3}
       };
 
   noUiSlider.create(sliderBar, {

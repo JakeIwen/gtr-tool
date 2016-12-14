@@ -1,0 +1,195 @@
+[
+
+		{
+						"names": ["5", "power"],
+						"longName": " power",
+						"notes": [ 0, 7 ]
+				 },
+
+		{
+						"names": ["maj", "M","ma", "major", ""],
+						"longName": "major",
+						"notes": [ 0, 4, 7 ]
+				 },
+		{  			"names": ["m","mi","min","minor","-"],
+						"longName": "minor",
+						"notes": [ 0, 3, 7 ]
+				 },
+		{
+						"names": ["dim","diminished","o"],
+						"longName": "diminished",
+						"notes": [ 0, 3, 6 ]
+				 },
+		{
+						"names": ["aug","augmented","a"],
+						"longName": "augmented",
+						"notes": [ 0, 4, 8 ]
+				 },
+		{
+						"names": ["sus2"],
+						"longName": "suspended 2nd",
+						"notes": [ 0, 2, 7 ]
+				 },
+		{
+						"names": ["sus4","su","sus"],
+						"longName": "suspended 4th",
+						"notes": [ 0, 5, 7 ]
+				 },
+
+		{
+						"names": ["maj7","maj 7", "major 7"],
+						"longName": "major 7th",
+						"notes": [ 0, 4, 7, 11 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["m7","mi7","min7","minor 7","-7"],
+						"longName": "minor 7th",
+						"notes": [ 0, 3, 7, 10 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["7","M7"],
+						"longName": "dominant 7th",
+						"notes": [ 0, 4, 7, 10 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["dim7","dim 7"],
+						"longName": "diminished 7th",
+						"notes": [ 0, 3, 6, 9 ]
+				 },
+		{
+						"names": ["m7b5","ø7","-7b5","m7(b5)"],
+						"longName": "half diminished",
+						"notes": [ 0, 3, 6, 10 ]
+
+				 },
+		{
+						"names": ["mM7"],
+						"longName": "minor major seventh",
+						"notes": [ 0, 3, 7, 11 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["6"],
+						"longName": "major 6th",
+						"notes": [ 0, 4, 7, 9 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["m6"],
+						"longName": "minor 6th",
+						"notes": [ 0, 3, 7, 9 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["9","M9"],
+						"longName": "dominant 9th",
+						"notes": [ 0, 4, 7, 10, 14 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["maj9"],
+						"longName": "major 9th",
+						"notes": [ 0, 4, 7, 11, 14 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["m9"],
+						"longName": "minor 9th",
+						"notes": [ 0, 3, 7, 10, 14 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["madd9","m add9","min add9"],
+						"longName": "minor add 9th",
+						"notes": [ 0, 3, 7, 14 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["add9","Madd9","maj add9"],
+						"longName": "major add 9th",
+						"notes": [ 0, 4, 7, 14 ],
+						"optional": [7]
+
+				 },
+		{
+						"names": ["6/9","69"],
+						"longName": "6 9th chord",
+						"notes": [ 0, 4, 7, 9, 14 ],
+						"optional": [7]
+				 },
+		{
+						"names": [" b9","Mb9","maj b9"],
+						"longName": "major flat 9th",
+						"notes": [ 0, 4, 7, 11, 13 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["7b9","M7b9","7 b9"],
+						"longName": "dominant 7th flat 9th",
+						"notes": [ 0, 4, 7, 10, 13 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["7#9","M7#9","7 #9","hendrix","7alt"],
+						"longName": "dominant 7th sharp 9th",
+						"notes": [ 0, 3, 4, 7, 10],
+						"optional": [7]
+				 },
+		{
+						"names": ["#9","M#9","M #9","maj #9"],
+						"longName": "sharp 9th",
+						"notes": [ 0, 4, 7, 15 ],
+						"optional": [7]
+				 },
+
+
+		{
+						"names": ["maj11"],
+						"longName": "major 11th",
+						"notes": [ 0, 4, 7, 11, 17 ],
+						"optional": [7]
+
+				 },
+		{
+						"names": ["m11"],
+						"longName": "minor 11th",
+						"notes": [ 0, 3, 7, 10, 17 ],
+						"optional": [7, 10]
+				 },
+		{
+						"names": ["11"],
+						"longName": "dominant 11th",
+						"notes": [ 0, 4, 7, 10, 17 ],
+						"optional": [7, 10]
+				 },
+
+		{
+						"names": ["maj13"],
+						"longName": "major 13th",
+						"notes": [ 0, 4, 7, 11, 21 ],
+						"optional": [7]
+
+				 },
+		{
+						"names": ["m13"],
+						"longName": "minor 13th",
+						"notes": [ 0, 3, 7, 10, 21 ],
+						"optional": [7]
+				 },
+		{
+						"names": ["13","M13"],
+						"longName": "dominant 13th",
+						"notes": [ 0, 4, 7, 10, 21 ],
+						"optional": [7]
+				 },
+		{
+						"names": [" b13"],
+						"longName": "flat 13th",
+						"notes": [ 0, 4, 7, 10, 20 ],
+						"optional": [7]
+				 }
+
+			 ]
