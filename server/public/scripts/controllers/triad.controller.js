@@ -1,10 +1,10 @@
 //$('.fretboardContainer') change r
 // slider position relation to guitar fret#
-app.controller('TriadController', ["$http", 'Factory', function($http, Factory) {
+app.controller('TriadController', ["$http", "$scope", 'Factory', function($http, $scope, Factory) {
   console.log('Triad controller running');
   var self = this;
   var slider = document.getElementById('slider');
-  var fretNoteRelation = [];
+  var fretNotes = [];
   var masterSet = [];
   var filteredConfigs = [];
   var notes = [];
@@ -17,17 +17,19 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   var highLimit = 100;
   self.numNotes = 0;
 
+
   self.triadIndex = 0;
   self.allowedInversions = [true, true, true, true];
   self.allowedStrings = [true, true, true, true, true, true];
 
-  $('#sliderBar').on("click", function () {
-
+  $('#slider').on("mouseup", function () {
     if(self.selectedChord){
       self.filter();
     }
+    $scope.$apply();
+
   });
-  //finger-stretch dropdown menu
+
 
   self.toggleInversion = function(index) {
     self.allowedInversions[index] = !(self.allowedInversions[index]);
@@ -55,14 +57,14 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
       $fretMidiNote = $(this).data('stringfretmidi')[2];
       //ensure that this fret-note is contained in the selected chord, then add to array of objects describing fret-note location and relation to chord
       if (notes.indexOf(($fretMidiNote % 12)) != -1) {
-        fretNoteRelation[i] = {
+        fretNotes[i] = {
           stringFretMidi: $(this).data('stringfretmidi'),
           relation: notes.indexOf(($fretMidiNote % 12)),
           // string: $(this).data('stringfret')[0], //not yet used
           // fret: $(this).data('stringfret')[1], //not yet used
           //not yet used
         }
-        // $(this).data-noterelation(fretNoteRelation[i]);
+        // $(this).data-noterelation(fretNotes[i]);
 
         i++;
       }
@@ -76,10 +78,10 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   // function findNote() {
   //   noteIndex = usedStrings.length;
   //   pushedChord = false;
-  //   for (var i = noteIndex; i < fretNoteRelation.length; i++) {
-  //     if(fretNoteRelation[i].relation == noteIndex && usedStrings.indexOf(fretNoteRelation[i].stringFretMidi[0]) == -1) {
-  //       usedStrings.push(fretNoteRelation[i].stringFretMidi[0]);
-  //       chordFrets.push(fretNoteRelation[i]);
+  //   for (var i = noteIndex; i < fretNotes.length; i++) {
+  //     if(fretNotes[i].relation == noteIndex && usedStrings.indexOf(fretNotes[i].stringFretMidi[0]) == -1) {
+  //       usedStrings.push(fretNotes[i].stringFretMidi[0]);
+  //       chordFrets.push(fretNotes[i]);
   //       noteIndex++;
   //       if (notes.length == usedStrings.length) {
   //         possibleConfigs.push(chordFrets);
@@ -95,54 +97,43 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
 
   self.findTriads = function() {
     masterSet = [];
-    // usedStrings = [];
-    // chordFrets = [];
-    // noteIndex = 0;
-    //fretNoteRelation contains every DOM '.marker' element that is contained in the selected chord
-    //this function seperates them into single playable chords
+    console.log('frind triads; fretNotes', fretNotes);
 
-    //Find the first 'root' note in fretNoteRelations at fretNoteRelations[i]
-    //Find the first 'third' note in fretNoteRelations at fretNoteRelations[j]
-    //Find the first 'fifth' note in fretNoteRelations at fretNoteRelations[k]
-    //First triad has been identified. Save the triad [fretNoteRelations[i], fretNoteRelations[j], fretNoteRelations[k]].
-
-    //Find the next 'fifth' at fretNoteRelations[k]. Save this triad.
-    //Find all remaining fifths and save each.
-
-    //Find next third. Find all fifths and save.
-    //find all remaining thirds and fifths and save
-
-    //find next root. repeat
-
-    // while(pushedChord) {
-    //   findNote();
-    // }
-    //masterSet.push(chordFrets);
-
-    //create an array masterSet containing sets of 3 or more notes representing the chord/triad
-    //these are the sets that will be displayed, one-at-a-time on the DOM
-    //the if statements check to make sure the notes are on different strings
-    console.log('frind triads; fretNoteRelation', fretNoteRelation);
-    var numRelations = self.selectedChord.notes;
-    // loops will be nested for numRelations.length levels. this is the number of notes in the chosen chord
-    for (var i = 0; i < fretNoteRelation.length; i++) {
-      if(fretNoteRelation[i].relation == 0){
-        for (var j = 0; j < fretNoteRelation.length; j++) {
-            //IF the note relation is 'fifth' AND it is on a different string than the root note from above loop
-          if(fretNoteRelation[j].relation == 1 && (fretNoteRelation[i].stringFretMidi[0] != fretNoteRelation[j].stringFretMidi[0])){
-            for (var k = 0; k < fretNoteRelation.length; k++) {
-              //IF the note relation is 'third' AND it is on a different string than both the root and third notes from above loops
-              // console.log('used strings, currentstring, indexof', [fretNoteRelation[j].stringFretMidi[0], fretNoteRelation[i].stringFretMidi[0]], fretNoteRelation[k].stringFretMidi[0], [fretNoteRelation[j].stringFretMidi[0],  fretNoteRelation[i].stringFretMidi[0]].indexOf(fretNoteRelation[k].stringFretMidi[0]) );
-              if(fretNoteRelation[k].relation == 2 && (fretNoteRelation[i].stringFretMidi[0] != fretNoteRelation[k].stringFretMidi[0]) && (fretNoteRelation[j].stringFretMidi[0] != fretNoteRelation[k].stringFretMidi[0])) {
-                  //I would like to add one or more nested loops for more complex chords (7ths etc)
-                  //send DOM corrdinates which get matched with $('marker').data(stringfret) in displayTriad().
-                  masterSet.push([fretNoteRelation[i].stringFretMidi, fretNoteRelation[j].stringFretMidi, fretNoteRelation[k].stringFretMidi]);
-
-              }
-            }
-          }
-        }
+    var noteIdx = 0;
+    var tmp = [];
+    var index = [];
+    var strings = [];
+    var notes = [];
+    
+    for (var i = 0; i < fretNotes.length; i++) {
+      //if the string and note are not already used in the chord being constructed
+      if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && notes.indexOf(fretNotes[i].relation) == -1){
+        notePush(i);
       }
+      //if the temp array contains the correct number of notes, push to master
+      if(tmp.length == self.numNotes){
+        masterSet.push(tmp.slice());
+        i = notePop();
+      }
+
+      while(i > fretNotes.length -2) {
+        i = notePop();
+      }
+    }
+
+    //release a note/ string making it available for another
+    function notePop() {
+      tmp.pop();
+      strings.pop();
+      notes.pop();
+      return index.pop();
+    }
+    //append arrays containing strings and notes already part of the chord being built
+    function notePush(i) {
+      strings.push(fretNotes[i].stringFretMidi[0]);
+      tmp.push(fretNotes[i].stringFretMidi);
+      index.push(i);
+      notes.push(fretNotes[i].relation);
     }
 
     console.log('masterSet', masterSet);
@@ -197,6 +188,7 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
     filteredConfigs = inversionFilter(filteredConfigs);
     filteredConfigs = stringFilter(filteredConfigs);
     self.variations = filteredConfigs.length;
+    console.log('updated self.variations', self.variations);
     self.triadIndex = 0;
     displayTriad();
   };
@@ -264,11 +256,11 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
     for (var i = 0; i < chordSets.length; i++) {
       for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
         var fretNum = chordSets[i].stringFretMidis[j][1];
-        console.log('fretnum, position', fretNum, fretPositions[fretNum]);
+      //  console.log('fretnum, position', fretNum, fretPositions[fretNum]);
         if(lowLimit > fretPositions[fretNum] || highLimit < fretPositions[fretNum]) {
 
           if(!(self.allowOpen && !fretNum)) {
-            console.log("slider splice", chordSets[i]);
+            //console.log("slider splice", chordSets[i]);
             chordSets.splice(i,1);
             i--;
             break;
@@ -348,11 +340,6 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
   	}
   });
 
-  //x-position of each fret for slider-bar functionality
-  // self.getFrets = function() {
-  //       self.sliderSnaps = Factory.fretMap();
-  //       console.log('self.sliderSnaps:', self.sliderSnaps);
-  //     };
 
   function cloneTwoDimArray(arr) {
     // Deep copy arrays. Going one level deep seems to be enough.
@@ -362,5 +349,14 @@ app.controller('TriadController', ["$http", 'Factory', function($http, Factory) 
     }
     return clone;
   }
+
+  // function compare(a,b) {
+  //   if (a.stringFretMidi[1] < b.stringFretMidi[1])
+  //     return -1;
+  //   if (a.stringFretMidi[1] > b.stringFretMidi[1])
+  //     return 1;
+  //   return 0;
+  // }
+  //fretNotes.sort(compare);
 
 }]);

@@ -9,7 +9,7 @@ app.controller('CagedController', ["$http", function($http) {
   ];
   self.scale = self.scaleTypes[0];
 
-self.changeScaleType = function() {
+self.changeScaleType = function(index) {
   console.log('change self.scaletype', self.scale);
 };
 

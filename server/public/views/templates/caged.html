@@ -36,7 +36,7 @@
     <h4>Scale type:</h4>
     <ul >
       <li ng-repeat="scaleType in caged.scaleTypes">
-        <input type="radio" ng-change="caged.changeScaleType()" ng-model="caged.scale" name="scaleType" value="{{scaleType}}">
+        <input type="radio" ng-change="caged.changeScaleType($index)" ng-model="caged.scale" name="scaleType" value="{{scaleType}}">
         {{scaleType}}
       </li>
     </ul>
