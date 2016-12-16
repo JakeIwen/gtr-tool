@@ -1,31 +1,67 @@
 [
+
+			{
+					"names": ["Ionian","Major"],
+					"longName": "Ionian (Major)",
+					"notes": [0,2,4,5,7,9,11],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+
+			{
+					"names": ["Dorian"],
+					"longName": "Dorian",
+					"notes": [0,2,3,5,7,9,10],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+			{
+					"names": ["Phrygian"],
+					"longName": "Phrygian",
+					"notes": [0,1,3,5,7,8,10],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+			{
+					"names": ["Lydian"],
+					"longName": "lydian",
+					"notes": [0,2,4,6,7,9,11],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+			{
+					"names": ["Mixolydian"],
+					"longName": "Mixolydian",
+					"notes": [0,2,4,5,7,9,10],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+			{
+					"names": ["Aeolian", "Natural Minor"],
+					"longName": "Aeolian (Natural Minor)",
+					"notes": [0,2,3,5,7,8,10],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+			{
+					"names": ["Locrian"],
+					"longName": "Locrian",
+					"notes": [0,1,3,5,6,8,10],
+					"degrees": [1,2,3,4,5,6,7]
+			},
+
 		{
 				"names": ["CAGED","Major"],
 				"longName": "CAGED Major",
-				"notes": [0,4,7]
+				"notes": [0,4,7],
+				"degrees": [1,3,5]
 		},
-
-		{
-				"names": ["Major","ionian","-major"],
-				"longName": "Major",
-				"notes": [0,2,4,5,7,9,11]
-		},
-		{
-				"names": ["Minor","Aeolian"],
-				"longName": "Minor",
-				"notes": [0,2,3,5,7,8,10]
-		},
-
 
 		{
 				"names": ["Major Pentatonic","Pentatonic"],
 				"longName": "Major Pentatonic",
-				"notes": [0,2,4,7,9]
+				"notes": [0,2,4,7,9],
+				"degrees": [1,3,4,5,7]
 		},
 		{
 				"names": ["Minor Pentatonic","Relative Minor Pentatonic"],
 				"longName": "Relative Minor Pentatonic",
-				"notes": [0,3,5,7,10]
+				"notes": [0,3,5,7,10],
+				"degrees": [1,3,4,5,7]
 		},
 
 
@@ -33,50 +69,16 @@
 		{
 				"names": ["Major Blues","Blues Major","Blues","Hexatonic"],
 				"longName": "Major Blues",
-				"notes": [0,2,4,6,7,9]
+				"notes": [0,2,4,6,7,9],
+				"degrees": [1,3,4,5,"alt",7]
 		},
 
 		{
 				"names": ["Minor Blues","Blues Minor","M Blues"],
 				"longName": "Minor Blues",
-				"notes": [0,3,5,6,7,10]
-		},
-
-
-		{
-				"names": ["Ionian","Major"],
-				"longName": "Ionian",
-				"notes": [0,2,4,5,7,9,11]
-		},
-		{
-				"names": ["Dorian"],
-				"longName": "Dorian",
-				"notes": [0,2,3,5,7,9,10]
-		},
-		{
-				"names": ["Phrygian"],
-				"longName": "Phrygian",
-				"notes": [0,1,3,5,7,8,10]
-		},
-		{
-				"names": ["Lydian"],
-				"longName": "lydian",
-				"notes": [0,2,4,6,7,9,11]
-		},
-		{
-				"names": ["Mixolydian"],
-				"longName": "Mixolydian",
-				"notes": [0,2,4,5,7,9,10]
-		},
-		{
-				"names": ["Aeolian", "Natural Minor"],
-				"longName": "Aeolian (Natural Minor)",
-				"notes": [0,2,3,5,7,8,10]
-		},
-		{
-				"names": ["Locrian"],
-				"longName": "Locrian",
-				"notes": [0,1,3,5,6,8,10]
+				"notes": [0,3,5,6,7,10],
+				"degrees": [1,3,4,5,"alt",7]
 		}
+
 
 	]

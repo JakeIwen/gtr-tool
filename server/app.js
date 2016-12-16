@@ -4,6 +4,8 @@ var path = require('path');
 
 var bodyParser = require('body-parser');
 var scales = require('./public/routes/scales');
+var chords = require('./public/routes/chords');
+
 var mongoose = require('mongoose');
 
 
@@ -15,6 +17,8 @@ app.use(bodyParser.json()); // needed for angular requests
 app.get('/home', function(req, res) {});
 
 app.use('/scales', scales);
+app.use('/chords', chords);
+
 
 /** ---------- MONGOOSE CONNECTION HANDLING ---------- **/
 var databaseUri = 'mongodb://localhost:27017/gtr-tool';

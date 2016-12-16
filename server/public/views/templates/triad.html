@@ -4,18 +4,34 @@
 
 
   <div class="options row">
-    <div class="col-md-2">
-      <div><img src="../img/1.svg" alt="*" height="16" width="24" /> Root</div>
-      <div><img src="../img/3.svg" alt="*" height="16" width="24" /> Third</div>
-      <div><img src="../img/5.svg" alt="*" height="16" width="24" /> Fifth</div>
-      <div ng-if="triad.numNotes > 3"><img src="../img/alt.svg" alt="*" height="16" width="24" /> Other</div>
+    <div class="col-md-3">
+      <h4>{{triad.chord + triad.type.name}} composition</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td class="map">{{triad.noteName(0)}}:</td>
+            <td><img src="../img/1.svg" alt="*" height="16" width="24" /></td>
+          </tr>
+          <tr>
+            <td class="map">{{triad.noteName(1)}}:</td>
+            <td><img src="../img/3.svg" alt="*" height="16" width="24" /></td>
+          </tr>
+          <tr ng-if="triad.numNotes > 2">>
+            <td class="map">{{triad.noteName(2)}}:</td>
+            <td><img src="../img/5.svg" alt="*" height="16" width="24" /></td>
+          </tr>
+          <tr ng-if="triad.numNotes > 3">>
+            <td class="map">{{triad.noteName(3)}}:</td>
+            <td><img src="../img/alt.svg" alt="*" height="16" width="24" /></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
       <form class="row">
-        <select ng-model="triad.triadChord" ng-change="triad.newChord()">
-          <option ng-selected="true" ng-disabled="true">Choose Chord</option>
-          <option>C</option>
+        <select ng-model="triad.chord" ng-change="triad.newChord()">
+          <option ng-selected="true">C</option>
           <option>C#</option>
           <option>D</option>
           <option>D#</option>
@@ -28,19 +44,15 @@
           <option>A#</option>
           <option>B</option>
         </select>
-        <select ng-model="triad.triadAddendum" ng-change="triad.newChord()">
-          <option ng-selected="true">maj</option>
-          <option>min</option>
-          <option>dom7</option>
-          <option>min7</option>
-          <option>maj7</option>
-          <option>sus2</option>
-          <option>sus4</option>
+        <select ng-options="types as types.name for types in triad.types" ng-model="triad.type" ng-change="triad.newChord()">
+        <select ng-model="triad.type" ng-change="triad.newChord()">
+
         </select>
       </form>
       <div class="row">
         <br>
-        <p> Variation {{triad.triadIndex + 1}} of {{triad.variations}} </p>
+        <h5 ng-if="triad.variations"> Variation {{triad.triadIndex + 1}} of {{triad.variations}} </h5>
+        <h5 id="noMatch" ng-if="!triad.variations">NO MATCHES!</h5>
         <button class="customBtn" type="submit" ng-click="triad.prevVar()">Previous</button>
         <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
       </div>
@@ -60,19 +72,25 @@
       <select ng-options="chordSpan.span as chordSpan.span for chordSpan in triad.chordSpan.spans" ng-model="triad.chordSpan.selectedSpan.span"
       ng-change="triad.filter()">
       </select>
-      Max Fret-Stretch
-      <br /><br />
+      <span>Max Fret-Stretch</span>
+      <br />
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen">
-      Allow open strings
+      <span>Allow open strings</span>
       <br />
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.onlyClusters">
-      Only show clusters
+      <span>Consecutive strings only</span>
+      <br>
+      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.octaves">
+      <span>Allow octave-duplicates</span>
+      <br>
+      Fret Range:
+      <span id="lower-value">{{triad.lowLimit}} to {{triad.highLimit}}</span>
     </div>
 
   </div>
 
     <div class="fretboardContainer col-xs-11">
-      <div id="sliderBar" class="noUi-target noUi-ltr noUi-horizontal"></div>
+      <div id="nonlinear" class="noUi-target noUi-ltr noUi-horizontal"></div>
       <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
 
         <div class="fretRow">
@@ -80,7 +98,7 @@
 
             <label class="switch" ng-model="triad.allowedStrings">
               <input type="checkbox" ng-checked="triad.allowedStrings[string.pos]" ng-click="triad.toggleString(string.pos)">
-              <div class="slider"></div>
+              <div class="sliderBox"></div>
             </label>
           </div>
 

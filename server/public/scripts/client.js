@@ -1,13 +1,4 @@
-//auto exe of fret sizing
-//ng-show or jQuery
-//ng-everything or jQuery
-//z-values
-//hide icon and move next forward OR best way to use different SVG markers
-//multi controllers on one page? - one for building fretboard used on both app pages
-//add play status to fret and
 
-//ng-if or show
-//sass for loop for fret spacing
 
 var numFrets = 16;
 var zeroFretLength = 25;
