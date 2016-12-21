@@ -102,22 +102,26 @@ td {
   margin-top: -55px;
   margin-bottom: 40px;
   top: 10px;
-  left: 6%;
-  width: 91%;
+  left: 4%;
+  width: 94%;
 }
 
 .fretboardContainer {
   margin:15px;
   padding: 17px 20px 0 0;
-  background-color: #59442D;
+  // background-color: #59442D;
+  background-image:url('../img/neck.png');
+  background-repeat: no-repeat;
+  background-position: left 15px;
+  background-size: 97.5% 85%;
   display:inline-block;
   /*max-width: 1200px;*/
   /*align-self: center;*/
 }
 .strings {
-  border-top: 3px solid #b59b4f;
+  padding-top: 3px;
   /*width: 100%;*/
-  height: 20px;
+  height: 25px;
     z-index: 1000;
 }
 
@@ -141,7 +145,7 @@ td {
 .fret {
   /*margin-bottom: -50%;*/
   display: inline-block;
-  border-right: 3px solid #c1c1c1;
+  border-right: 1px solid #c1c1c1;
   min-width: 19px;
   padding-top: 4px;
   z-index: -1;
@@ -152,14 +156,28 @@ td {
   overflow: none;
 }
 //should I be linking .sass from html file instead of .css
-$zero-fret: 30px;
+$zero-fret: 20px;
 $used-length: 0%;
 .fretNum0 {
   width: $zero-fret;
 }
 
-@for $i from 1 through 14 {  //also need that #15
-    $new-length: (160% - $used-length) / 18;
+// @for $i from 1 through 14 {  //also need that #15
+//     $new-length: (168% - $used-length) / 19;
+//
+//     .fretNum#{$i} {
+//         width: $new-length;
+//
+//
+//
+//     }
+//     $used-length: $used-length + $new-length;
+//
+// }
+
+$old-len: 9.28%;
+@for $i from 1 through 15 {  //also need that #15
+    $new-length: $old-len * (9.48/10);
 
     .fretNum#{$i} {
         width: $new-length;
@@ -167,13 +185,14 @@ $used-length: 0%;
 
 
     }
-    $used-length: $used-length + $new-length;
+    $old-len: $new-length;
 
 }
 
 .borderString{
   /*same height as tr*/
   height: 18px;
+  padding-top: 2px;
   border-top: 2px, solid #bdc19d;
   margin-right: -3px;
 }

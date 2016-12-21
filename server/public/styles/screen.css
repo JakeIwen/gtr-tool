@@ -125,29 +125,32 @@ td {
   margin-top: -55px;
   margin-bottom: 40px;
   top: 10px;
-  left: 6%;
-  width: 91%;
+  left: 4%;
+  width: 94%;
 }
 
 /* line 109, ../sass/screen.scss */
 .fretboardContainer {
   margin: 15px;
   padding: 17px 20px 0 0;
-  background-color: #59442D;
+  background-image: url("../img/neck.png");
+  background-repeat: no-repeat;
+  background-position: left 15px;
+  background-size: 97.5% 85%;
   display: inline-block;
   /*max-width: 1200px;*/
   /*align-self: center;*/
 }
 
-/* line 117, ../sass/screen.scss */
+/* line 121, ../sass/screen.scss */
 .strings {
-  border-top: 3px solid #b59b4f;
+  padding-top: 3px;
   /*width: 100%;*/
-  height: 20px;
+  height: 25px;
   z-index: 1000;
 }
 
-/* line 124, ../sass/screen.scss */
+/* line 128, ../sass/screen.scss */
 .fretRow {
   /*display: flex;
   text-align: justify;
@@ -157,113 +160,119 @@ td {
   white-space: nowrap;
 }
 
-/* line 141, ../sass/screen.scss */
+/* line 145, ../sass/screen.scss */
 .fret {
   /*margin-bottom: -50%;*/
   display: inline-block;
-  border-right: 3px solid #c1c1c1;
+  border-right: 1px solid #c1c1c1;
   min-width: 19px;
   padding-top: 4px;
   z-index: -1;
   text-align: right;
 }
 
-/* line 150, ../sass/screen.scss */
+/* line 154, ../sass/screen.scss */
 .preFret {
   display: inline-block;
   overflow: none;
 }
 
-/* line 157, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum0 {
-  width: 30px;
+  width: 20px;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum1 {
-  width: 8.88889%;
+  width: 8.79744%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum2 {
-  width: 8.39506%;
+  width: 8.33997%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum3 {
-  width: 7.92867%;
+  width: 7.90629%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum4 {
-  width: 7.48819%;
+  width: 7.49517%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum5 {
-  width: 7.07218%;
+  width: 7.10542%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum6 {
-  width: 6.67928%;
+  width: 6.73594%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum7 {
-  width: 6.30821%;
+  width: 6.38567%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum8 {
-  width: 5.95775%;
+  width: 6.05361%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum9 {
-  width: 5.62677%;
+  width: 5.73883%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum10 {
-  width: 5.31417%;
+  width: 5.44041%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum11 {
-  width: 5.01894%;
+  width: 5.15751%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum12 {
-  width: 4.74011%;
+  width: 4.88932%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum13 {
-  width: 4.47677%;
+  width: 4.63507%;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .fretNum14 {
-  width: 4.22806%;
+  width: 4.39405%;
 }
 
-/* line 174, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
+.fretNum15 {
+  width: 4.16556%;
+}
+
+/* line 192, ../sass/screen.scss */
 .borderString {
   /*same height as tr*/
   height: 18px;
+  padding-top: 2px;
   border-top: 2px, solid #bdc19d;
   margin-right: -3px;
 }
 
-/* line 180, ../sass/screen.scss */
+/* line 199, ../sass/screen.scss */
 .fretNum0 {
   border-right: 9px solid #e0e2c9;
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
-/* line 186, ../sass/screen.scss */
+/* line 205, ../sass/screen.scss */
 nav ul {
   margin: 0 auto;
   width: 80%;
@@ -271,18 +280,18 @@ nav ul {
   text-align: center;
 }
 
-/* line 193, ../sass/screen.scss */
+/* line 212, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 195, ../sass/screen.scss */
+/* line 214, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
 }
 
-/* line 200, ../sass/screen.scss */
+/* line 219, ../sass/screen.scss */
 .customBtn {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
@@ -302,21 +311,21 @@ form {
   margin-top: 10px;
 }
 
-/* line 219, ../sass/screen.scss */
+/* line 238, ../sass/screen.scss */
 .customBtn:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-/* line 225, ../sass/screen.scss */
+/* line 244, ../sass/screen.scss */
 .customBtn:active {
   position: relative;
   top: 1px;
 }
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 230, ../sass/screen.scss */
+/* line 249, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -326,13 +335,13 @@ form {
 }
 
 /* Hide default HTML checkbox */
-/* line 239, ../sass/screen.scss */
+/* line 258, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 242, ../sass/screen.scss */
+/* line 261, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -345,7 +354,7 @@ form {
   transition: .4s;
 }
 
-/* line 254, ../sass/screen.scss */
+/* line 273, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -358,29 +367,29 @@ form {
   transition: .4s;
 }
 
-/* line 266, ../sass/screen.scss */
+/* line 285, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 270, ../sass/screen.scss */
+/* line 289, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 274, ../sass/screen.scss */
+/* line 293, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 281, ../sass/screen.scss */
+/* line 300, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 283, ../sass/screen.scss */
+/* line 302, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;

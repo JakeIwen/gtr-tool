@@ -21,13 +21,14 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.allowedStrings = [true, true, true, true, true, true];
   self.chord = 'C';
   self.types = [];
-  var sets = [];
+  var stgIdx = [];
 
   var nonLinearSlider = document.getElementById('nonlinear');
 
 
 
   self.newChord = function() {
+    stgIdx = [0];
     self.guitar = new Guitar();
     self.thisChord = chord(self.chord + self.type.name);
     console.log(GuitarChord.fromChord(self.guitar, self.thisChord));
@@ -56,8 +57,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   function findTriads() {
     masterSet = [];
     console.log('frind triads; fretNotes', fretNotes);
-
-
+    //remove the last note added to the last masterSet chord
     function notePop() {
       strings.pop();
       tmp.pop();
@@ -73,55 +73,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       index.push(i);
       noteset.push(fretNotes[i].relation);
     }
-
-    var noteIdx = 0;
-    var tmp = [];
-    var index = [];
-    var strings = [];
-    var noteset = [];
-    var tmpSets = [];
-    var stringset = [];
-    var frets = [];
-    fretNotes.reverse();
-    for (var i = 0; i < fretNotes.length; i++) {
-      if(tmp.length == 0 && fretNotes[i].stringFretMidi[0] == 4) {
-        break;
-      }
-      //if the string and note are not already used in the chord being constructed
-      if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && noteset.indexOf(fretNotes[i].relation) == -1){
-        notePush(i);
-      }
-      //if the temp array contains the correct number of noteset, push to master
-      if(tmp.length == self.numNotes){
-        masterSet.push(tmp.slice());
-        stringset.push(clone(strings));
-        console.log(strings[0]);
-        if(strings[0] < 3) {
-          if(sets.indexOf(strings[0] + ',' + frets[0]) != -1) {
-            console.log('array match');
-          }
-          // if(sets.indexOf(strings[0] + ',' + frets[0]) == -1) {
-            // sets.push(strings[0] + ',' +  frets[0]);
-            // var tempAry = [clone(strings), clone(tmp), clone(index), clone(noteset)];
-            moreStrings(i + 1);
-            // strings = clone(tempAry[0]);
-            // tmp = clone(tempAry[1]);
-            // index = clone(tempAry[2]);
-            // noteset = clone(tempAry[3]);
-          // }
-        }
-        i = notePop();
-
-      }
-      //traverse back to lower strings
-      //if temp arrays are empty the for loop will conditionally terminate
-      while(i > fretNotes.length -2) {
-        i = notePop();
-      }
-    }
-
     function moreStrings(idx) {
-      console.log('morestrings');
       var len = tmp.length;
       for (var i = idx; i < fretNotes.length; i++) {
         //if the string and note are not already used in the chord being constructed
@@ -130,10 +82,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
           masterSet.push(tmp.slice());
           stringset.push(clone(strings));
         }
-
-        //traverse back to lower strings
-        //if temp arrays are empty the for loop will conditionally terminate
-        while(i > fretNotes.length -2) {
+        while(i > fretNotes.length - 2) {
           if(tmp.length == len) {
             break;
           }
@@ -141,41 +90,40 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         }
 
       }
+      return notePop();
     }
 
+    var noteIdx = 0;
+    var tmp = [];
+    var index = [];
+    var strings = [];
+    var noteset = [];
+    var stringset = [];
+    var frets = [];
+    fretNotes.reverse();
+
+    for (var i = 0; i < fretNotes.length; i++) {
+      if(tmp.length == 0 && fretNotes[i].stringFretMidi[0] == self.numNotes + 1) {
+        break;
+      }
+      //if the string and note are not already used in the chord being constructed
+      if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && noteset.indexOf(fretNotes[i].relation) == -1){
+        notePush(i);
+        //if the temp array contains the correct number of noteset, push to master
+        if(tmp.length == self.numNotes){
+          masterSet.push(tmp.slice());
+          stringset.push(clone(strings));
+          i = moreStrings(i + 1);
+        }
+      }
+      //traverse back to lower strings
+      //if temp arrays are empty the for loop will conditionally terminate
+      while(i > fretNotes.length - 2) {
+        i = notePop();
+      }
+    }
     console.log( 'mastersets ',masterSet);
     console.log('stringset', stringset);
-
-    // var lastSet = clone(masterSet);
-    // while(lastSet[0].length < 5){
-    //   console.log('length', lastSet[0].length);
-    //   octaves();
-    //   console.log('new last set', lastSet);
-    //   console.log('new string set', stringset);
-    //
-    // }
-
-    // function octaves() {
-    //   var thisSet = [];
-    //   var newStrings = [];
-    //   count = 0;
-    //   for (var i = 0; i < fretNotes.length; i++) {
-    //     for (var j = 0; j < lastSet.length; j++) {
-    //       if(stringset[j].indexOf(fretNotes[i].stringFretMidi[0]) == -1) {
-    //         lastSet[j].push(clone(fretNotes[i].stringFretMidi));
-    //         //make second temp set for more strings.
-    //         masterSet.push(clone(lastSet[j]));
-    //         thisSet.push(clone(lastSet[j]));
-    //         lastSet[j].pop();
-    //         newStrings[count] = clone(stringset[j]);
-    //         newStrings[count].push(fretNotes[i].stringFretMidi[0]);
-    //         count++;
-    //       }
-    //     }
-    //   }
-    //   stringset = clone(newStrings);
-    //   lastSet =  clone(thisSet);
-    // }
   };
 
   self.filter = function() {
@@ -430,33 +378,33 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       {span: 5}],
       selectedSpan:
       {span: 3}
-  };
+    };
 
-  noUiSlider.create(nonLinearSlider, {
-    connect: true,
-    behaviour: 'tap',
-    start: [ 0, 15 ],
-    range: {
-      // Starting at 500, step the value by 500,
-      // until 4000 is reached. From there, step by 1000.
-      'min': [ 0, 1 ],
-      '10%': [1, 1],
-      '19%': [2, 1],
-      '28%': [3, 1],
-      '36%': [4, 1],
-      '43.8%': [5, 1],
-      '51%': [6, 1],
-      '58%': [7, 1],
-      '64%': [8, 1],
-      '71.5%': [9, 1],
-      '77%': [10, 1],
-      '82%': [11, 1],
-      '87%': [12, 1],
-      '92.5%': [13, 1],
-      '97%': [14, 1],
-      'max': [ 15, 1 ]
-    }
-  });
+    noUiSlider.create(nonLinearSlider, {
+      connect: true,
+      behaviour: 'tap',
+      start: [ 0, 15 ],
+      range: {
+        // Starting at 500, step the value by 500,
+        // until 4000 is reached. From there, step by 1000.
+        'min': [ 0, 1 ],
+        '10%': [1, 1],
+        '19.5%': [2, 1],
+        '28.5%': [3, 1],
+        '36%': [4, 1],
+        '43.8%': [5, 1],
+        '51%': [6, 1],
+        '58%': [7, 1],
+        '64%': [8, 1],
+        '70.5%': [9, 1],
+        '76%': [10, 1],
+        '81.5%': [11, 1],
+        '867%': [12, 1],
+        '92%': [13, 1],
+        '96.5%': [14, 1],
+        'max': [ 15, 1 ]
+      }
+    });
 
     nonLinearSlider.noUiSlider.on('change', function ( values, handle, unencoded, isTap, positions ) {
       //set fret limits
@@ -468,7 +416,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       console.log('sliderchange');
     });
 
-/******************************UTILITY FUNCTIONS******************************/
+    /******************************UTILITY FUNCTIONS******************************/
     function cloneTwoDimArray(arr) {
       // Deep copy arrays. Going one level deep seems to be enough.
       var clone = [];
