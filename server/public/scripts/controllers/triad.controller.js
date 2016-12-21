@@ -21,6 +21,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.allowedStrings = [true, true, true, true, true, true];
   self.chord = 'C';
   self.types = [];
+  var sets = [];
 
   var nonLinearSlider = document.getElementById('nonlinear');
 
@@ -61,11 +62,13 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       strings.pop();
       tmp.pop();
       noteset.pop();
+      frets.pop();
       return index.pop();
     }
     //append arrays containing strings and noteset already part of the chord being built
     function notePush(i) {
       strings.push(fretNotes[i].stringFretMidi[0]);
+      frets.push(fretNotes[i].stringFretMidi[1]);
       tmp.push(fretNotes[i].stringFretMidi);
       index.push(i);
       noteset.push(fretNotes[i].relation);
@@ -78,8 +81,12 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     var noteset = [];
     var tmpSets = [];
     var stringset = [];
-
+    var frets = [];
+    fretNotes.reverse();
     for (var i = 0; i < fretNotes.length; i++) {
+      if(tmp.length == 0 && fretNotes[i].stringFretMidi[0] == 4) {
+        break;
+      }
       //if the string and note are not already used in the chord being constructed
       if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && noteset.indexOf(fretNotes[i].relation) == -1){
         notePush(i);
@@ -88,7 +95,23 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       if(tmp.length == self.numNotes){
         masterSet.push(tmp.slice());
         stringset.push(clone(strings));
+        console.log(strings[0]);
+        if(strings[0] < 3) {
+          if(sets.indexOf(strings[0] + ',' + frets[0]) != -1) {
+            console.log('array match');
+          }
+          // if(sets.indexOf(strings[0] + ',' + frets[0]) == -1) {
+            // sets.push(strings[0] + ',' +  frets[0]);
+            // var tempAry = [clone(strings), clone(tmp), clone(index), clone(noteset)];
+            moreStrings(i + 1);
+            // strings = clone(tempAry[0]);
+            // tmp = clone(tempAry[1]);
+            // index = clone(tempAry[2]);
+            // noteset = clone(tempAry[3]);
+          // }
+        }
         i = notePop();
+
       }
       //traverse back to lower strings
       //if temp arrays are empty the for loop will conditionally terminate
@@ -96,39 +119,63 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         i = notePop();
       }
     }
+
+    function moreStrings(idx) {
+      console.log('morestrings');
+      var len = tmp.length;
+      for (var i = idx; i < fretNotes.length; i++) {
+        //if the string and note are not already used in the chord being constructed
+        if(fretNotes[i].stringFretMidi[0] == strings[0] + strings.length) {
+          notePush(i);
+          masterSet.push(tmp.slice());
+          stringset.push(clone(strings));
+        }
+
+        //traverse back to lower strings
+        //if temp arrays are empty the for loop will conditionally terminate
+        while(i > fretNotes.length -2) {
+          if(tmp.length == len) {
+            break;
+          }
+          i = notePop();
+        }
+
+      }
+    }
+
     console.log( 'mastersets ',masterSet);
     console.log('stringset', stringset);
 
-    var lastSet = clone(masterSet);
-    while(lastSet[0].length < 5){
-      console.log('length', lastSet[0].length);
-      octaves();
-      console.log('new last set', lastSet);
-      console.log('new string set', stringset);
+    // var lastSet = clone(masterSet);
+    // while(lastSet[0].length < 5){
+    //   console.log('length', lastSet[0].length);
+    //   octaves();
+    //   console.log('new last set', lastSet);
+    //   console.log('new string set', stringset);
+    //
+    // }
 
-    }
-
-    function octaves() {
-      var thisSet = [];
-      var newStrings = [];
-      count = 0;
-      for (var i = 0; i < fretNotes.length; i++) {
-        for (var j = 0; j < lastSet.length; j++) {
-          if(stringset[j].indexOf(fretNotes[i].stringFretMidi[0]) == -1) {
-            lastSet[j].push(clone(fretNotes[i].stringFretMidi));
-            //make second temp set for more strings.
-            masterSet.push(clone(lastSet[j]));
-            thisSet.push(clone(lastSet[j]));
-            lastSet[j].pop();
-            newStrings[count] = clone(stringset[j]);
-            newStrings[count].push(fretNotes[i].stringFretMidi[0]);
-            count++;
-          }
-        }
-      }
-      stringset = clone(newStrings);
-      lastSet =  clone(thisSet);
-    }
+    // function octaves() {
+    //   var thisSet = [];
+    //   var newStrings = [];
+    //   count = 0;
+    //   for (var i = 0; i < fretNotes.length; i++) {
+    //     for (var j = 0; j < lastSet.length; j++) {
+    //       if(stringset[j].indexOf(fretNotes[i].stringFretMidi[0]) == -1) {
+    //         lastSet[j].push(clone(fretNotes[i].stringFretMidi));
+    //         //make second temp set for more strings.
+    //         masterSet.push(clone(lastSet[j]));
+    //         thisSet.push(clone(lastSet[j]));
+    //         lastSet[j].pop();
+    //         newStrings[count] = clone(stringset[j]);
+    //         newStrings[count].push(fretNotes[i].stringFretMidi[0]);
+    //         count++;
+    //       }
+    //     }
+    //   }
+    //   stringset = clone(newStrings);
+    //   lastSet =  clone(thisSet);
+    // }
   };
 
   self.filter = function() {
