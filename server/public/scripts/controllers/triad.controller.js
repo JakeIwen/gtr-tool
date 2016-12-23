@@ -30,9 +30,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.newChord = function() {
     stgIdx = [0];
     self.guitar = new Guitar();
-    self.thisChord = chord(self.chord + self.type.name);
-    console.log(GuitarChord.fromChord(self.guitar, self.thisChord));
+
     notes = [];
+    //populate array with semitone intervals of chord
     for (var i = 0; i < self.type.notes.length; i++) {
       notes[i] = (note(self.chord).pos + self.type.notes[i]) % 12;
     }
@@ -77,7 +77,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       var len = tmp.length;
       for (var i = idx; i < fretNotes.length; i++) {
         //if the string and note are not already used in the chord being constructed
-        if(fretNotes[i].stringFretMidi[0] == strings[0] + strings.length) {
+        if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && fretNotes[i].stringFretMidi[0] == strings[0] + strings.length) {
           notePush(i);
           masterSet.push(tmp.slice());
           stringset.push(clone(strings));
@@ -147,6 +147,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
           triadFrets.push(masterSet[i][j][1]);
         }
       }
+    //  console.log('triadmidis, ', triadMidis, 'notes', notes);
       var triadFretSpan = findSpan(triadFrets);
       //console.log('triadFretSpan', triadFretSpan);
       //populate array of triad formations AND corresponding string-spans
@@ -157,10 +158,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
           //will not include open strings if self.allowOpen checkbox == true (see above)
           fretSpan: triadFretSpan,
           //the span of played strings (smaller is more desireable because there are no open strings to mute in between the strings to be played)
-          stringSpan: findSpan(triadStrings),
+          stringSpan: triadFretSpan,
           strings: triadStrings.sort(compare),
           frets: triadFrets.sort(compare),
-          inversion: triadMidis.indexOf(Math.min(...triadMidis)),
+          inversion: notes.indexOf(Math.min(...triadMidis) % 12),
           //elementSet: possibleConfigs[i]
         });
       }
@@ -247,41 +248,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     }
     return chordSets;
   }
-  //
-  // function octaveFilter() {
-  //   for (var i = 0; i < filteredConfigs.length; i++) {
-  //     var strings = filteredConfigs[i].strings;
-  //     var frets = filteredConfigs[i].frets;
-  //     var newNote = filteredConfigs[i].stringFretMidi[2] % 12;
-  //
-  //     for (var j = 0; j < fretNotes.length; j++) {
-  //       var newString = fretNotes[j].stringFretMidi[0] % 12;
-  //       var newFret = fretNotes[j].stringFretMidi[1] % 12;
-  //
-  //       var thisNote = filteredConfigs[i].stringFretMidi[2] % 12;
-  //       if (newNote == thisNote && strings.indexOf(newString) == -1) {
-  //         strings.push(newString);
-  //         frets.push(newFret);
-  //         if(findSpan(frets) <= self.chordSpan) {
-  //           var tmp =
-  //
-  //             stringFretMidis:  triadStringFretMidis,
-  //             //will not include open strings if self.allowOpen checkbox == true (see above)
-  //             fretSpan: triadFretSpan,
-  //             //the span of played strings (smaller is more desireable because there are no open strings to mute in between the strings to be played)
-  //             stringSpan: Math.max(...triadStrings) - Math.min(...triadStrings),
-  //             strings: triadStrings,
-  //             inversion: triadMidis.indexOf(Math.min(...triadMidis)),
-  //           }
-  //
-  //             filteredConfigs.splice(i, 0, thisNote);
-  //
-  //
-  //       }
-  //     }
-  //   }
-  //   displayTriad();
-  // }
+
+
 
   function displayTriad() {
     if(!self.variations) {return 0;} //abort if no matches
