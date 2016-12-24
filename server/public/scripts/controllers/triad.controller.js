@@ -8,44 +8,47 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   var filteredConfigs = [];
   var notes = [];
   var noOctaves = [];
-  var fretPositions = [0, 11, 20.5, 29, 37, 44.5, 52, 58.5, 64, 71, 77, 82, 87.5, 92, 96.5, 100];
+  self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth']
   self.lowLimit = 0;
   self.highLimit = 15;
 
   self.allowOpen = false;
   self.onlyClusters = true;
   self.octaves = true;
-  self.numNotes = 0;
   self.triadIndex = 0;
   self.allowedInversions = [true, true, true, true];
   self.allowedStrings = [true, true, true, true, true, true];
-  self.chord = 'C';
-  self.types = [];
+  self.tonic = 'C';
+  self.activeMarkers = [];
   var stgIdx = [];
+  self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
+  self.maxSpan = 3;
 
-  var nonLinearSlider = document.getElementById('nonlinear');
+  // c_chord = chord('Cdim');
+  //
+  // console.log('c_chord', c_chord, c_chord.noteObjects(), c_chord.noteObjects()[0]);
+  // stgIdx = [0];
+  // self.guitar = new Guitar();
 
 
 
   self.newChord = function() {
-    stgIdx = [0];
-    self.guitar = new Guitar();
-
-    notes = [];
+    fretNotes = [];
+    notes = []
     //populate array with semitone intervals of chord
     for (var i = 0; i < self.type.notes.length; i++) {
-      notes[i] = (note(self.chord).pos + self.type.notes[i]) % 12;
+      notes[i] = (note(self.tonic).pos + self.type.notes[i]) % 12;
     }
     self.numNotes = notes.length;
     console.log('notes', notes);
     var i=0;
     $('.marker').each(function() {
       $fretMidiNote = $(this).data('stringfretmidi')[2];
-      //ensure that this fret-note is contained in the selected chord, then add to array of objects describing fret-note location and relation to chord
+      //if this fret-note is contained in the selected chord, add array of objects describing fret-note location and relation to chord
       if (notes.indexOf(($fretMidiNote % 12)) != -1) {
         fretNotes[i] = {
           stringFretMidi: $(this).data('stringfretmidi'),
-          relation: notes.indexOf(($fretMidiNote % 12)),
+          relation: notes.indexOf($fretMidiNote % 12),
         }
         i++;
       }
@@ -56,7 +59,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   function findTriads() {
     masterSet = [];
-    console.log('frind triads; fretNotes', fretNotes);
     //remove the last note added to the last masterSet chord
     function notePop() {
       strings.pop();
@@ -88,7 +90,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
           }
           i = notePop();
         }
-
       }
       return notePop();
     }
@@ -122,14 +123,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         i = notePop();
       }
     }
-    console.log( 'mastersets ',masterSet);
-    console.log('stringset', stringset);
   };
 
   self.filter = function() {
     var possibleConfigs = [];
-    var stretch = self.chordSpan.selectedSpan.span;
-    console.log('stretch', stretch);
     for (var i = 0; i < masterSet.length; i++) {
       //fret and string each note is on
       var triadFrets = [];
@@ -151,7 +148,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       var triadFretSpan = findSpan(triadFrets);
       //console.log('triadFretSpan', triadFretSpan);
       //populate array of triad formations AND corresponding string-spans
-      if(triadFretSpan <= stretch) {
+      if(triadFretSpan <= self.maxSpan) {
         //  console.log('triadmidis', triadMidis, Math.min(...triadMidis));
         possibleConfigs.push({
           stringFretMidis:  triadStringFretMidis,
@@ -186,9 +183,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   function clusterSort(allConfigs) {
     var clusterConfigs = [];
 
-    clusters(0);
-    if(!self.onlyClusters) {
-      for (var i = 1; i < 3; i++) {
+    if(self.onlyClusters) {
+      clusters(0);
+    } else {
+      for (var i = 0; i < 3; i++) {
         clusters(i);
       }
     }
@@ -227,13 +225,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         i--;
       }
     }
-    console.log('allowedinverions', self.allowedInversions);
     return chordSets;
   }
 
   function sliderFilter(chordSets) {
-    console.log('left slider', self.lowLimit);
-    console.log('right slider', self.highLimit);
     for (var i = 0; i < chordSets.length; i++) {
       for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
         var fretNum = chordSets[i].stringFretMidis[j][1];
@@ -249,30 +244,29 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     return chordSets;
   }
 
-
-
   function displayTriad() {
     if(!self.variations) {return 0;} //abort if no matches
     //the thisTriad variation dictated by prev/next buttions
     var thisTriad = filteredConfigs[self.triadIndex];
     console.log('This triad:', thisTriad);
+    //reset all markers to empty
     $('.marker').attr('src', "../img/empty.svg");
     $('.marker').each(function() {
       $fret = $(this);
       $fretCoord = $(this).data('stringfretmidi');
       for (var i = 0; i < thisTriad.stringFretMidis.length; i++) {
         if(thisTriad.stringFretMidis[i].equals($fretCoord)) {
-          var intvl = MUSIQ.intervalNames[Math.abs(($fretCoord[2] % 12) - notes[0])];
-          console.log('intve', intvl);
+          var intvl = self.intervalName(notes.indexOf(thisTriad.stringFretMidis[i][2] % 12));
           $fret.attr('src', "../img/" + intvl + ".svg");
           break;
         }
       }
     });
-  };
-
-
+    self.activeMarkers = imgSrcs.sort(compare).reverse();
+  }
+//if the string/fret pos is not the same as the last (or open) more than 4 times in a row, nix the chord (if reasonable)
   function convertList(chordsArray) {
+    self.types = [];
     //turn mongoDb data into array of chord objects
     for (var i = 0; i < chordsArray.length; i++) {
       var obj = {
@@ -283,7 +277,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       self.types.push(obj);
     }  //set default chord
     self.type = self.types[0];
-    console.log('self.types', self.types);
     self.newChord();
   }
 
@@ -327,132 +320,127 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     displayTriad();
   }
 
-  var svgSources = [
-    //indicies correspond with that of thisTriad, filteredConfigs[];
-    "../img/1.svg",
-    "../img/3.svg",
-    "../img/5.svg",
-    "../img/alt.svg",
-    "../img/empty.svg"
-  ]
+  self.noteName = function(pos) {
+    //relative cof positions to determine if # or flat
+    return MUSIQ.sharpNames[notes[pos]];
+  }
 
-  self.chordSpan = {
-    spans: [
-      {span: 0},
-      {span: 1},
-      {span: 2},
-      {span: 3},
-      {span: 4},
-      {span: 5}],
-      selectedSpan:
-      {span: 3}
-    };
+  self.intervalName = function(pos) {
+    var thisNote = Note.fromNotation(self.noteName(pos));
+    var root = Note.fromNotation(self.tonic);
+    var intervalName = Interval.fromNotes(root, thisNote).name();
+    if (intervalName == 'unison' ) {
+      intervalName = 'tonic';
+    } else if(intervalName == 'tritone') {
+      intervalName = "flat fifth";
+    }
+    return intervalName;
+  }
 
-    noUiSlider.create(nonLinearSlider, {
-      connect: true,
-      behaviour: 'tap',
-      start: [ 0, 15 ],
-      range: {
-        // Starting at 500, step the value by 500,
-        // until 4000 is reached. From there, step by 1000.
-        'min': [ 0, 1 ],
-        '10%': [1, 1],
-        '19.5%': [2, 1],
-        '28.5%': [3, 1],
-        '36%': [4, 1],
-        '43.8%': [5, 1],
-        '51%': [6, 1],
-        '58%': [7, 1],
-        '64%': [8, 1],
-        '70.5%': [9, 1],
-        '76%': [10, 1],
-        '81.5%': [11, 1],
-        '867%': [12, 1],
-        '92%': [13, 1],
-        '96.5%': [14, 1],
-        'max': [ 15, 1 ]
+/************************************SLIDER***********************************/
+  var nonLinearSlider = document.getElementById('nonlinear');
+
+  noUiSlider.create(nonLinearSlider, {
+    connect: true,
+    behaviour: 'tap',
+    start: [ 0, 15 ],
+    range: {
+      'min': [ 0, 1 ],
+      '10%': [1, 1],
+      '19.5%': [2, 1],
+      '28.5%': [3, 1],
+      '36%': [4, 1],
+      '43.8%': [5, 1],
+      '51%': [6, 1],
+      '58%': [7, 1],
+      '64%': [8, 1],
+      '70.5%': [9, 1],
+      '76%': [10, 1],
+      '81.5%': [11, 1],
+      '87%': [12, 1],
+      '92%': [13, 1],
+      '96.5%': [14, 1],
+      'max': [ 15, 1 ]
+    }
+  });
+
+  nonLinearSlider.noUiSlider.on('change', function ( values, handle, unencoded, isTap, positions ) {
+    //set fret limits
+    self.lowLimit = parseInt(values[0]);
+    self.highLimit = parseInt(values[1]);
+    self.filter();
+    //update ng-DOM
+    $scope.$apply();
+    console.log('sliderchange');
+  });
+
+
+
+/******************************UTILITY FUNCTIONS******************************/
+  function cloneTwoDimArray(arr) {
+    // Deep copy arrays. Going one level deep seems to be enough.
+    var clone = [];
+    for (i=0; i<arr.length; i++) {
+      clone.push( arr[i].slice(0) )
+    }
+    return clone;
+  }
+
+  function findSpan(ary) {
+    return Math.max(ary) - Math.min(ary);
+  }
+
+  function clone (existingArray) {
+    var newObj = (existingArray instanceof Array) ? [] : {};
+    for (i in existingArray) {
+      if (i == 'clone') continue;
+      if (existingArray[i] && typeof existingArray[i] == "object") {
+        newObj[i] = clone(existingArray[i]);
+      } else {
+        newObj[i] = existingArray[i]
       }
-    });
+    }
+    return newObj;
+  }
 
-    nonLinearSlider.noUiSlider.on('change', function ( values, handle, unencoded, isTap, positions ) {
-      //set fret limits
-      self.lowLimit = parseInt(values[0]);
-      self.highLimit = parseInt(values[1]);
-      self.filter();
-      //update ng-DOM
-      $scope.$apply();
-      console.log('sliderchange');
-    });
+  function compare(a,b) {
+    if (a < b)
+    return -1;
+    if (a > b)
+    return 1;
+    return 0;
+  }
 
-    /******************************UTILITY FUNCTIONS******************************/
-    function cloneTwoDimArray(arr) {
-      // Deep copy arrays. Going one level deep seems to be enough.
-      var clone = [];
-      for (i=0; i<arr.length; i++) {
-        clone.push( arr[i].slice(0) )
+  function findSpan(ary) {
+    return Math.max(...ary) - Math.min(...ary);
+  }
+
+  if(Array.prototype.equals)
+  console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+  // attach the .equals method to Array's prototype to call it on any array
+  Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+    return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+    return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+      // Check if we have nested arrays
+      if (this[i] instanceof Array && array[i] instanceof Array) {
+        // recurse into the nested arrays
+        if (!this[i].equals(array[i]))
+        return false;
       }
-      return clone;
-    }
-
-    function findSpan(ary) {
-      return Math.max(ary) - Math.min(ary);
-    }
-
-    function clone (existingArray) {
-      var newObj = (existingArray instanceof Array) ? [] : {};
-      for (i in existingArray) {
-        if (i == 'clone') continue;
-        if (existingArray[i] && typeof existingArray[i] == "object") {
-          newObj[i] = clone(existingArray[i]);
-        } else {
-          newObj[i] = existingArray[i]
-        }
+      else if (this[i] != array[i]) {
+        // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        return false;
       }
-      return newObj;
     }
-
-    function compare(a,b) {
-      if (a < b)
-      return -1;
-      if (a > b)
-      return 1;
-      return 0;
-    }
-
-    self.noteName = function(pos) {
-      return MUSIQ.sharpNames[notes[pos]];
-    }
-
-    function findSpan(ary) {
-      return Math.max(...ary) - Math.min(...ary);
-    }
-
-    if(Array.prototype.equals)
-    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
-    // attach the .equals method to Array's prototype to call it on any array
-    Array.prototype.equals = function (array) {
-      // if the other array is a falsy value, return
-      if (!array)
-      return false;
-
-      // compare lengths - can save a lot of time
-      if (this.length != array.length)
-      return false;
-
-      for (var i = 0, l=this.length; i < l; i++) {
-        // Check if we have nested arrays
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-          // recurse into the nested arrays
-          if (!this[i].equals(array[i]))
-          return false;
-        }
-        else if (this[i] != array[i]) {
-          // Warning - two different object instances will never be equal: {x:20} != {x:20}
-          return false;
-        }
-      }
-      return true;
-    }
-    // Hide method from for-in loops
-    Object.defineProperty(Array.prototype, "equals", {enumerable: false});
-  }]);
+    return true;
+  }
+  // Hide method from for-in loops
+  Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+}]);
