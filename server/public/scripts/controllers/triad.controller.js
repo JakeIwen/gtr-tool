@@ -5,31 +5,25 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   var self = this;
   var fretNotes = [];
   var masterSet = [];
-  var filteredConfigs = [];
+  var possibleConfigs = [];
   var notes = [];
-  var noOctaves = [];
-  self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth']
   self.lowLimit = 0;
   self.highLimit = 15;
-
   self.allowOpen = false;
   self.onlyClusters = true;
   self.octaves = true;
+  self.maxSpan = 3;
   self.triadIndex = 0;
+  self.tonic = 'C';
   self.allowedInversions = [true, true, true, true];
   self.allowedStrings = [true, true, true, true, true, true];
-  self.tonic = 'C';
-  self.activeMarkers = [];
-  var stgIdx = [];
+  self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth'];
   self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
-  self.maxSpan = 3;
 
   // c_chord = chord('Cdim');
   //
   // console.log('c_chord', c_chord, c_chord.noteObjects(), c_chord.noteObjects()[0]);
-  // stgIdx = [0];
   // self.guitar = new Guitar();
-
 
 
   self.newChord = function() {
@@ -79,15 +73,15 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       var len = tmp.length;
       for (var i = idx; i < fretNotes.length; i++) {
         //if the string and note are not already used in the chord being constructed
-        if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && fretNotes[i].stringFretMidi[0] == strings[0] + strings.length) {
+        var stringIsFree = strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1;
+        var isNextString = fretNotes[i].stringFretMidi[0] == strings[0] + strings.length;
+        if (stringIsFree && isNextString) {
           notePush(i);
           masterSet.push(tmp.slice());
           stringset.push(clone(strings));
         }
         while(i > fretNotes.length - 2) {
-          if(tmp.length == len) {
-            break;
-          }
+          if (tmp.length == len) { break; }
           i = notePop();
         }
       }
@@ -104,14 +98,18 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     fretNotes.reverse();
 
     for (var i = 0; i < fretNotes.length; i++) {
-      if(tmp.length == 0 && fretNotes[i].stringFretMidi[0] == self.numNotes + 1) {
-        break;
-      }
+      var stackIsEmpty = tmp.length == 0 ;
+      var notEnoughStrings = fretNotes[i].stringFretMidi[0] == self.numNotes + 1;
+
+      if (stackIsEmpty && notEnoughStrings) { break; }
       //if the string and note are not already used in the chord being constructed
-      if(strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1 && noteset.indexOf(fretNotes[i].relation) == -1){
+      var stringIsFree = strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1;
+      var relativeNoteUnused = noteset.indexOf(fretNotes[i].relation) == -1;
+
+      if (stringIsFree && relativeNoteUnused) {
         notePush(i);
-        //if the temp array contains the correct number of noteset, push to master
-        if(tmp.length == self.numNotes){
+        //if the temp array contains each of the chord notes, push to master
+        if (tmp.length == self.numNotes) {
           masterSet.push(tmp.slice());
           stringset.push(clone(strings));
           i = moreStrings(i + 1);
@@ -119,36 +117,42 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
       //traverse back to lower strings
       //if temp arrays are empty the for loop will conditionally terminate
-      while(i > fretNotes.length - 2) {
-        i = notePop();
-      }
+      while(i > fretNotes.length - 2) { i = notePop(); }
     }
   };
 
   self.filter = function() {
-    var possibleConfigs = [];
+    self.triadIndex = 0;
+    possibleConfigs = [];
+    console.log('masterset', masterSet);
     for (var i = 0; i < masterSet.length; i++) {
       //fret and string each note is on
       var triadFrets = [];
       var triadStrings = [];
       var triadMidis = [];
       var triadStringFretMidis = [];
+      var openFlag = false;
+      var triadFretSpan = 0;
+
       //store fret and string arrangement of this note group into seperate arrays
       for (var j = 0; j < masterSet[i].length; j++) {
         //the strings to be played
         triadStrings.push(masterSet[i][j][0]);
         triadMidis.push(masterSet[i][j][2]);
         triadStringFretMidis.push(masterSet[i][j]);
+        triadFrets.push(masterSet[i][j][1]);
         //dont include open strings if user has selected allowOpen
-        if(!(self.allowOpen && (masterSet[i][j][1] == 0))) {
-          triadFrets.push(masterSet[i][j][1]);
-        }
       }
-    //  console.log('triadmidis, ', triadMidis, 'notes', notes);
-      var triadFretSpan = findSpan(triadFrets);
-      //console.log('triadFretSpan', triadFretSpan);
+      //  open strings
+      if (self.allowOpen) {
+        var fretSpan = findSpan(triadFrets, 0);
+      } else {
+        var fretSpan = findSpan(triadFrets);
+      }
+      //console.log('fretSpan', fretSpan);
       //populate array of triad formations AND corresponding string-spans
-      if(triadFretSpan <= self.maxSpan) {
+    //  if (octaveAndSpan(triadFrets)) {
+      if (octaveAndSpan(fretSpan, triadFrets.length)) {
         //  console.log('triadmidis', triadMidis, Math.min(...triadMidis));
         possibleConfigs.push({
           stringFretMidis:  triadStringFretMidis,
@@ -163,38 +167,36 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         });
       }
     }
-    //add 3-string filteredConfigs to beginning of list
-    //possibleConfigs = [];
-    filteredConfigs = clusterSort(possibleConfigs);
-
+    possibleConfigs = clusterSort(possibleConfigs);
+    possibleConfigs = sliderFilter(possibleConfigs);
+    possibleConfigs = inversionFilter(possibleConfigs);
+    possibleConfigs = stringFilter(possibleConfigs);
     //DOM binding listing number of chord variations
-    console.log('activedomsets sorted', filteredConfigs);
-    //console.log('filteredConfigs', filteredConfigs);
-    filteredConfigs = sliderFilter(filteredConfigs);
-
-    filteredConfigs = inversionFilter(filteredConfigs);
-    filteredConfigs = stringFilter(filteredConfigs);
-    self.variations = filteredConfigs.length;
-    console.log('updated. filteredConfigs:', filteredConfigs);
-    self.triadIndex = 0;
+    self.variations = possibleConfigs.length;
+    console.log('updated possibleConfigs:', possibleConfigs);
     displayTriad();
   };
 
+  function octaveAndSpan(fretSpan, len) {
+    var spanBool = fretSpan <= self.maxSpan;
+    var octaveBool = self.octaves || (len <= self.numNotes);
+    return spanBool && octaveBool;
+  }
+
   function clusterSort(allConfigs) {
     var clusterConfigs = [];
-
-    if(self.onlyClusters) {
+    if (self.onlyClusters) {
       clusters(0);
     } else {
       for (var i = 0; i < 3; i++) {
         clusters(i);
       }
     }
-    function clusters(skips){
+    function clusters(skips) {
       //get all clusters of a given string span
       for (var i = 0; i < allConfigs.length; i++) {
         var sts = allConfigs[i].strings;
-        if(findSpan(sts) == sts.length - 1 + skips){
+        if (findSpan(sts) == sts.length - 1 + skips) {
           clusterConfigs.push(allConfigs[i]);
         }
       }
@@ -205,7 +207,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   function stringFilter(chordSets) {
     for (var i = 0; i < chordSets.length; i++) {
       for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
-        if(self.allowedStrings[chordSets[i].stringFretMidis[j][0]] == false) {
+        if (self.allowedStrings[chordSets[i].stringFretMidis[j][0]] == false) {
           console.log("string splice", chordSets[i]);
           chordSets.splice(i,1);
           i--;
@@ -217,9 +219,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     return chordSets;
   }
 
-  function inversionFilter (chordSets) {
+  function inversionFilter(chordSets) {
     for (var i = 0; i < chordSets.length; i++) {
-      if(self.allowedInversions[chordSets[i].inversion] == false) {
+      if (self.allowedInversions[chordSets[i].inversion] == false) {
         // console.log("inversion splice", chordSets[i]);
         chordSets.splice(i,1);
         i--;
@@ -232,8 +234,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     for (var i = 0; i < chordSets.length; i++) {
       for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
         var fretNum = chordSets[i].stringFretMidis[j][1];
-        if(self.lowLimit > fretNum || self.highLimit < fretNum) {
-          if(!(self.allowOpen && !fretNum)) {
+        if (self.lowLimit > fretNum || self.highLimit < fretNum) {
+          if (!(self.allowOpen && !fretNum)) {
             chordSets.splice(i,1);
             i--;
             break;
@@ -245,9 +247,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   }
 
   function displayTriad() {
-    if(!self.variations) {return 0;} //abort if no matches
+    if (!self.variations) {return 0;} //abort if no matches
     //the thisTriad variation dictated by prev/next buttions
-    var thisTriad = filteredConfigs[self.triadIndex];
+    var thisTriad = possibleConfigs[self.triadIndex];
     console.log('This triad:', thisTriad);
     //reset all markers to empty
     $('.marker').attr('src', "../img/empty.svg");
@@ -255,14 +257,13 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       $fret = $(this);
       $fretCoord = $(this).data('stringfretmidi');
       for (var i = 0; i < thisTriad.stringFretMidis.length; i++) {
-        if(thisTriad.stringFretMidis[i].equals($fretCoord)) {
+        if (thisTriad.stringFretMidis[i].equals($fretCoord)) {
           var intvl = self.intervalName(notes.indexOf(thisTriad.stringFretMidis[i][2] % 12));
           $fret.attr('src', "../img/" + intvl + ".svg");
           break;
         }
       }
     });
-    self.activeMarkers = imgSrcs.sort(compare).reverse();
   }
 //if the string/fret pos is not the same as the last (or open) more than 4 times in a row, nix the chord (if reasonable)
   function convertList(chordsArray) {
@@ -306,7 +307,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   self.nextVar = function() {
     self.triadIndex++;
-    if (self.triadIndex > filteredConfigs.length - 1) {
+    if (self.triadIndex > possibleConfigs.length - 1) {
       self.triadIndex = 0;
     }
     displayTriad();
@@ -315,7 +316,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.prevVar = function() {
     self.triadIndex--;
     if (self.triadIndex < 0) {
-      self.triadIndex = filteredConfigs.length - 1;
+      self.triadIndex = possibleConfigs.length - 1;
     }
     displayTriad();
   }
@@ -329,9 +330,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     var thisNote = Note.fromNotation(self.noteName(pos));
     var root = Note.fromNotation(self.tonic);
     var intervalName = Interval.fromNotes(root, thisNote).name();
-    if (intervalName == 'unison' ) {
+    if (intervalName == 'unison') {
       intervalName = 'tonic';
-    } else if(intervalName == 'tritone') {
+    } else if (intervalName == 'tritone') {
       intervalName = "flat fifth";
     }
     return intervalName;
@@ -364,7 +365,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     }
   });
 
-  nonLinearSlider.noUiSlider.on('change', function ( values, handle, unencoded, isTap, positions ) {
+  nonLinearSlider.noUiSlider.on('change', function (values, handle, unencoded, isTap, positions) {
     //set fret limits
     self.lowLimit = parseInt(values[0]);
     self.highLimit = parseInt(values[1]);
@@ -374,20 +375,22 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     console.log('sliderchange');
   });
 
-
-
 /******************************UTILITY FUNCTIONS******************************/
-  function cloneTwoDimArray(arr) {
-    // Deep copy arrays. Going one level deep seems to be enough.
-    var clone = [];
-    for (i=0; i<arr.length; i++) {
-      clone.push( arr[i].slice(0) )
+  function removeElem(arr, elem) {
+    var i = arr.length;
+    while (i--) {
+        if (arr[i] === elem) {
+            arr.splice(i, 1);
+        }
     }
-    return clone;
+    return arr;
   }
 
-  function findSpan(ary) {
-    return Math.max(ary) - Math.min(ary);
+  function findSpan(ary, ignore) {
+    if (ignore !== undefined) {
+      ary = removeElem(clone(ary), ignore);
+    }
+    return Math.max(...ary) - Math.min(...ary);
   }
 
   function clone (existingArray) {
@@ -411,11 +414,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     return 0;
   }
 
-  function findSpan(ary) {
-    return Math.max(...ary) - Math.min(...ary);
-  }
-
-  if(Array.prototype.equals)
+  if (Array.prototype.equals)
   console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
   // attach the .equals method to Array's prototype to call it on any array
   Array.prototype.equals = function (array) {
