@@ -94,7 +94,7 @@ h4 {
 td {
   vertical-align: text-top;
   font-size: 1.2em;
-  
+
 }
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
 
@@ -115,6 +115,7 @@ td {
   background-position: left 15px;
   background-size: 97.5% 85%;
   display:inline-block;
+  // background-color: black;
   /*max-width: 1200px;*/
   /*align-self: center;*/
 }
@@ -145,7 +146,7 @@ td {
 .fret {
   /*margin-bottom: -50%;*/
   display: inline-block;
-  border-right: 1px solid #c1c1c1;
+  // border-right: 1px solid #c1c1c1;
   min-width: 19px;
   padding-top: 4px;
   z-index: -1;

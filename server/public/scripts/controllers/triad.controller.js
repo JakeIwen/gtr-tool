@@ -1,7 +1,6 @@
 //$('.fretboardContainer') change r
 // slider position relation to guitar fret#
 app.controller('TriadController', ["$http", "$scope", 'Factory', function($http, $scope, Factory) {
-  console.log('Triad controller running');
   var self = this;
   var fretNotes = [];
   var masterSet = [];
@@ -20,10 +19,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth'];
   self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
 
-  // c_chord = chord('Cdim');
-  //
-  // console.log('c_chord', c_chord, c_chord.noteObjects(), c_chord.noteObjects()[0]);
-  // self.guitar = new Guitar();
+  self.neck = new Guitar();
+  self.neck.frets_shown = 15;
+  //get chord list from MongoDB
+  getChords();
 
 
   self.newChord = function() {
@@ -143,13 +142,12 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         triadFrets.push(masterSet[i][j][1]);
         //dont include open strings if user has selected allowOpen
       }
-      //  open strings
+      //if open strings allowed, ignore zerows for fret span calculation
       if (self.allowOpen) {
         var fretSpan = findSpan(triadFrets, 0);
       } else {
         var fretSpan = findSpan(triadFrets);
       }
-      //console.log('fretSpan', fretSpan);
       //populate array of triad formations AND corresponding string-spans
     //  if (octaveAndSpan(triadFrets)) {
       if (octaveAndSpan(fretSpan, triadFrets.length)) {
@@ -292,8 +290,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       console.log('get error:', response);
     });
   }
-
-  getChords();
 
   self.toggleInversion = function(index) {
     self.allowedInversions[index] = !(self.allowedInversions[index]);

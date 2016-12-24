@@ -1,4 +1,4 @@
-<section class="row" ng-controller="CagedController as caged">
+<section class="row">
 
   <div class="options row">
     <div class="noteMap col-md-4">
@@ -13,19 +13,7 @@
 
       <form class="col-sm-6">
           <h4>Chord to map:</h4>
-          <select ng-model="caged.tonic" ng-change="caged.init()">
-            <option ng-selected="true">C</option>
-            <option>C#</option>
-            <option>D</option>
-            <option>D#</option>
-            <option>E</option>
-            <option>F</option>
-            <option>F#</option>
-            <option>G</option>
-            <option>G#</option>
-            <option>A</option>
-            <option>A#</option>
-            <option>B</option>
+          <select ng-model="caged.tonic" ng-options="tonic as tonic for tonic in caged.tonicList" ng-change="caged.init()">
           </select>
       </form>
 
@@ -37,14 +25,18 @@
     </div>
 </div>
 
-  <div class="fretboardContainer col-xs-12">
-    <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
+  <div class="fretboardContainer col-xs-11">
+    <div class="strings" ng-repeat="string in caged.neck.strings | orderBy:'':true">
       <div class="fretRow">
-        <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
-
-          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
-
+        <div class="preFret">
+          <label class="switch">
+            <input type="checkbox">
+            <div class="sliderBox"></div>
+          </label>
         </div>
+          <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in caged.neck.frets">
+            <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
+          </div>
       </div>
     </div>
   </div>

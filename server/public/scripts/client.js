@@ -14,13 +14,13 @@ app.config(['$routeProvider', function($routeProvider) {
   })
   .when('/caged' ,{
     templateUrl: '/views/templates/caged.html',
-    controller: 'GuitarController',
-    controllerAs: 'guitar'
+    controller: 'CagedController',
+    controllerAs: 'caged'
   })
   .when('/triad' ,{
     templateUrl: '/views/templates/triad.html',
-    controller: 'GuitarController',
-    controllerAs: 'guitar'
+    controller: 'TriadController',
+    controllerAs: 'triad'
   })
   .otherwise({
     redirectTo: 'home'
@@ -28,6 +28,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
+//this factory is not used currently
 app.factory('Factory', ["$http", function($http){
   console.log('factory running');
   var fretLocations = [];

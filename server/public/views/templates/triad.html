@@ -1,4 +1,4 @@
-<section class="row" ng-controller="TriadController as triad">
+<section class="row">
   <div class="options row">
     <div class="col-md-3">
       <h4>{{triad.tonic + triad.type.name}} composition</h4>
@@ -67,7 +67,7 @@
 
     <div class="fretboardContainer col-xs-11">
       <div id="nonlinear" class="noUi-target noUi-ltr noUi-horizontal"></div>
-      <div class="strings" ng-repeat="string in guitar.neck.strings | orderBy:'':true">
+      <div class="strings" ng-repeat="string in triad.neck.strings | orderBy:'':true">
 
         <div class="fretRow">
           <div class="preFret">
@@ -78,7 +78,7 @@
             </label>
           </div>
 
-          <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in guitar.neck.frets">
+          <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in triad.neck.frets">
 
             <img src="../img/empty.svg" alt="*" class="marker" data-stringfretmidi="[{{string.pos}}, {{fret.pos}}, {{string.base + fret.pos}}]"  height="16" width="24"/>
 

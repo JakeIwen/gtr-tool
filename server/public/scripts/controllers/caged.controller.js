@@ -1,5 +1,9 @@
 app.controller('CagedController', ["$http", function($http) {
   var self = this;
+  self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
+  
+  self.neck = new Guitar();
+  self.neck.frets_shown = 15;
 
   getScales();
   self.tonic = 'C';
