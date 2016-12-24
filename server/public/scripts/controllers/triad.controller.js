@@ -148,9 +148,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       } else {
         var fretSpan = findSpan(triadFrets);
       }
-      //populate array of triad formations AND corresponding string-spans
-    //  if (octaveAndSpan(triadFrets)) {
-      if (octaveAndSpan(fretSpan, triadFrets.length)) {
+
+      //populate array of triad formations AND corresponding string-spans if they meet octave and fret-span conditions
+      if (octaveSpanString(fretSpan, triadStrings)) {
         //  console.log('triadmidis', triadMidis, Math.min(...triadMidis));
         possibleConfigs.push({
           stringFretMidis:  triadStringFretMidis,
@@ -168,17 +168,25 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     possibleConfigs = clusterSort(possibleConfigs);
     possibleConfigs = sliderFilter(possibleConfigs);
     possibleConfigs = inversionFilter(possibleConfigs);
-    possibleConfigs = stringFilter(possibleConfigs);
     //DOM binding listing number of chord variations
     self.variations = possibleConfigs.length;
     console.log('updated possibleConfigs:', possibleConfigs);
     displayTriad();
   };
 
-  function octaveAndSpan(fretSpan, len) {
+  function octaveSpanString(fretSpan, usedStrings) {
+
+    var len = usedStrings.length
     var spanBool = fretSpan <= self.maxSpan;
     var octaveBool = self.octaves || (len <= self.numNotes);
-    return spanBool && octaveBool;
+    var stringActive = true;
+    for (var i = 0; i < len; i++) {
+      if (self.allowedStrings[usedStrings[i]] == false) {
+        stringActive = false;
+        break;
+      }
+    }
+    return spanBool && octaveBool && stringActive;
   }
 
   function clusterSort(allConfigs) {
@@ -200,21 +208,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
     }
     return clusterConfigs;
-  }
-
-  function stringFilter(chordSets) {
-    for (var i = 0; i < chordSets.length; i++) {
-      for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
-        if (self.allowedStrings[chordSets[i].stringFretMidis[j][0]] == false) {
-          console.log("string splice", chordSets[i]);
-          chordSets.splice(i,1);
-          i--;
-          break;
-        }
-      }
-    }
-    console.log('allowed strings', self.allowedStrings);
-    return chordSets;
   }
 
   function inversionFilter(chordSets) {
