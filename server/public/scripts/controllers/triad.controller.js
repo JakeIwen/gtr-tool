@@ -5,7 +5,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   var self = this;
   var fretNotes = [];
   var masterSet = [];
-  var possibleConfigs = [];
+  var activeList = [];
+  var sortedConfigs = [];
   var notes = [];
   self.range = [0, 15];
   self.allowOpen = false;
@@ -23,7 +24,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.neck.frets_shown = 15;
   //get chord list from MongoDB
   getChords();
-
 
   self.newChord = function() {
     notes = [];
@@ -126,49 +126,64 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         ids: ids.slice(),
         midis: midis.slice(),
         relations: relations.slice(),
-        count: count
+        count: count,
+        inversion: notes.indexOf(Math.min(...midis) % 12)
       });
     }
 
+    sortedConfigs = clusterSort(masterSet);
+
+    function clusterSort(allConfigs) {
+      var sortedConfigs = [];
+      if (self.onlyClusters) {
+        clusters(0);
+      } else {
+        for (var i = 0; i < 3; i++) {
+          clusters(i);
+        }
+      }
+      function clusters(skips) {
+        //get all clusters of a given string span
+        for (var i = 0; i < allConfigs.length; i++) {
+          if (findSpan(allConfigs[i].strings) == allConfigs[i].count - 1 + skips) {
+            sortedConfigs.unshift(clone(allConfigs[i]));
+          }
+        }
+      }
+      return sortedConfigs;
+    }
   };
 
   self.filter = function() {
     self.triadIndex = 0;
-    possibleConfigs = [];
     console.log('masterset', masterSet);
-    for (var i = 0; i < masterSet.length; i++) {
+    for (var i = 0; i < sortedConfigs.length; i++) {
       //if open strings allowed, ignore zerows for fret span calculation
-      if (self.allowOpen) {
-        var fretSpan = findSpan(masterSet[i].frets, 0);
-      } else {
-        var fretSpan = findSpan(masterSet[i].frets);
-      }
-
-      //populate array of triad formations AND corresponding string-spans if they meet octave and fret-span conditions
-      if (octaveSpanString(fretSpan, masterSet[i].strings)) {
-        //  console.log('triadmidis', triadMidis, Math.min(...triadMidis));
-        masterSet[i].fretSpan = fretSpan;
-        masterSet[i].inversion = notes.indexOf(Math.min(...masterSet[i].midis) % 12);
-        masterSet[i].strings.sort(compare);
-        masterSet[i].frets.sort(compare);
-        possibleConfigs.push(masterSet[i]);
+      //populate sortedConfigs if they meet octave and fret-span and active string conditions
+      if (octaveSpanString(sortedConfigs[i]) && inversionSliderFilter(sortedConfigs[i])) {
+        activeList.push(i);
       }
     }
-    possibleConfigs = clusterSort(possibleConfigs);
-    possibleConfigs = inversionSliderFilter(possibleConfigs);
     //DOM binding listing number of chord variations
-    self.variations = possibleConfigs.length;
-    console.log('updated possibleConfigs:', possibleConfigs);
+    self.variations = activeList.length;
+    console.log('updated sortedConfigs:', sortedConfigs);
     displayTriad();
   };
 
-  function octaveSpanString(fretSpan, usedStrings) {
-    var len = usedStrings.length
+  function octaveSpanString(thisConfig) {
+    if (self.allowOpen) {
+      var fretSpan = findSpan(thisConfig.frets, 0);
+    } else {
+      var fretSpan = findSpan(thisConfig.frets);
+    }
+    //is fretSpan within user defined range?
     var spanBool = fretSpan <= self.maxSpan;
-    var octaveBool = self.octaves || (len <= self.numNotes);
+    //did the use allow octave suplicates and are they in this chord config?
+    var octaveBool = self.octaves || (thisConfig.count <= self.numNotes);
     var stringActive = true;
-    for (var i = 0; i < len; i++) {
-      if (self.allowedStrings[usedStrings[i]] == false) {
+    //are any inactive strings contained in this chord config?
+    for (var i = 0; i < thisConfig.count; i++) {
+      if (self.allowedStrings[thisConfig.strings[i]] == false) {
         stringActive = false;
         break;
       }
@@ -176,42 +191,18 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     return spanBool && octaveBool && stringActive;
   }
 
-  function clusterSort(allConfigs) {
-    var clusterConfigs = [];
-    if (self.onlyClusters) {
-      clusters(0);
-    } else {
-      for (var i = 0; i < 3; i++) {
-        clusters(i);
-      }
+  function inversionSliderFilter(chordSet) {
+    var inversionAllowed = self.allowedInversions[chordSet.inversion];
+    if (inversionAllowed && inSliderRange()) {
+      // remove this chordset if this inversion is not allowed
+      return true;
     }
-    function clusters(skips) {
-      //get all clusters of a given string span
-      for (var i = 0; i < allConfigs.length; i++) {
-        if (findSpan(allConfigs[i].strings) == allConfigs[i].count - 1 + skips) {
-          clusterConfigs.push(allConfigs[i]);
-        }
-      }
-    }
-    return clusterConfigs;
-  }
-
-  function inversionSliderFilter(chordSets) {
-    for (var i = 0; i < chordSets.length; i++) {
-      var inversionNotAllowed = !self.allowedInversions[chordSets[i].inversion];
-      if (inversionNotAllowed || outOfSliderRange(chordSets[i])) {
-        // remove this chordset if this inversion is not allowed
-        chordSets.splice(i--,1);
-      }
-    }
-    return chordSets;
-
-    function outOfSliderRange(chordSet) {
+    function inSliderRange() {
       for (var i = 0; i < chordSet.count; i++) {
         var fretNum = chordSet.frets[i];
-        var outOfRange = self.range[0] > fretNum || self.range[1] < fretNum;
+        var inRange = self.range[0] <= fretNum && self.range[1] >= fretNum;
         //check with open-string condition
-        if (outOfRange && (!self.allowOpen || fretNum)) { return true;}
+        if (inRange || (self.allowOpen && !fretNum)) { return true;}
       }
     }
   }
@@ -219,7 +210,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   function displayTriad() {
     if (!self.variations) {return 0;} //abort if no matches
     //the thisTriad variation dictated by prev/next buttions
-    var thisTriad = possibleConfigs[self.triadIndex];
+    var thisTriad = sortedConfigs[activeList[self.triadIndex]];
     console.log('This triad:', thisTriad);
     //reset all markers to empty
     $('.marker').attr('src', "../img/empty.svg");
@@ -268,7 +259,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   self.nextVar = function() {
     self.triadIndex++;
-    if (self.triadIndex > possibleConfigs.length - 1) {
+    if (self.triadIndex > activeList.length - 1) {
       self.triadIndex = 0;
     }
     displayTriad();
@@ -277,7 +268,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.prevVar = function() {
     self.triadIndex--;
     if (self.triadIndex < 0) {
-      self.triadIndex = possibleConfigs.length - 1;
+      self.triadIndex = activeList.length - 1;
     }
     displayTriad();
   }
