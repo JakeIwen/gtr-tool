@@ -1,3 +1,4 @@
+
 //$('.fretboardContainer') change r
 // slider position relation to guitar fret#
 app.controller('TriadController', ["$http", "$scope", 'Factory', function($http, $scope, Factory) {
@@ -96,16 +97,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     var stringset = [];
     var frets = [];
     fretNotes.reverse();
-
     for (var i = 0; i < fretNotes.length; i++) {
-      var stackIsEmpty = tmp.length == 0 ;
-      var notEnoughStrings = fretNotes[i].stringFretMidi[0] == self.numNotes + 1;
-
-      if (stackIsEmpty && notEnoughStrings) { break; }
       //if the string and note are not already used in the chord being constructed
       var stringIsFree = strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1;
       var relativeNoteUnused = noteset.indexOf(fretNotes[i].relation) == -1;
-
       if (stringIsFree && relativeNoteUnused) {
         notePush(i);
         //if the temp array contains each of the chord notes, push to master
