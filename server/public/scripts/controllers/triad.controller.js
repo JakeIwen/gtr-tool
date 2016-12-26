@@ -6,14 +6,15 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   var masterSet = [];
   var possibleConfigs = [];
   var notes = [];
-  self.range = [0, 15];
+  self.lowLimit = 0;
+  self.highLimit = 15;
   self.allowOpen = false;
   self.onlyClusters = true;
   self.octaves = true;
   self.maxSpan = 3;
   self.triadIndex = 0;
   self.tonic = 'C';
-  self.allowedInversions = [true, true, true, true, true];
+  self.allowedInversions = [true, true, true, true];
   self.allowedStrings = [true, true, true, true, true, true];
   self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth'];
   self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
@@ -25,7 +26,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
 
   self.newChord = function() {
-    fretNotes = [];
     notes = []
     //populate array with semitone intervals of chord
     for (var i = 0; i < self.type.notes.length; i++) {
@@ -37,11 +37,15 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     $('.marker').each(function() {
       $fretMidiNote = $(this).data('stringfretmidi')[2];
       //if this fret-note is contained in the selected chord, add array of objects describing fret-note location and relation to chord
-      if (notes.indexOf(($fretMidiNote % 12)) != -1) {
+      var noteRelation = notes.indexOf($fretMidiNote % 12);
+      if (noteRelation != -1) {
         fretNotes[i] = {
-          stringFretMidi: $(this).data('stringfretmidi'),
-          relation: notes.indexOf($fretMidiNote % 12),
-        // } else {fretNotes[i] = false;}
+          string: $(this).data('stringfretmidi')[0],
+          fret: $(this).data('stringfretmidi')[1],
+          midi: $(this).data('stringfretmidi')[2],
+          relation: noteRelation,
+          id: $(this).attr('id')
+        }
         i++;
       }
     });
@@ -51,56 +55,27 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   function findTriads() {
     masterSet = [];
-
-    for (var i = 0; i < fretNotes.length; i++) {
-      var stackIsEmpty = tmp.length == 0;
-      var notEnoughStrings = fretNotes[i].stringFretMidi[0] == self.numNotes + 1;
-
-      if (stackIsEmpty && notEnoughStrings) { break; }
-      //if the string and note are not already used in the chord being constructed
-      var stringIsFree = strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1;
-      var relativeNoteUnused = noteset.indexOf(fretNotes[i].relation) == -1;
-
-      if (stringIsFree && relativeNoteUnused) {
-        notePush(i);
-        //if the temp array contains each of the chord notes, push to master
-        if (tmp.length == self.numNotes) {
-          masterSet.push(tmp.slice());
-          stringset.push(clone(strings));
-          i = moreStrings(i + 1);
-        }
-      }
-      //traverse back to lower strings
-      //if temp arrays are empty the for loop will conditionally terminate
-      while(i > fretNotes.length - 2) { i = notePop(); }
-    }
-
     //remove the last note added to the last masterSet chord
     function notePop() {
-      strings.pop();
       tmp.pop();
-      noteset.pop();
-      frets.pop();
+      strings.pop();
       return index.pop();
     }
     //append arrays containing strings and noteset already part of the chord being built
     function notePush(i) {
-      strings.push(fretNotes[i].stringFretMidi[0]);
-      frets.push(fretNotes[i].stringFretMidi[1]);
-      tmp.push(fretNotes[i].stringFretMidi);
+      tmp.push(fretNotes[i]);
+      strings.push(fretNotes[i].string);
       index.push(i);
-      noteset.push(fretNotes[i].relation);
     }
     function moreStrings(idx) {
       var len = tmp.length;
       for (var i = idx; i < fretNotes.length; i++) {
         //if the string and note are not already used in the chord being constructed
-        var stringIsFree = strings.indexOf(fretNotes[i].stringFretMidi[0]) == -1;
-        var isNextString = fretNotes[i].stringFretMidi[0] == strings[0] + strings.length;
+        var stringIsFree = strings.indexOf(fretNotes[i].string) == -1;
+        var isNextString = fretNotes[i].string == strings[0] + strings.length;
         if (stringIsFree && isNextString) {
           notePush(i);
           masterSet.push(tmp.slice());
-          stringset.push(clone(strings));
         }
         while(i > fretNotes.length - 2) {
           if (tmp.length == len) { break; }
@@ -119,6 +94,28 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     var frets = [];
     fretNotes.reverse();
 
+    for (var i = 0; i < fretNotes.length; i++) {
+      var stackIsEmpty = tmp.length == 0 ;
+      //notenoughstrings means a chord cannot be formed with the number of strings remaining
+      var notEnoughStrings = fretNotes[i].string == self.numNotes + 1;
+      if (stackIsEmpty && notEnoughStrings) { break; }
+      var stringIsFree = strings.indexOf(fretNotes[i].string) == -1;
+      var relativeNoteUnused = noteset.indexOf(fretNotes[i].relation) == -1;
+      //if the string and note are not already used in the chord being constructed
+      if (stringIsFree && relativeNoteUnused) {
+        notePush(i);
+        //if the temp array contains each of the chord notes, push to master
+        if (tmp.length == self.numNotes) {
+          masterSet.push(tmp.slice());
+          i = moreStrings(i + 1);
+        }
+        //traverse back to lower strings
+        //if temp arrays are empty the for loop will conditionally terminate
+      }
+      while (i > fretNotes.length - 2) {
+        i = notePop();
+      }
+    }
 
   };
 
@@ -152,7 +149,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
 
       //populate array of triad formations AND corresponding string-spans if they meet octave and fret-span conditions
-      if (octaveSpanStringFilter(fretSpan, triadStrings)) {
+      if (octaveSpanString(fretSpan, triadStrings)) {
         //  console.log('triadmidis', triadMidis, Math.min(...triadMidis));
         possibleConfigs.push({
           stringFretMidis:  triadStringFretMidis,
@@ -176,8 +173,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     displayTriad();
   };
 
-  function octaveSpanStringFilter(fretSpan, usedStrings) {
-    var len = usedStrings.length;
+  function octaveSpanString(fretSpan, usedStrings) {
+
+    var len = usedStrings.length
     var spanBool = fretSpan <= self.maxSpan;
     var octaveBool = self.octaves || (len <= self.numNotes);
     var stringActive = true;
@@ -226,7 +224,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     for (var i = 0; i < chordSets.length; i++) {
       for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
         var fretNum = chordSets[i].stringFretMidis[j][1];
-        if (self.range[0] > fretNum || self.range[1] < fretNum) {
+        if (self.lowLimit > fretNum || self.highLimit < fretNum) {
           if (!(self.allowOpen && !fretNum)) {
             chordSets.splice(i,1);
             i--;
@@ -357,8 +355,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   nonLinearSlider.noUiSlider.on('change', function (values, handle, unencoded, isTap, positions) {
     //set fret limits
-    self.range[0] = parseInt(values[0]);
-    self.range[1] = parseInt(values[1]);
+    self.lowLimit = parseInt(values[0]);
+    self.highLimit = parseInt(values[1]);
     self.filter();
     //update ng-DOM
     $scope.$apply();
