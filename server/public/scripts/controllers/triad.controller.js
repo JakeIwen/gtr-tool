@@ -59,12 +59,14 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     function notePop() {
       tmp.pop();
       strings.pop();
+      noteset.pop();
       return index.pop();
     }
     //append arrays containing strings and noteset already part of the chord being built
     function notePush(i) {
       tmp.push(fretNotes[i]);
       strings.push(fretNotes[i].string);
+      noteset.push(fretNotes[i].relation);
       index.push(i);
     }
     function moreStrings(idx) {
@@ -85,20 +87,14 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       return notePop();
     }
 
-    var noteIdx = 0;
     var tmp = [];
-    var index = [];
     var strings = [];
     var noteset = [];
+    var index = [];
     var stringset = [];
-    var frets = [];
     fretNotes.reverse();
 
     for (var i = 0; i < fretNotes.length; i++) {
-      var stackIsEmpty = tmp.length == 0 ;
-      //notenoughstrings means a chord cannot be formed with the number of strings remaining
-      var notEnoughStrings = fretNotes[i].string == self.numNotes + 1;
-      if (stackIsEmpty && notEnoughStrings) { break; }
       var stringIsFree = strings.indexOf(fretNotes[i].string) == -1;
       var relativeNoteUnused = noteset.indexOf(fretNotes[i].relation) == -1;
       //if the string and note are not already used in the chord being constructed
@@ -135,10 +131,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       //store fret and string arrangement of this note group into seperate arrays
       for (var j = 0; j < masterSet[i].length; j++) {
         //the strings to be played
-        triadStrings.push(masterSet[i][j][0]);
-        triadMidis.push(masterSet[i][j][2]);
-        triadStringFretMidis.push(masterSet[i][j]);
-        triadFrets.push(masterSet[i][j][1]);
+        triadStrings.push(masterSet[i][j].string);
+        triadMidis.push(masterSet[i][j].midi);
+        triadFrets.push(masterSet[i][j].fret);
+        triadStringFretMidis.push([masterSet[i][j].string, masterSet[i][j].fret, masterSet[i][j].midi]);
         //dont include open strings if user has selected allowOpen
       }
       //if open strings allowed, ignore zerows for fret span calculation
@@ -154,9 +150,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         possibleConfigs.push({
           stringFretMidis:  triadStringFretMidis,
           //will not include open strings if self.allowOpen checkbox == true (see above)
-          fretSpan: triadFretSpan,
+          fretSpan: fretSpan,
           //the span of played strings (smaller is more desireable because there are no open strings to mute in between the strings to be played)
-          stringSpan: triadFretSpan,
           strings: triadStrings.sort(compare),
           frets: triadFrets.sort(compare),
           inversion: notes.indexOf(Math.min(...triadMidis) % 12),
@@ -222,8 +217,8 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   function sliderFilter(chordSets) {
     for (var i = 0; i < chordSets.length; i++) {
-      for (var j = 0; j < chordSets[i].stringFretMidis.length; j++) {
-        var fretNum = chordSets[i].stringFretMidis[j][1];
+      for (var j = 0; j < chordSets[i].frets.length; j++) {
+        var fretNum = chordSets[i].frets[j];
         if (self.lowLimit > fretNum || self.highLimit < fretNum) {
           if (!(self.allowOpen && !fretNum)) {
             chordSets.splice(i,1);
