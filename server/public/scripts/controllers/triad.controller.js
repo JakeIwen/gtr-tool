@@ -38,10 +38,11 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     $('.marker').each(function() {
       $fretMidiNote = $(this).data('stringfretmidi')[2];
       //if this fret-note is contained in the selected chord, add array of objects describing fret-note location and relation to chord
-      if (notes.indexOf(($fretMidiNote % 12)) != -1) {
+      var noteRelation = notes.indexOf($fretMidiNote % 12);
+      if (noteRelation != -1) {
         fretNotes[i] = {
           stringFretMidi: $(this).data('stringfretmidi'),
-          relation: notes.indexOf($fretMidiNote % 12),
+          relation: noteRelation,
         }
         i++;
       }
