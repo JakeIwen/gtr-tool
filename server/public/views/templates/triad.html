@@ -4,7 +4,7 @@
       <h4>{{triad.tonic + triad.type.name}} composition</h4>
       <table class="noteMap">
         <tbody>
-          <tr ng-repeat="n in [0,1,2,3] track by $index" ng-if="triad.numNotes > n">
+          <tr ng-repeat="n in [0,1,2,3,4] track by $index" ng-if="triad.numNotes > n">
             <td>
               <img ng-src="../img/{{triad.intervalName(n)}}.svg" alt="*" height="16" width="24" />
             </td>
@@ -60,7 +60,7 @@
       <span>Allow octave-duplicates</span>
       <br>
       Fret Range:
-      <span id="lower-value">{{triad.lowLimit}} to {{triad.highLimit}}</span>
+      <span id="lower-value">{{triad.range[0]}} to {{triad.range[1]}}</span>
     </div>
 
   </div>
@@ -80,7 +80,7 @@
 
           <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in triad.neck.frets">
 
-            <img src="../img/empty.svg" alt="*" class="marker" data-stringfretmidi="[{{string.pos}}, {{fret.pos}}, {{string.base + fret.pos}}]"  height="16" width="24"/>
+            <img src="../img/empty.svg" alt="*" class="marker" id="{{15 * (5 - string.pos) + fret.pos}}" data-stringfretmidi="[{{string.pos}}, {{fret.pos}}, {{string.base + fret.pos}}]"  height="16" width="24"/>
 
           </div>
         </div>
