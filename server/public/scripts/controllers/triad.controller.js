@@ -6,8 +6,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   var masterSet = [];
   var possibleConfigs = [];
   var notes = [];
-  self.lowLimit = 0;
-  self.highLimit = 15;
+  self.range = [0, 15];
   self.allowOpen = false;
   self.onlyClusters = true;
   self.octaves = true;
@@ -160,8 +159,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
     }
     possibleConfigs = clusterSort(possibleConfigs);
-    possibleConfigs = sliderFilter(possibleConfigs);
-    possibleConfigs = inversionFilter(possibleConfigs);
+    possibleConfigs = inversionSliderFilter(possibleConfigs);
     //DOM binding listing number of chord variations
     self.variations = possibleConfigs.length;
     console.log('updated possibleConfigs:', possibleConfigs);
@@ -169,7 +167,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   };
 
   function octaveSpanString(fretSpan, usedStrings) {
-
     var len = usedStrings.length
     var spanBool = fretSpan <= self.maxSpan;
     var octaveBool = self.octaves || (len <= self.numNotes);
@@ -204,32 +201,30 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     return clusterConfigs;
   }
 
-  function inversionFilter(chordSets) {
+  function inversionSliderFilter(chordSets) {
+    console.log('chordset,', chordSets );
     for (var i = 0; i < chordSets.length; i++) {
-      if (self.allowedInversions[chordSets[i].inversion] == false) {
-        // console.log("inversion splice", chordSets[i]);
-        chordSets.splice(i,1);
-        i--;
+      var inversionNotAllowed = !self.allowedInversions[chordSets[i].inversion];
+      if (inversionNotAllowed || outOfSliderRange(chordSets[i])) {
+        // remove this chordset if this inversion is not allowed
+        chordSets.splice(i--,1);
       }
     }
     return chordSets;
-  }
 
-  function sliderFilter(chordSets) {
-    for (var i = 0; i < chordSets.length; i++) {
-      for (var j = 0; j < chordSets[i].frets.length; j++) {
-        var fretNum = chordSets[i].frets[j];
-        if (self.lowLimit > fretNum || self.highLimit < fretNum) {
-          if (!(self.allowOpen && !fretNum)) {
-            chordSets.splice(i,1);
-            i--;
-            break;
-          }
+    function outOfSliderRange(chordSet) {
+      for (var i = 0; i < chordSet.frets.length; i++) {
+        var fretNum = chordSet.frets[i];
+        var outOfRange = self.range[0] > fretNum || self.range[1] < fretNum;
+        //check with open-string condition
+        if (outOfRange && (!self.allowOpen || fretNum)){
+          return true;
         }
       }
     }
-    return chordSets;
   }
+
+
 
   function displayTriad() {
     if (!self.variations) {return 0;} //abort if no matches
@@ -350,12 +345,11 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   nonLinearSlider.noUiSlider.on('change', function (values, handle, unencoded, isTap, positions) {
     //set fret limits
-    self.lowLimit = parseInt(values[0]);
-    self.highLimit = parseInt(values[1]);
+    self.range[0] = parseInt(values[0]);
+    self.range[1] = parseInt(values[1]);
     self.filter();
     //update ng-DOM
     $scope.$apply();
-    console.log('sliderchange');
   });
 
 /******************************UTILITY FUNCTIONS******************************/
