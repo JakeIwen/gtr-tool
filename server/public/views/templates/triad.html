@@ -40,7 +40,7 @@
       <h4>Show Inversions:</h4>
       <ul ng-model="triad.allowedInversions">
         <li ng-repeat="invName in triad.inversionNames track by $index" ng-if="triad.numNotes > $index">
-          <input type="checkbox" ng-checked="triad.allowedInversions[$index]" ng-click="triad.toggleInversion($index)" /> {{invName}}</li>
+          <input type="checkbox" ng-model="triad.allowedInversions[$index]" ng-click="triad.filter()" /> {{invName}}</li>
       </ul>
     </div>
 
@@ -73,12 +73,12 @@
           <div class="preFret">
 
             <label class="switch" ng-model="triad.allowedStrings">
-              <input type="checkbox" ng-checked="triad.allowedStrings[string.pos]" ng-click="triad.toggleString(string.pos)">
+              <input type="checkbox" ng-model="triad.allowedStrings[string.pos]" ng-click="triad.filter()">
               <div class="sliderBox"></div>
             </label>
           </div>
           <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in triad.neck.frets">
-            <img src="../img/empty.svg" alt="*" class="marker" id="{{16 * (5 - string.pos) + fret.pos}}" data-stringfretmidi="[{{string.pos}}, {{fret.pos}}, {{string.base + fret.pos}}]"  height="16" width="24"/>
+            <img src="../img/empty.svg" alt="*" class="marker" id="{{16 * (5 - string.pos) + fret.pos}}" data-pos="[{{string.pos}}, {{fret.pos}}]" data-midi="{{string.base + fret.pos}}"  height="16" width="24"/>
           </div>
         </div>
       </div>

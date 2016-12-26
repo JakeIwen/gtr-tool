@@ -15,7 +15,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.maxSpan = 3;
   self.triadIndex = 0;
   self.tonic = 'C';
-  self.allowedInversions = [true, true, true, true];
+  self.allowedInversions = [true, true, true, true, true];
   self.allowedStrings = [true, true, true, true, true, true];
   self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth'];
   self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
@@ -36,22 +36,20 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     console.log('notes', notes);
     var i=0;
     $('.marker').each(function() {
-      $fretMidiNote = $(this).data('stringfretmidi')[2];
       //if this fret-note is contained in the selected chord, add array of objects describing fret-note location and relation to chord
-      var noteRelation = notes.indexOf($fretMidiNote % 12);
+      var noteRelation = notes.indexOf($(this).data('midi') % 12);
       if (noteRelation != -1) {
         fretNotes.unshift({
-          string: $(this).data('stringfretmidi')[0],
-          fret: $(this).data('stringfretmidi')[1],
-          midi: $fretMidiNote,
-          relation: noteRelation,
-          id: $(this).attr('id')
+          string: $(this).data('pos')[0],
+          fret: $(this).data('pos')[1],
+          midi: $(this).data('midi'),
+          id: $(this).attr('id'),
+          relation: noteRelation
         });
         i++;
       }
     });
     findTriads();
-    self.filter();
   };
 
   function findTriads() {
@@ -83,11 +81,12 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
     }
     function moreStrings(idx) {
+      //this function iterates to find more playable notes after the minimum required notes have been found
       var len = count;
       for (var i = idx; i < fretNotes.length; i++) {
         //if the string and note are not already used in the chord being constructed
-        var stringIsFree = strings.indexOf(fretNotes[i].string) == -1;
-        var isNextString = fretNotes[i].string == strings[0] + strings.length;
+        stringIsFree = strings.indexOf(fretNotes[i].string) == -1;
+        isNextString = fretNotes[i].string == strings[0] + strings.length;
         if (stringIsFree && isNextString) {
           notePush(i);
           masterPush();
@@ -130,9 +129,14 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         inversion: notes.indexOf(Math.min(...midis) % 12)
       });
     }
+    console.log('masterset', masterSet);
+    self.filter();
+  };
 
+  self.filter = function() {
+    self.triadIndex = 0;
+    activeList = [];
     sortedConfigs = clusterSort(masterSet);
-
     function clusterSort(allConfigs) {
       var sortedConfigs = [];
       if (self.onlyClusters) {
@@ -152,17 +156,15 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       }
       return sortedConfigs;
     }
-  };
 
-  self.filter = function() {
-    self.triadIndex = 0;
-    activeList = [];
-    console.log('masterset', masterSet);
     for (var i = 0; i < sortedConfigs.length; i++) {
-      //if open strings allowed, ignore zerows for fret span calculation
-      //populate sortedConfigs if they meet octave and fret-span and active string conditions
-      if (octaveSpanString(sortedConfigs[i]) && inversionSliderFilter(sortedConfigs[i])) {
-        activeList.push(i);
+      //pass thru filters and push the index of all acceptible configs to activeList
+      if (spanFilt(sortedConfigs[i]) &&
+        octaveFilt(sortedConfigs[i]) &&
+        stringFilt(sortedConfigs[i]) &&
+        invFilt(sortedConfigs[i]) &&
+        sliderFilt(sortedConfigs[i])){
+          activeList.push(i);
       }
     }
     //DOM binding listing number of chord variations
@@ -170,44 +172,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     console.log('updated sortedConfigs:', sortedConfigs);
     displayTriad();
   };
-
-  function octaveSpanString(thisConfig) {
-    if (self.allowOpen) {
-      //removes the zero-element from the fret span calculation
-      var fretSpan = findSpan(thisConfig.frets, 0);
-    } else {
-      var fretSpan = findSpan(thisConfig.frets);
-    }
-    //is fretSpan within user defined range?
-    var spanBool = fretSpan <= self.maxSpan;
-    //did the use allow octave suplicates and are they in this chord config?
-    var octaveBool = self.octaves || (thisConfig.count <= self.numNotes);
-    var stringActive = true;
-    //are any inactive strings contained in this chord config?
-    for (var i = 0; i < thisConfig.count; i++) {
-      if (self.allowedStrings[thisConfig.strings[i]] == false) {
-        stringActive = false;
-        break;
-      }
-    }
-    return spanBool && octaveBool && stringActive;
-  }
-
-  function inversionSliderFilter(chordSet) {
-    var inversionAllowed = self.allowedInversions[chordSet.inversion];
-    if (inversionAllowed && inSliderRange()) {
-      // remove this chordset if this inversion is not allowed
-      return true;
-    }
-    function inSliderRange() {
-      for (var i = 0; i < chordSet.count; i++) {
-        var fretNum = chordSet.frets[i];
-        var inRange = self.range[0] <= fretNum && self.range[1] >= fretNum;
-        //check with open-string condition
-        if (inRange || (self.allowOpen && !fretNum)) { return true;}
-      }
-    }
-  }
 
   function displayTriad() {
     if (!self.variations) {return 0;} //abort if no matches
@@ -220,43 +184,6 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
       var intvl = self.intervalName(notes.indexOf(thisTriad.midis[i] % 12));
       $('#' + thisTriad.ids[i]).attr('src', "../img/" + intvl + ".svg");
     }
-  }
-
-  function convertList(chordsArray) {
-    self.types = [];
-    //turn mongoDb data into array of chord objects
-    for (var i = 0; i < chordsArray.length; i++) {
-      var obj = {
-        name: chordsArray[i].longName,
-        names: chordsArray[i].names,
-        notes: chordsArray[i].notes
-      };
-      self.types.push(obj);
-    }  //set default chord
-    self.type = self.types[0];
-    self.newChord();
-  }
-
-  function getChords() {
-    //ajax call to get scales from MongoDb
-    $http.get('/chords/')
-    .then(function(response) {
-      console.log('getnames response', response.data);
-      convertList(response.data);;
-    },
-    function(response) {
-      console.log('get error:', response);
-    });
-  }
-
-  self.toggleInversion = function(index) {
-    self.allowedInversions[index] = !(self.allowedInversions[index]);
-    self.filter();
-  };
-
-  self.toggleString = function(string) {
-    self.allowedStrings[string] = !(self.allowedStrings[string]);
-    self.filter();
   }
 
   self.nextVar = function() {
@@ -281,9 +208,11 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   }
 
   self.intervalName = function(pos) {
+    //get english interval name fmor MUSIQ.js
     var thisNote = Note.fromNotation(self.noteName(pos));
     var root = Note.fromNotation(self.tonic);
     var intervalName = Interval.fromNotes(root, thisNote).name();
+    //correct some discrepancies with MUSIQ.js output
     if (intervalName == 'unison') {
       intervalName = 'tonic';
     } else if (intervalName == 'tritone') {
@@ -291,6 +220,74 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     }
     return intervalName;
   }
+
+  function getChords() {
+    //ajax call to get scales from MongoDb
+    $http.get('/chords/')
+    .then(function(response) {
+      console.log('getnames response', response.data);
+      convertList(response.data);;
+    },
+    function(response) {
+      console.log('get error:', response);
+    });
+  }
+  function convertList(chordsArray) {
+    self.types = [];
+    //turn mongoDb data into array of chord objects
+    for (var i = 0; i < chordsArray.length; i++) {
+      var obj = {
+        name: chordsArray[i].longName,
+        names: chordsArray[i].names,
+        notes: chordsArray[i].notes
+      };
+      self.types.push(obj);
+    }  //set default chord
+    self.type = self.types[0];
+    self.newChord();
+  }
+/***********************************FILTERS***********************************/
+function spanFilt(config){
+  if (self.allowOpen) {
+    //removes the zero-element from the fret span calculation
+    var fretSpan = findSpan(config.frets, 0);
+  } else {
+    var fretSpan = findSpan(config.frets);
+  }
+  //is fretSpan within user defined range?
+  return fretSpan <= self.maxSpan;
+}
+function octaveFilt(config){
+  //did the use allow octave suplicates and are they in this chord config?
+  return self.octaves || (config.count <= self.numNotes)
+}
+
+function stringFilt(config) {
+  var stringActive = true;
+  //are any inactive strings contained in this chord config?
+  for (var i = 0; i < config.count; i++) {
+    if (self.allowedStrings[config.strings[i]] == false) {
+      stringActive = false;
+      break;
+    }
+  }
+  return stringActive;
+}
+
+function invFilt(config) {
+  return self.allowedInversions[config.inversion];
+}
+
+function sliderFilt(config) {
+  for (var i = 0; i < config.count; i++) {
+    var fretNum = config.frets[i];
+    var inRange = self.range[0] <= fretNum && self.range[1] >= fretNum;
+    //check with open-string condition
+    if (inRange || (self.allowOpen && !fretNum)) {
+      return true;
+    }
+  }
+}
 
 /************************************SLIDER***********************************/
   var nonLinearSlider = document.getElementById('nonlinear');
