@@ -77,11 +77,8 @@
               <div class="sliderBox"></div>
             </label>
           </div>
-
           <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in triad.neck.frets">
-
             <img src="../img/empty.svg" alt="*" class="marker" id="{{16 * (5 - string.pos) + fret.pos}}" data-stringfretmidi="[{{string.pos}}, {{fret.pos}}, {{string.base + fret.pos}}]"  height="16" width="24"/>
-
           </div>
         </div>
       </div>

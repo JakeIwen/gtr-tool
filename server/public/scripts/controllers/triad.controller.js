@@ -156,6 +156,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   self.filter = function() {
     self.triadIndex = 0;
+    activeList = [];
     console.log('masterset', masterSet);
     for (var i = 0; i < sortedConfigs.length; i++) {
       //if open strings allowed, ignore zerows for fret span calculation
@@ -172,6 +173,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
 
   function octaveSpanString(thisConfig) {
     if (self.allowOpen) {
+      //removes the zero-element from the fret span calculation
       var fretSpan = findSpan(thisConfig.frets, 0);
     } else {
       var fretSpan = findSpan(thisConfig.frets);
