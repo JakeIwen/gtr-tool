@@ -138,34 +138,14 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     activeList = [];
     sortedConfigs = clusterSort(masterSet);
 
-    function clusterSort(allConfigs) {
-      var sorted = [];
-      if (self.onlyClusters) {
-        clusters(0);
-      } else {
-        for (var i = 0; i < 3; i++) {
-          clusters(i);
-        }
-      }
-      function clusters(skips) {
-        //get all clusters of a given string span
-        for (var i = 0; i < allConfigs.length; i++) {
-          if (findSpan(allConfigs[i].strings) == allConfigs[i].count - 1 + skips) {
-            sorted.unshift(clone(allConfigs[i]));
-          }
-        }
-      }
-      return sorted;
-    }
-
     for (var i = 0; i < sortedConfigs.length; i++) {
       //pass thru filters and push the index of all acceptible configs to activeList
       if (spanFilt(sortedConfigs[i]) &&
-        octaveFilt(sortedConfigs[i]) &&
-        stringFilt(sortedConfigs[i]) &&
-        invFilt(sortedConfigs[i]) &&
-        sliderFilt(sortedConfigs[i])){
-          activeList.push(i);
+      octaveFilt(sortedConfigs[i]) &&
+      stringFilt(sortedConfigs[i]) &&
+      invFilt(sortedConfigs[i]) &&
+      sliderFilt(sortedConfigs[i])){
+        activeList.push(i);
       }
     }
     //DOM binding listing number of chord variations
@@ -247,50 +227,68 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     self.type = self.types[0];
     self.newChord();
   }
-/***********************************FILTERS***********************************/
-function spanFilt(config){
-  if (self.allowOpen) {
-    //removes the zero-element from the fret span calculation
-    var fretSpan = findSpan(config.frets, 0);
-  } else {
-    var fretSpan = findSpan(config.frets);
+  /******************************FILTERS & SORTING******************************/
+  function spanFilt(config){
+    if (self.allowOpen) {
+      //removes the zero-element from the fret span calculation
+      var fretSpan = findSpan(config.frets, 0);
+    } else {
+      var fretSpan = findSpan(config.frets);
+    }
+    //is fretSpan within user defined range?
+    return fretSpan <= self.maxSpan;
   }
-  //is fretSpan within user defined range?
-  return fretSpan <= self.maxSpan;
-}
-function octaveFilt(config){
-  //did the use allow octave suplicates and are they in this chord config?
-  return self.octaves || (config.count <= self.numNotes)
-}
+  function octaveFilt(config){
+    //did the use allow octave suplicates and are they in this chord config?
+    return self.octaves || (config.count <= self.numNotes)
+  }
 
-function stringFilt(config) {
-  var stringActive = true;
-  //are any inactive strings contained in this chord config?
-  for (var i = 0; i < config.count; i++) {
-    if (self.allowedStrings[config.strings[i]] == false) {
-      stringActive = false;
-      break;
+  function stringFilt(config) {
+    var stringActive = true;
+    //are any inactive strings contained in this chord config?
+    for (var i = 0; i < config.count; i++) {
+      if (self.allowedStrings[config.strings[i]] == false) {
+        stringActive = false;
+        break;
+      }
+    }
+    return stringActive;
+  }
+
+  function invFilt(config) {
+    return self.allowedInversions[config.inversion];
+  }
+
+  function sliderFilt(config) {
+    for (var i = 0; i < config.count; i++) {
+      var fretNum = config.frets[i];
+      var inRange = self.range[0] <= fretNum && self.range[1] >= fretNum;
+      //check with open-string condition
+      if (inRange || (self.allowOpen && !fretNum)) {
+        return true;
+      }
     }
   }
-  return stringActive;
-}
-
-function invFilt(config) {
-  return self.allowedInversions[config.inversion];
-}
-
-function sliderFilt(config) {
-  for (var i = 0; i < config.count; i++) {
-    var fretNum = config.frets[i];
-    var inRange = self.range[0] <= fretNum && self.range[1] >= fretNum;
-    //check with open-string condition
-    if (inRange || (self.allowOpen && !fretNum)) {
-      return true;
+  function clusterSort(allConfigs) {
+    var sorted = [];
+    if (self.onlyClusters) {
+      clusters(0);
+    } else {
+      for (var i = 0; i < 3; i++) {
+        clusters(i);
+      }
     }
+    function clusters(skips) {
+      //get all clusters of a given string span
+      for (var i = 0; i < allConfigs.length; i++) {
+        if (findSpan(allConfigs[i].strings) == allConfigs[i].count - 1 + skips) {
+          sorted.unshift(clone(allConfigs[i]));
+        }
+      }
+    }
+    return sorted;
   }
-}
-
-/************************************SLIDER***********************************/
+  /************************************SLIDER***********************************/
   var nonLinearSlider = document.getElementById('nonlinear');
 
   noUiSlider.create(nonLinearSlider, {
@@ -326,13 +324,13 @@ function sliderFilt(config) {
     $scope.$apply();
   });
 
-/******************************UTILITY FUNCTIONS******************************/
+  /******************************UTILITY FUNCTIONS******************************/
   function removeElem(arr, elem) {
     var i = arr.length;
     while (i--) {
-        if (arr[i] === elem) {
-            arr.splice(i, 1);
-        }
+      if (arr[i] === elem) {
+        arr.splice(i, 1);
+      }
     }
     return arr;
   }
