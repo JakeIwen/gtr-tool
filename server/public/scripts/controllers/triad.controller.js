@@ -137,8 +137,9 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     self.triadIndex = 0;
     activeList = [];
     sortedConfigs = clusterSort(masterSet);
+
     function clusterSort(allConfigs) {
-      var sortedConfigs = [];
+      var sorted = [];
       if (self.onlyClusters) {
         clusters(0);
       } else {
@@ -150,11 +151,11 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
         //get all clusters of a given string span
         for (var i = 0; i < allConfigs.length; i++) {
           if (findSpan(allConfigs[i].strings) == allConfigs[i].count - 1 + skips) {
-            sortedConfigs.unshift(clone(allConfigs[i]));
+            sorted.unshift(clone(allConfigs[i]));
           }
         }
       }
-      return sortedConfigs;
+      return sorted;
     }
 
     for (var i = 0; i < sortedConfigs.length; i++) {
@@ -174,7 +175,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   };
 
   function displayTriad() {
-    if (!self.variations) {return 0;} //abort if no matches
+    if (!self.variations) {return 0} //abort if no matches
     //the thisTriad variation dictated by prev/next buttions
     var thisTriad = sortedConfigs[activeList[self.triadIndex]];
     console.log('This triad:', thisTriad);
