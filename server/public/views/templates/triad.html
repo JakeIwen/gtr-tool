@@ -1,5 +1,6 @@
 <section class="row">
   <div class="options row">
+
     <div class="col-md-3">
       <h4>{{triad.tonic + triad.type.name}} composition</h4>
       <table class="noteMap">
@@ -11,21 +12,14 @@
             <td class="map">{{triad.noteName(n)}}:</td>
             <td> {{triad.intervalName(n)}}</td>
           </tr>
-
         </tbody>
       </table>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <form class="row">
-
-        <select ng-model="triad.tonic" ng-options="tonic as tonic for tonic in triad.tonicList" ng-change="triad.newChord()">
-        </select>
-
-        <select ng-options="types as types.name for types in triad.types" ng-model="triad.type" ng-change="triad.newChord()">
-        <select ng-model="triad.type" ng-change="triad.newChord()">
-
-        </select>
+        <select ng-model="triad.tonic" ng-options="tonic as tonic for tonic in triad.tonicList" ng-change="triad.newChord()"></select>
+        <select ng-options="types as types.name for types in triad.types" ng-model="triad.type" ng-change="triad.newChord()"></select>
       </form>
       <div class="row">
         <br>
@@ -36,6 +30,7 @@
       </div>
 
     </div>
+
     <div class="col-md-2">
       <h4>Show Inversions:</h4>
       <ul ng-model="triad.allowedInversions">
@@ -46,43 +41,35 @@
 
     <div class="col-md-3">
       <select ng-options="span as span for span in [1,2,3,4,5]" ng-model="triad.maxSpan"
-      ng-change="triad.filter()">
-      </select>
-      <span>Max Fret-Stretch</span>
-      <br />
-      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen">
-      <span>Allow open strings</span>
-      <br />
-      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.onlyClusters">
-      <span>Consecutive strings only</span>
-      <br>
-      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.octaves">
-      <span>Allow octave-duplicates</span>
-      <br>
+      ng-change="triad.filter()"></select>
+      <span>Max Fret-Stretch</span><br>
+      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen" />
+      <span>Allow open strings</span><br>
+      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.onlyClusters" />
+      <span>Consecutive strings only</span><br>
+      <input type="checkbox" ng-click="triad.filter()" ng-model="triad.octaves" />
+      <span>Allow octave-duplicates</span><br>
       Fret Range:
       <span id="lower-value">{{triad.range[0]}} to {{triad.range[1]}}</span>
     </div>
 
   </div>
 
-    <div class="fretboardContainer col-xs-11">
-      <div id="nonlinear" class="noUi-target noUi-ltr noUi-horizontal"></div>
-      <div class="strings" ng-repeat="string in triad.neck.strings | orderBy:'':true">
-
-        <div class="fretRow">
-          <div class="preFret">
-
-            <label class="switch" ng-model="triad.allowedStrings">
-              <input type="checkbox" ng-model="triad.allowedStrings[string.pos]" ng-click="triad.filter()">
-              <div class="sliderBox"></div>
-            </label>
-          </div>
-          <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in triad.neck.frets">
-            <img src="../img/empty.svg" alt="*" class="marker" id="{{16 * (5 - string.pos) + fret.pos}}" data-pos="[{{string.pos}}, {{fret.pos}}]" data-midi="{{string.base + fret.pos}}"  height="16" width="24"/>
-          </div>
+  <div class="fretboardContainer col-xs-11">
+    <div id="nonlinear" class="noUi-target noUi-ltr noUi-horizontal"></div>
+    <div class="strings" ng-repeat="string in triad.neck.strings | orderBy:'':true">
+      <div class="fretRow">
+        <div class="preFret">
+          <label class="switch" ng-model="triad.allowedStrings">
+            <input type="checkbox" ng-model="triad.allowedStrings[string.pos]" ng-click="triad.filter()">
+            <div class="sliderBox"></div>
+          </label>
+        </div>
+        <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in triad.neck.frets">
+          <img src="../img/empty.svg" alt="*" class="marker" id="{{16 * (5 - string.pos) + fret.pos}}" data-pos="[{{string.pos}}, {{fret.pos}}]" data-midi="{{string.base + fret.pos}}"  height="16" width="24"/>
         </div>
       </div>
     </div>
-
+  </div>
 
 </section>

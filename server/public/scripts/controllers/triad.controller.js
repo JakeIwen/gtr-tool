@@ -260,14 +260,17 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   }
 
   function sliderFilt(config) {
+    var sliderBool = true;
     for (var i = 0; i < config.count; i++) {
       var fretNum = config.frets[i];
       var inRange = self.range[0] <= fretNum && self.range[1] >= fretNum;
       //check with open-string condition
-      if (inRange || (self.allowOpen && !fretNum)) {
-        return true;
+      if (!(inRange || (self.allowOpen && !fretNum))) {
+        sliderBool = false;
+        break;
       }
     }
+    return sliderBool;
   }
   function clusterSort(allConfigs) {
     var sorted = [];
