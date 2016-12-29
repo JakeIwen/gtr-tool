@@ -1,16 +1,16 @@
 <section class="row">
   <div class="options row">
 
-    <div class="col-md-3">
-      <h4>{{triad.tonic + triad.type.name}} composition</h4>
+    <div class="col-md-4">
+      <h4>{{triad.tonic + ' ' + triad.type.name}} composition</h4>
       <table class="noteMap">
         <tbody>
           <tr ng-repeat="n in [0,1,2,3,4] track by $index" ng-if="triad.numNotes > n">
             <td>
               <img ng-src="../img/{{triad.intervalName(n)}}.svg" alt="*" height="16" width="24" />
             </td>
-            <td class="map">{{triad.noteName(n)}}:</td>
-            <td> {{triad.intervalName(n)}}</td>
+            <td class="map">{{triad.noteName(n, true)}}</td>
+            <td>:{{triad.intervalName(n)}}</td>
           </tr>
         </tbody>
       </table>

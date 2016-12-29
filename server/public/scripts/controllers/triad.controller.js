@@ -8,6 +8,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   var activeList = [];
   var sortedConfigs = [];
   var notes = [];
+  var tonic = '';
   self.range = [0, 15];
   self.allowOpen = false;
   self.onlyClusters = true;
@@ -18,7 +19,7 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.allowedInversions = [true, true, true, true, true];
   self.allowedStrings = [true, true, true, true, true, true];
   self.inversionNames = ['Root', 'First', 'Second', 'Third', 'Fourth'];
-  self.tonicList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G#', 'A', 'A#', 'B'];
+  self.tonicList = ['C', 'C♯', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B', 'C♭'];
 
   self.neck = new Guitar();
   self.neck.frets_shown = 15;
@@ -28,9 +29,10 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
   self.newChord = function() {
     notes = [];
     fretNotes = [];
+    tonic = self.tonic.replace("♭","b").replace("♯", "#");
     //populate array with semitone intervals of chord
     for (var i = 0; i < self.type.notes.length; i++) {
-      notes[i] = (note(self.tonic).pos + self.type.notes[i]) % 12;
+      notes[i] = (note(tonic).pos + self.type.notes[i]) % 12;
     }
     self.numNotes = notes.length;
     console.log('notes', notes);
@@ -183,15 +185,24 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     displayTriad();
   }
 
-  self.noteName = function(pos) {
+  self.noteName = function(pos, notation) {
     //relative cof positions to determine if # or flat
-    return MUSIQ.sharpNames[notes[pos]];
+    var root = Note.fromNotation(tonic);
+    if (root.cofPosition() < 6) {
+      var ret = MUSIQ.sharpNames[notes[pos]];
+    } else {
+      var ret = MUSIQ.flatNames[notes[pos]];
+    }
+    if(notation){
+      ret = ret.replace("b","♭").replace("#","♯");
+    }
+    return ret;
   }
 
   self.intervalName = function(pos) {
     //get english interval name fmor MUSIQ.js
     var thisNote = Note.fromNotation(self.noteName(pos));
-    var root = Note.fromNotation(self.tonic);
+    var root = Note.fromNotation(tonic);
     var intervalName = Interval.fromNotes(root, thisNote).name();
     //correct some discrepancies with MUSIQ.js output
     if (intervalName == 'unison') {
