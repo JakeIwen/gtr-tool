@@ -1,7 +1,7 @@
 /* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+* In this file you should write your main styles. (or centralize your imports)
+* Import this file using the following HTML or equivalent:
+* <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 /* line 6, ../sass/screen.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -103,13 +103,8 @@ h4 {
   margin-top: 10px;
 }
 
-/* line 89, ../sass/screen.scss */
-.markerMap {
-  display: inline-block;
-}
-
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
-/* line 97, ../sass/screen.scss */
+/* line 95, ../sass/screen.scss */
 #nonlinear {
   margin-top: -55px;
   margin-bottom: 40px;
@@ -118,7 +113,7 @@ h4 {
   width: 94%;
 }
 
-/* line 105, ../sass/screen.scss */
+/* line 103, ../sass/screen.scss */
 .fretboardContainer {
   margin: 15px;
   padding: 17px 20px 0 0;
@@ -131,7 +126,7 @@ h4 {
   /*align-self: center;*/
 }
 
-/* line 118, ../sass/screen.scss */
+/* line 116, ../sass/screen.scss */
 .strings {
   padding-top: 3px;
   /*width: 100%;*/
@@ -139,112 +134,131 @@ h4 {
   z-index: 1000;
 }
 
-/* line 125, ../sass/screen.scss */
+/* line 123, ../sass/screen.scss */
 .fretRow {
   /*display: flex;
   text-align: justify;
   justify-content: space-between;*/
-  margin-top: -13px;
-  margin-bottom: 10px;
+  margin-top: -8px;
+  margin-bottom: 8px;
   white-space: nowrap;
 }
 
-/* line 142, ../sass/screen.scss */
+/* line 131, ../sass/screen.scss */
+.markerContainer {
+  position: relative;
+  width: 30px;
+}
+
+/* line 135, ../sass/screen.scss */
+.markerMap {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+}
+
+/* line 140, ../sass/screen.scss */
+.horizMarker {
+  display: inline-block;
+}
+
+/* line 152, ../sass/screen.scss */
 .fret {
   /*margin-bottom: -50%;*/
   display: inline-block;
   min-width: 19px;
   z-index: -1;
   text-align: right;
+  padding: 0;
 }
 
-/* line 151, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .preFret {
   display: inline-block;
   overflow: none;
 }
 
-/* line 157, ../sass/screen.scss */
+/* line 167, ../sass/screen.scss */
 .fretNum0 {
   width: 20px;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum1 {
   width: 8.79744%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum2 {
   width: 8.33997%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum3 {
   width: 7.90629%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum4 {
   width: 7.49517%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum5 {
   width: 7.10542%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum6 {
   width: 6.73594%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum7 {
   width: 6.38567%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum8 {
   width: 6.05361%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum9 {
   width: 5.73883%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum10 {
   width: 5.44041%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum11 {
   width: 5.15751%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum12 {
   width: 4.88932%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum13 {
   width: 4.63507%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum14 {
   width: 4.39405%;
 }
 
-/* line 165, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .fretNum15 {
   width: 4.16556%;
 }
 
-/* line 172, ../sass/screen.scss */
+/* line 182, ../sass/screen.scss */
 .borderString {
   /*same height as tr*/
   height: 18px;
@@ -253,13 +267,13 @@ h4 {
   margin-right: -3px;
 }
 
-/* line 179, ../sass/screen.scss */
+/* line 189, ../sass/screen.scss */
 .fretNum0 {
   border-right: 9px solid #e0e2c9;
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
-/* line 185, ../sass/screen.scss */
+/* line 195, ../sass/screen.scss */
 nav ul {
   margin: 0 auto;
   width: 80%;
@@ -267,18 +281,18 @@ nav ul {
   text-align: center;
 }
 
-/* line 192, ../sass/screen.scss */
+/* line 202, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 194, ../sass/screen.scss */
+/* line 204, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
 }
 
-/* line 199, ../sass/screen.scss */
+/* line 209, ../sass/screen.scss */
 .customBtn {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
@@ -298,33 +312,38 @@ form {
   margin-top: 10px;
 }
 
-/* line 218, ../sass/screen.scss */
+/* line 228, ../sass/screen.scss */
 .customBtn:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-/* line 224, ../sass/screen.scss */
+/* line 234, ../sass/screen.scss */
 .customBtn:active {
   position: relative;
   top: 1px;
 }
 
+/* line 238, ../sass/screen.scss */
+td {
+  font-size: 1.2em;
+}
+
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
-/* line 230, ../sass/screen.scss */
+/* line 243, ../sass/screen.scss */
 #source {
   font-family: "Courier New", courier;
 }
 
-/* line 233, ../sass/screen.scss */
+/* line 246, ../sass/screen.scss */
 textarea {
   margin-top: 22px;
   border-radius: 16px;
 }
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 240, ../sass/screen.scss */
+/* line 253, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -334,13 +353,13 @@ textarea {
 }
 
 /* Hide default HTML checkbox */
-/* line 249, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 252, ../sass/screen.scss */
+/* line 265, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -353,7 +372,7 @@ textarea {
   transition: .4s;
 }
 
-/* line 264, ../sass/screen.scss */
+/* line 277, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -366,29 +385,29 @@ textarea {
   transition: .4s;
 }
 
-/* line 276, ../sass/screen.scss */
+/* line 289, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 280, ../sass/screen.scss */
+/* line 293, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 284, ../sass/screen.scss */
+/* line 297, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 291, ../sass/screen.scss */
+/* line 304, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 293, ../sass/screen.scss */
+/* line 306, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;

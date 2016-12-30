@@ -1,26 +1,26 @@
 /* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+* In this file you should write your main styles. (or centralize your imports)
+* Import this file using the following HTML or equivalent:
+* <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
- html, body, div, span, applet, object, iframe,
- h1, h2, h3, h4, h5, h6, p, blockquote, pre,
- a, abbr, acronym, address, big, cite, code,
- del, dfn, em, img, ins, kbd, q, s, samp,
- small, strike, strong, sub, sup, tt, var,
- b, u, i, center,
- dl, dt, dd, ol, ul, li,
- fieldset, form, label, legend,
- table, caption, tbody, tfoot, thead, tr, th, td,
- article, aside, canvas, details, embed,
- figure, figcaption, footer, header, hgroup,
- menu, nav, output, ruby, section, summary,
- time, mark, audio, video {
-   margin: 0;
-   padding: 0;
-   border: 0;
-   vertical-align: baseline;
- }
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
 
 /*----------------------------- GENERAL STYLING ------------------------------*/
 body {
@@ -64,7 +64,7 @@ h4 {
 .sitePage {
   margin-right: -2px;
   margin-left: -2px;
-  }
+}
 #siteName > h2 {
   font-weight: 700;
   font-size: 18pt;
@@ -86,9 +86,7 @@ h4 {
 .select {
   margin-top: 10px;
 }
-.markerMap {
-  display: inline-block;
-}
+
 .map {
 }
 
@@ -119,16 +117,28 @@ h4 {
   padding-top: 3px;
   /*width: 100%;*/
   height: 25px;
-    z-index: 1000;
+  z-index: 1000;
 }
 
 .fretRow {
   /*display: flex;
   text-align: justify;
   justify-content: space-between;*/
-  margin-top: -13px;
-  margin-bottom: 10px;
+  margin-top: -8px;
+  margin-bottom: 8px;
   white-space: nowrap;
+}
+.markerContainer {
+  position: relative;
+  width: 30px;
+}
+.markerMap {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+}
+.horizMarker {
+  display: inline-block;
 }
 .marker {
   // background-image: url("../img/greencircle.svg");
@@ -136,7 +146,7 @@ h4 {
   // background-image-size: 16px;
   // background-position: right;
   // height: 16px;
-  // min-width: 16px;
+  // min-width: 16px
 
 }
 .fret {
@@ -146,7 +156,7 @@ h4 {
   min-width: 19px;
   z-index: -1;
   text-align: right;
-
+  padding: 0;
 }
 .preFret {
   display: inline-block;
@@ -160,12 +170,12 @@ $used-length: 0%;
 
 $old-len: 9.28%;
 @for $i from 1 through 15 {
-    $new-length: $old-len * (9.48/10);
+  $new-length: $old-len * (9.48/10);
 
-    .fretNum#{$i} {
-        width: $new-length;
-    }
-    $old-len: $new-length;
+  .fretNum#{$i} {
+    width: $new-length;
+  }
+  $old-len: $new-length;
 
 }
 
@@ -225,10 +235,13 @@ form {display: inline-block;}
   position:relative;
   top:1px;
 }
+td {
+  font-size: 1.2em;
+}
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
 
 #source {
-    font-family: "Courier New", courier;
+  font-family: "Courier New", courier;
 }
 textarea {
   margin-top: 22px;
