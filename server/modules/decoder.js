@@ -1,5 +1,4 @@
 var admin = require("firebase-admin");
-
 admin.initializeApp({
   credential: admin.credential.cert({
     "type": process.env.FIREBASE_TYPE,

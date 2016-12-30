@@ -37,7 +37,7 @@ mongoose.connection.on('connected', function() {
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
-console.log('process env', process.ENV);
+console.log('process env', process.env);
 
 var portDecision = process.env.PORT || 3000;
 
