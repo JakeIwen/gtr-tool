@@ -1,9 +1,26 @@
 
 <section>
 
-<h2>Welcome Home</h2>
+  <h2>Welcome Home</h2>
 
-<!-- <button ng-click="home.logIn()">Log In</button>
-<button ng-click="home.logOut()">Log Out</button> -->
+  <button ng-click="home.logIn()">Log In</button>
+  <button ng-click="home.logOut()">Log Out</button>
+
+  <div ng-if="home.songs.length === 0">Log in to get some secret data.</div>
+  <table ng-if="home.songs.length > 0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Song</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="song in home.songs">
+        <td>{{song.title}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+    </tbody>
+  </table>
 
 </section>

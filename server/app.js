@@ -1,10 +1,14 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-
+var decoder = require('./modules/decoder');
 var bodyParser = require('body-parser');
 var scales = require('./routes/scales');
 var chords = require('./routes/chords');
+var mongoConnection = require('./modules/mongo-connection');
+var songs = require('./routes/songs');
+var users = require('./routes/users');
+
 
 var mongoose = require('mongoose');
 
@@ -35,3 +39,7 @@ app.get('/', function(req, res) {
 app.listen(3000, function() {
   console.log("server running, check localhost:3000");
 });
+app.use(decoder.token);
+app.use('/users', users);
+
+app.use('/songs', songs);

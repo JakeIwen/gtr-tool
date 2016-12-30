@@ -1,0 +1,26 @@
+var admin = require("firebase-admin");
+
+admin.initializeApp({
+  credential: admin.credential.cert("./server/firebase-service-account.json"),
+  databaseURL: "https://gtr-tool.firebaseio.com" // replace this line with your URL
+});
+
+var tokenDecoder = function(req, res, next){
+  if (req.headers.id_token) {
+    admin.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+      // Adding the decodedToken to the request so that downstream processes can use it
+      req.decodedToken = decodedToken;
+      next();
+    })
+    .catch(function(error) {
+      console.log('User token could not be verified');
+      res.sendStatus(403);
+    });
+  } else {
+    // Seems to be hit when chrome makes request for map files
+    // Will also be hit when user does not send back an idToken in the header
+    res.sendStatus(403);
+  }
+}
+
+module.exports = { token: tokenDecoder };
