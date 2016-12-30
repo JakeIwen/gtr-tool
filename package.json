@@ -14,6 +14,7 @@
     "angularfire": "^2.1.0",
     "body-parser": "^1.15.2",
     "dot-env": "0.0.1",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "firebase": "^3.6.2",
     "firebase-admin": "^4.0.4",
@@ -23,7 +24,7 @@
     "request": "^2.79.0"
   },
   "repository": {
-  "type": "git",
-  "url": "git+https://github.com/JakeIwen/gtr-tool.git"
-},
+    "type": "git",
+    "url": "git+https://github.com/JakeIwen/gtr-tool.git"
+  }
 }
