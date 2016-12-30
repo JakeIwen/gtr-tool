@@ -10,22 +10,37 @@ app.controller('TextController', function($firebaseAuth, $http) {
         title: self.title,
         song: self.songText
       }
-      if(currentUser) {
-        currentUser.getToken().then(function(idToken){
-          console.log('getting song list');
-          $http({
-            method: 'POST',
-            url: '/songs/',
-            data: songData,
-            headers: {
-              id_token: idToken
-            }
-          }).then(function(response){
-            console.log('song added to DB');
-          });
+      currentUser.getToken().then(function(idToken){
+        console.log('getting song list');
+        $http({
+          method: 'POST',
+          url: '/songs/',
+          data: songData,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          console.log('song added to DB');
         });
-      }
+      });
+    } else {
+      //ng-if flip: message about requiring text in fields
     }
+  }
+  self.getSong = function(songId){
+    console.log('songid', songId);
+    currentUser.getToken().then(function(idToken){
+      console.log('getting song list');
+      $http({
+        method: 'GET',
+        url: '/songs/title/' + songId,
+        headers: { id_token: idToken }
+      }).then(function(response){
+        console.log('reponee ', response.data);
+        self.songText = response.data.song;
+        self.title = response.data.title;
+      });
+    });
   }
 
 
@@ -41,6 +56,7 @@ app.controller('TextController', function($firebaseAuth, $http) {
       console.log('Logging the user out!');
     });
   }
+
 
   auth.$onAuthStateChanged(function(firebaseUser){
     console.log('authentication state changed');

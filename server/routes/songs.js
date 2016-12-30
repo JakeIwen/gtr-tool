@@ -20,7 +20,7 @@ router.get("/titles", function(req, res){
         res.sendStatus(403);
       } else {
         // Based on the clearance level of the individual, give them access to different information
-        Song.find( {}, '-song', function (err, titles){
+        Song.find( {}, '-song', {sort: {title: 1}}, function (err, titles){
           if (err) {
             console.log('Error COMPLETING song query task', err);
             res.sendStatus(500);
@@ -35,8 +35,10 @@ router.get("/titles", function(req, res){
   });
 });
 
-router.get("/title", function(req, res){
+router.get("/title/:id", function(req, res){
   var userEmail = req.decodedToken.email;
+  var songId = req.params.id;
+  console.log('songid', req.params.id);
   // Check the user's exitence based on their email
   User.findOne({ email: userEmail }, function (err, user) {
     if (err) {
@@ -50,14 +52,14 @@ router.get("/title", function(req, res){
         res.sendStatus(403);
       } else {
         // Based on the clearance level of the individual, give them access to different information
-        Song.find( {}, function (err, songs){
+        Song.findOne( { _id: songId }, function (err, song){
           if (err) {
             console.log('Error COMPLETING song query task', err);
             res.sendStatus(500);
           } else {
             // return all of the results where a specific user has permission
-            console.log('songs', songs);
-            res.send(songs);
+            console.log('song', song);
+            res.send(song);
           }
         });
       }

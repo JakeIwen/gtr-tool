@@ -1,54 +1,39 @@
 <section>
-  <div class="list col-md-2">
-    <button ng-click="text.logIn()">Log In</button>
-    <button ng-click="text.logOut()">Log Out</button>
-    <table>
-      <thead>
-        <tr>
-          <th>Key</th>
-          <th>Title</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="song in text.songList">
-          <td>{{song.key}}</td>
-          <td ng-click="text.getSong()">{{song.title}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-
-  <div class="song col-md-10">
-    <input type="text" ng-model="text.title" placeholder="Song Title">
-
-    <div class="row">
-      <button class="submit col-md-4" ng-click="text.minus()">
-        <strong>Transpose Down</strong>
+  <div class="row">
+    <div class="col-md-12">
+      <input type="text" ng-model="text.title" placeholder="Title - Artist">
+      <button class="button addSong" ng-click="text.addToDb()">
+        <strong>Save Song</strong>
       </button>
-      <span>
-        <button class="submit col-md-4" ng-click="text.plus()">
-          <strong>Transpose Up</strong>
-        </button>
-      </span>
-      <span>
-        <button class="submit col-md-4" ng-click="text.addToDb()">
-          <strong>Save Song</strong>
-        </button>
-      </span>
+      <button class="customBtn" ng-click="text.plus()">Transpose Up</button>
+      <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
+      <button class="customBtn" ng-click="text.logIn()">Log In</button>
+      <button class="customBtn" ng-click="text.logOut()">Log Out</button>
     </div>
-    <div class="row">
+  </div>
+  <div class="row">
+
+    <div class="song col-md-9">
       <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
     </div>
-    <div class="row">
-      <button class="submit col-md-6" ng-click="text.minus()">
-        <strong>Transpose Down</strong>
-      </button>
-      <span>
-        <button class="submit plus col-md-6" ng-click="text.plus()">
-          <strong>Transpose Up</strong>
-        </button>
-      </span>
+
+    <div class="col-md-3 list">
+      <h4>Saved Songs</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Title - Artist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="songs" data-id="{{song._id}}" ng-repeat="song in text.songList">
+            <td>{{song.key}}</td>
+            <td ng-click="text.getSong(song._id)">{{song.title}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+
 </section>

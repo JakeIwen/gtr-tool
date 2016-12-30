@@ -18,3 +18,6 @@ SVG dynamic property editor
 how can I best separate my code - several very similar functions are in both Triad and CAGED controllers.
 What do you recommend for "home page"? Nothing?
 is using "onclick" in nav.html bad practice? - theres hashtags inserted into the urls....
+should i be checking firebase authorization every time something with permissions is done, or is there a safe way to store the authentication status?
+upload text files
+get firebase login to exist across controller

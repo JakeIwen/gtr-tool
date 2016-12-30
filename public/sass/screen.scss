@@ -91,11 +91,7 @@ h4 {
 }
 .map {
 }
-td {
-  vertical-align: text-top;
-  font-size: 1.2em;
 
-}
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
 
 #nonlinear {
@@ -230,18 +226,16 @@ form {display: inline-block;}
   top:1px;
 }
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
-.submit {
-    padding: 10px 0;
-    cursor: pointer;
-    margin: 0;
-    font-size: 16px;
-    font-style: normal;
-    color: #999;
-}
+
 #source {
     font-family: "Courier New", courier;
-
 }
+textarea {
+  margin-top: 22px;
+  border-radius: 16px;
+}
+
+
 /*--------------------------------- SLIDER STYLE -----------------------------*/
 .switch {
   position: relative;

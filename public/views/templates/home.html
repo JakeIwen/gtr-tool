@@ -3,24 +3,4 @@
 
   <h2>Welcome Home</h2>
 
-  <button ng-click="home.logIn()">Log In</button>
-  <button ng-click="home.logOut()">Log Out</button>
-
-  <table ng-if="home.songList.length > 0">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Song</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="song in home.songList">
-        <td>{{song.title}}</td>
-        <td>{{song.key}}</td>
-
-      </tr>
-    </tbody>
-
-  </table>
-
 </section>
