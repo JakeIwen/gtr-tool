@@ -1,12 +1,12 @@
 {
   "name": "gtr-tool",
   "version": "1.0.0",
-  "description": "",
+  "description": "Interactive guitar tools",
   "main": "app.js",
   "scripts": {
     "start": "node server/app.js"
   },
-  "author": "",
+  "author": "Jake Iwen",
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.9",
@@ -21,5 +21,9 @@
     "mongoose": "^4.7.1",
     "pg": "^6.1.0",
     "request": "^2.79.0"
-  }
+  },
+  "repository": {
+  "type": "git",
+  "url": "git+https://github.com/JakeIwen/gtr-tool.git"
+},
 }
