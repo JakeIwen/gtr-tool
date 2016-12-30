@@ -3,15 +3,12 @@ var app = express();
 var path = require('path');
 var decoder = require('./modules/decoder');
 var bodyParser = require('body-parser');
-var scales = require('./routes/scales');
-var chords = require('./routes/chords');
+var scales = require('../public/data/scales');
+var chords = require('../public/data/chords');
 var mongoConnection = require('./modules/mongo-connection');
 var songs = require('./routes/songs');
 var users = require('./routes/users');
-
-
 var mongoose = require('mongoose');
-
 
 // serve static files
 app.use(express.static('public'));
@@ -20,12 +17,17 @@ app.use(bodyParser.json()); // needed for angular requests
 // server index file
 app.get('/home', function(req, res) {});
 
-app.use('/scales', scales);
-app.use('/chords', chords);
-
+app.get('/scales', function(req, res) {
+  res.send(scales);
+});
+app.get('/chords', function(req, res) {
+  res.send(chords);
+});
 
 /** ---------- MONGOOSE CONNECTION HANDLING ---------- **/
-var databaseUri = 'mongodb://localhost:27017/gtr-tool';
+//var databaseUri = 'mongodb://localhost:27017/gtr-tool';
+var databaseUri = 'mongodb://heroku_7b95z3d5:8b1s5ahe1fsi85sfb16lsvc1mf@ds149268.mlab.com:49268/heroku_7b95z3d5';
+
 mongoose.connect(databaseUri);
 
 mongoose.connection.on('connected', function() {

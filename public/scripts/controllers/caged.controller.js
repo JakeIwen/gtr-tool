@@ -71,8 +71,7 @@ app.controller('CagedController', ["$http", function($http) {
     //ajax call to get scales from MongoDb
     $http.get('/scales/')
     .then(function(response) {
-      console.log('getnames response', response.data);
-      convertList(response.data);;
+      convertList(response.data);
     },
     function(response) {
       console.log('get error:', response);

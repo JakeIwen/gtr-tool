@@ -83,7 +83,7 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
       }
     }
     function moreStrings(idx) {
-      //this function iterates to find more playable notes after the minimum required notes have been found
+      //iterates to find more playable notes after the minimum required notes have been found
       var len = count;
       for (var i = idx; i < fretNotes.length; i++) {
         //if the string and note are not already used in the chord being constructed
@@ -157,12 +157,12 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
   };
 
   function displayTriad() {
+    //reset all markers to empty
+    $('.marker').attr('src', "../img/empty.svg");
     if (!self.variations) {return 0} //abort if no matches
     //the thisTriad variation dictated by prev/next buttions
     var thisTriad = sortedConfigs[activeList[self.triadIndex]];
     console.log('This triad:', thisTriad);
-    //reset all markers to empty
-    $('.marker').attr('src', "../img/empty.svg");
     for (var i = 0; i < thisTriad.count; i++) {
       var intvl = self.intervalName(notes.indexOf(thisTriad.midis[i] % 12));
       $('#' + thisTriad.ids[i]).attr('src', "../img/" + intvl + ".svg");
@@ -217,8 +217,7 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
     //ajax call to get scales from MongoDb
     $http.get('/chords/')
     .then(function(response) {
-      console.log('getnames response', response.data);
-      convertList(response.data);;
+      convertList(response.data);
     },
     function(response) {
       console.log('get error:', response);
@@ -235,9 +234,22 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
       };
       self.types.push(obj);
     }  //set default chord
-    self.type = self.types[0];
+    self.type = self.types[1];
     self.newChord();
   }
+  //arrow-key bindings
+  $( "body" ).keydown(function() {
+    switch (event.keyCode) {
+      case 37:
+        self.prevVar();
+        break;
+      case 39:
+        self.nextVar();
+        break;
+      }
+      $scope.$apply();
+    });
+
   /******************************FILTERS & SORTING******************************/
   function spanFilt(config){
     if (self.allowOpen) {
