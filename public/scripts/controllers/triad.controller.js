@@ -1,7 +1,7 @@
 
 //$('.fretboardContainer') change r
 // slider position relation to guitar fret#
-app.controller('TriadController', ["$http", "$scope", 'Factory', function($http, $scope, Factory) {
+app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
   var self = this;
   var fretNotes = [];
   var masterSet = [];

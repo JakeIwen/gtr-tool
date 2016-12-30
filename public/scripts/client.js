@@ -3,7 +3,7 @@
 var numFrets = 16;
 var zeroFretLength = 25;
 var fretWidth = 3;
-var app = angular.module('app', ['ngRoute', "firebase"]);
+var app = angular.module('app', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -35,21 +35,21 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
 // Home controller
-app.controller('HomeController', function($firebaseAuth, $http) {
+app.controller('HomeController', function($http) {
   console.log('home controller running');
   var self = this;
   var currentUser = {};
   // This code runs whenever the user logs in
-  self.logIn = function(){
-    auth.$signInWithPopup("google").then(function(firebaseUser) {
-      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
-    }).catch(function(error) {
-      console.log("Authentication failed: ", error);
-    });
-  };
-  self.logOut = function(){
-    auth.$signOut().then(function(){
-      console.log('Logging the user out!');
-    });
-  }
+  // self.logIn = function(){
+  //   auth.$signInWithPopup("google").then(function(firebaseUser) {
+  //     console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+  //   }).catch(function(error) {
+  //     console.log("Authentication failed: ", error);
+  //   });
+  // };
+  // self.logOut = function(){
+  //   auth.$signOut().then(function(){
+  //     console.log('Logging the user out!');
+  //   });
+  // }
 });

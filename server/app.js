@@ -3,14 +3,14 @@ var app = express();
 var path = require('path');
 
 var bodyParser = require('body-parser');
-var scales = require('./public/routes/scales');
-var chords = require('./public/routes/chords');
+var scales = require('./routes/scales');
+var chords = require('./routes/chords');
 
 var mongoose = require('mongoose');
 
 
 // serve static files
-app.use(express.static(path.resolve('./server/public')));
+app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests
 
 // server index file
@@ -29,7 +29,7 @@ mongoose.connection.on('connected', function() {
 });
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, './public/views/index.html'));
+  res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
 
 app.listen(3000, function() {
