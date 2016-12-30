@@ -1,0 +1,20 @@
+Ajax to store songs/login
+CAGED Position filter
+Hide CAGED sliders
+Reorder Scales
+Figure out homepage situation
+Reactive Triad Tool
+SHow which nav item was selected - CSS how???
+set min width
+reorganize file tree
+
+Transposer
+Optimize regex
+song list and database
+firebase
+
+QUESTIONS
+SVG dynamic property editor
+how can I best separate my code - several very similar functions are in both Triad and CAGED controllers.
+What do you recommend for "home page"? Nothing?
+is using "onclick" in nav.html bad practice? - theres hashtags inserted into the urls....

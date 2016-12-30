@@ -160,7 +160,6 @@ td {
   /*margin-bottom: -50%;*/
   display: inline-block;
   min-width: 19px;
-  padding-top: 4px;
   z-index: -1;
   text-align: right;
 }
@@ -171,87 +170,87 @@ td {
   overflow: none;
 }
 
-/* line 162, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum0 {
   width: 20px;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum1 {
   width: 8.79744%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum2 {
   width: 8.33997%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum3 {
   width: 7.90629%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum4 {
   width: 7.49517%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum5 {
   width: 7.10542%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum6 {
   width: 6.73594%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum7 {
   width: 6.38567%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum8 {
   width: 6.05361%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum9 {
   width: 5.73883%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum10 {
   width: 5.44041%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum11 {
   width: 5.15751%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum12 {
   width: 4.88932%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum13 {
   width: 4.63507%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum14 {
   width: 4.39405%;
 }
 
-/* line 183, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum15 {
   width: 4.16556%;
 }
 
-/* line 193, ../sass/screen.scss */
+/* line 176, ../sass/screen.scss */
 .borderString {
   /*same height as tr*/
   height: 18px;
@@ -260,13 +259,13 @@ td {
   margin-right: -3px;
 }
 
-/* line 200, ../sass/screen.scss */
+/* line 183, ../sass/screen.scss */
 .fretNum0 {
   border-right: 9px solid #e0e2c9;
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
-/* line 206, ../sass/screen.scss */
+/* line 189, ../sass/screen.scss */
 nav ul {
   margin: 0 auto;
   width: 80%;
@@ -274,18 +273,18 @@ nav ul {
   text-align: center;
 }
 
-/* line 213, ../sass/screen.scss */
+/* line 196, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 215, ../sass/screen.scss */
+/* line 198, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
 }
 
-/* line 220, ../sass/screen.scss */
+/* line 203, ../sass/screen.scss */
 .customBtn {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
@@ -305,21 +304,37 @@ form {
   margin-top: 10px;
 }
 
-/* line 239, ../sass/screen.scss */
+/* line 222, ../sass/screen.scss */
 .customBtn:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-/* line 245, ../sass/screen.scss */
+/* line 228, ../sass/screen.scss */
 .customBtn:active {
   position: relative;
   top: 1px;
 }
 
+/*--------------------------------- TRANSPOSER STYLE -----------------------------*/
+/* line 233, ../sass/screen.scss */
+.submit {
+  padding: 10px 0;
+  cursor: pointer;
+  margin: 0;
+  font-size: 16px;
+  font-style: normal;
+  color: #999;
+}
+
+/* line 241, ../sass/screen.scss */
+#source {
+  font-family: "Courier New", courier;
+}
+
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 250, ../sass/screen.scss */
+/* line 246, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -329,13 +344,13 @@ form {
 }
 
 /* Hide default HTML checkbox */
-/* line 259, ../sass/screen.scss */
+/* line 255, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 262, ../sass/screen.scss */
+/* line 258, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -348,7 +363,7 @@ form {
   transition: .4s;
 }
 
-/* line 274, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -361,29 +376,29 @@ form {
   transition: .4s;
 }
 
-/* line 286, ../sass/screen.scss */
+/* line 282, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 290, ../sass/screen.scss */
+/* line 286, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 294, ../sass/screen.scss */
+/* line 290, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 301, ../sass/screen.scss */
+/* line 297, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 303, ../sass/screen.scss */
+/* line 299, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;

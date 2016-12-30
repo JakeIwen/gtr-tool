@@ -3,18 +3,18 @@
   <div class="options row">
     <div class="noteMap col-md-4">
       <h2 ng-show="caged.tonic && caged.scale">{{caged.tonic}} {{caged.scale.name}}</h2>
-        <div ng-if="caged.scale" class="markerMap" ng-repeat="num in caged.scale.degrees">
-          <img src="../img/{{num}}.svg" alt="*" height="20" width="30" />
-          <br>
-          <h5 class="map">{{caged.noteName(num-1, true)}}</h5>
-        </div>
+      <div ng-if="caged.scale" class="markerMap" ng-repeat="num in caged.scale.degrees">
+        <img src="../img/{{num}}.svg" alt="*" height="20" width="30" />
+        <br>
+        <h5 class="map">{{caged.noteName(num-1, true)}}</h5>
+      </div>
     </div>
     <div class="col-sm-6 dropdowns">
 
       <form class="col-sm-6">
-          <h4>Chord to map:</h4>
-          <select ng-model="caged.tonic" ng-options="tonic as tonic for tonic in caged.tonicList" ng-change="caged.init()">
-          </select>
+        <h4>Chord to map:</h4>
+        <select ng-model="caged.tonic" ng-options="tonic as tonic for tonic in caged.tonicList" ng-change="caged.init()">
+        </select>
       </form>
 
       <div class="col-sm-6">
@@ -23,7 +23,7 @@
         </select>
       </div>
     </div>
-</div>
+  </div>
 
   <div class="fretboardContainer col-xs-11">
     <div class="strings" ng-repeat="string in caged.neck.strings | orderBy:'':true">
@@ -34,9 +34,9 @@
             <div class="sliderBox"></div>
           </label>
         </div>
-          <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in caged.neck.frets">
-            <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="16" width="24"/>
-          </div>
+        <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in caged.neck.frets">
+          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="18" width="27"/>
+        </div>
       </div>
     </div>
   </div>

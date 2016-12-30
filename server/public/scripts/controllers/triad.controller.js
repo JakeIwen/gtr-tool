@@ -189,14 +189,14 @@ app.controller('TriadController', ["$http", "$scope", 'Factory', function($http,
     //relative cof positions to determine if # or flat
     var root = Note.fromNotation(tonic);
     if (root.cofPosition() < 6) {
-      var ret = MUSIQ.sharpNames[notes[pos]];
+      var name = MUSIQ.sharpNames[notes[pos]];
     } else {
-      var ret = MUSIQ.flatNames[notes[pos]];
+      var name = MUSIQ.flatNames[notes[pos]];
     }
     if(notation){
-      ret = ret.replace("b","♭").replace("#","♯");
+      name = name.replace("b","♭").replace("#","♯");
     }
-    return ret;
+    return name;
   }
 
   self.intervalName = function(pos) {

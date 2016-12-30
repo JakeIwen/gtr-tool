@@ -5,6 +5,8 @@ app.controller('CagedController', ["$http", function($http) {
 
   self.neck = new Guitar();
   self.neck.frets_shown = 15;
+  var a = Scale.fromTonicAndType('C', 'Major');
+  console.log('a', a);
 
   getScales();
   self.tonic = 'C';

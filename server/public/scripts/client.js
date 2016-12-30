@@ -3,7 +3,7 @@
 var numFrets = 16;
 var zeroFretLength = 25;
 var fretWidth = 3;
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('app', ['ngRoute', "firebase"]);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -22,46 +22,34 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'TriadController',
     controllerAs: 'triad'
   })
+  .when('/text' ,{
+    templateUrl: '/views/templates/text.html',
+    controller: 'TextController',
+    controllerAs: 'text'
+  })
   .otherwise({
     redirectTo: 'home'
   });
 
 }]);
 
-//this factory is not used currently
-app.factory('Factory', ["$http", function($http){
-  console.log('factory running');
-  var fretLocations = [];
-  var fretSpacings = [];
-
-  function fretMap() {
-    var fretName = '.fretNum0'
-    var i=0;
-    console.log('fretNum0', $(fretName).width());
-    while ($(fretName).width()) {
-      fretLocations[i] = 0;
-      fretSpacings[i] = $(fretName).width();
-      for (var j = 0; j < fretSpacings.length; j++) {
-        //fret locations are the sum of fret spacings up to the given fret (index)
-        fretLocations[i] += fretSpacings[j];
-      }
-      i++;
-      fretName = '.fretNum' + i;
-      console.log('Factory fretlocations:', fretLocations[i]);
-      console.log('fretNum', i, $(fretName).width());
-    }
-    return fretLocations;
-  }
-  return {
-    fretMap: function() {return fretMap();},
-    fretLocations: function() {return fretLocations;}
-  }
-
-
-}]);
 
 // Home controller
-app.controller('HomeController', function() {
+app.controller('HomeController', function($firebaseAuth, $http) {
   console.log('home controller running');
   var self = this;
+  var currentUser = {};
+  // This code runs whenever the user logs in
+  self.logIn = function(){
+    auth.$signInWithPopup("google").then(function(firebaseUser) {
+      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+    }).catch(function(error) {
+      console.log("Authentication failed: ", error);
+    });
+  };
+  self.logOut = function(){
+    auth.$signOut().then(function(){
+      console.log('Logging the user out!');
+    });
+  }
 });

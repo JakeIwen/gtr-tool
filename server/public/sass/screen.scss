@@ -148,43 +148,26 @@ td {
   display: inline-block;
   // border-right: 1px solid #c1c1c1;
   min-width: 19px;
-  padding-top: 4px;
   z-index: -1;
   text-align: right;
+
 }
 .preFret {
   display: inline-block;
   overflow: none;
 }
-//should I be linking .sass from html file instead of .css
 $zero-fret: 20px;
 $used-length: 0%;
 .fretNum0 {
   width: $zero-fret;
 }
 
-// @for $i from 1 through 14 {  //also need that #15
-//     $new-length: (168% - $used-length) / 19;
-//
-//     .fretNum#{$i} {
-//         width: $new-length;
-//
-//
-//
-//     }
-//     $used-length: $used-length + $new-length;
-//
-// }
-
 $old-len: 9.28%;
-@for $i from 1 through 15 {  //also need that #15
+@for $i from 1 through 15 {
     $new-length: $old-len * (9.48/10);
 
     .fretNum#{$i} {
         width: $new-length;
-
-
-
     }
     $old-len: $new-length;
 
@@ -245,6 +228,19 @@ form {display: inline-block;}
 .customBtn:active {
   position:relative;
   top:1px;
+}
+/*--------------------------------- TRANSPOSER STYLE -----------------------------*/
+.submit {
+    padding: 10px 0;
+    cursor: pointer;
+    margin: 0;
+    font-size: 16px;
+    font-style: normal;
+    color: #999;
+}
+#source {
+    font-family: "Courier New", courier;
+
 }
 /*--------------------------------- SLIDER STYLE -----------------------------*/
 .switch {
