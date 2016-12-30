@@ -78,27 +78,22 @@ app.controller('HomeController', function($firebaseAuth, $http) {
 
 
       currentUser.getToken().then(function(idToken){
-        console.log('getting songs');
+        console.log('getting song list');
         $http({
           method: 'GET',
-          url: '/songs',
+          url: '/songs/titles',
           headers: {
             id_token: idToken
           }
         }).then(function(response){
-          self.songs = response.data;
-          console.log('self songs', self.songs);
+          self.songList = response.data;
+          console.log('self.songList', self.songList);
         });
       });
     } else {
       console.log('Not logged in or not authorized.');
-      self.songs = [];
+      self.songList = [];
     }
 
   });
-
-  self.addUser = function() {
-    console.log(self.newUser);
-
-  }
 });

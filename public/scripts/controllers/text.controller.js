@@ -1,15 +1,95 @@
-app.controller('TextController', function() {
+app.controller('TextController', function($firebaseAuth, $http) {
   var self = this;
-  $(document).ready(function () {
-      $('.plus').click(changeChords);
-      $('.minus').click(function() {
-        event.preventDefault();
-      for (var i = 0; i < 11; i++) {
-         changeChords();
-       }
-     });
-   });
 
+  var auth = $firebaseAuth();
+  var currentUser = {};
+
+  self.addToDb = function(song) {
+    if (self.songText && self.title) {
+      var songData = {
+        title: self.title,
+        song: self.songText
+      }
+      if(currentUser) {
+        currentUser.getToken().then(function(idToken){
+          console.log('getting song list');
+          $http({
+            method: 'POST',
+            url: '/songs/',
+            data: songData,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response){
+            console.log('song added to DB');
+          });
+        });
+      }
+    }
+  }
+
+
+  self.logIn = function(){
+    auth.$signInWithPopup("google").then(function(firebaseUser) {
+      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+    }).catch(function(error) {
+      console.log("Authentication failed: ", error);
+    });
+  };
+  self.logOut = function(){
+    auth.$signOut().then(function(){
+      console.log('Logging the user out!');
+    });
+  }
+
+  auth.$onAuthStateChanged(function(firebaseUser){
+    console.log('authentication state changed');
+    // firebaseUser will be null if not logged in
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      // This is where we make our call to our server
+      currentUser.getToken().then(function(idToken){
+        $http({
+          method: 'POST',
+          url: '/users',
+          data: self.newUser,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          console.log('response:', response);
+        });
+      });
+
+      currentUser.getToken().then(function(idToken){
+        console.log('getting song list');
+        $http({
+          method: 'GET',
+          url: '/songs/titles',
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          self.songList = response.data;
+          console.log('self.songList', self.songList);
+        });
+      });
+    } else {
+      console.log('Not logged in or not authorized.');
+      self.songList = [];
+      currentUser = {};
+    }
+
+  });
+
+  self.plus = function() {
+    changeChords();
+  }
+  self.minus = function() {
+    for (var i = 0; i < 11; i++) {
+       changeChords();
+     }
+  }
 
   function changeChords () {
     var chordDoc = $('#source').val()

@@ -6,8 +6,7 @@
   <button ng-click="home.logIn()">Log In</button>
   <button ng-click="home.logOut()">Log Out</button>
 
-  <div ng-if="home.songs.length === 0">Log in to get some secret data.</div>
-  <table ng-if="home.songs.length > 0">
+  <table ng-if="home.songList.length > 0">
     <thead>
       <tr>
         <th>Title</th>
@@ -15,12 +14,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="song in home.songs">
+      <tr ng-repeat="song in home.songList">
         <td>{{song.title}}</td>
+        <td>{{song.key}}</td>
+
       </tr>
     </tbody>
-    <tbody>
-    </tbody>
+
   </table>
 
 </section>
