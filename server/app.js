@@ -37,11 +37,13 @@ mongoose.connection.on('connected', function() {
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
+console.log('process env', process.ENV);
 
-app.listen(3000, function() {
-  console.log("server running, check localhost:3000");
+var portDecision = process.env.PORT || 3000;
+
+app.listen(portDecision, function() {
+  console.log("listening on port", portDecision);
 });
 app.use(decoder.token);
 app.use('/users', users);
-
 app.use('/songs', songs);
