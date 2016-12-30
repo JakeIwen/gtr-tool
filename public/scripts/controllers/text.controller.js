@@ -21,6 +21,8 @@ app.controller('TextController', function($firebaseAuth, $http) {
           }
         }).then(function(response){
           console.log('song added to DB');
+          getSongs();
+
         });
       });
     } else {
@@ -42,6 +44,20 @@ app.controller('TextController', function($firebaseAuth, $http) {
       });
     });
   }
+  self.deleteSong = function(songId){
+    console.log('delete songid', songId);
+    currentUser.getToken().then(function(idToken){
+      $http({
+        method: 'DELETE',
+        url: '/songs/title/' + songId,
+        headers: { id_token: idToken }
+      }).then(function(response){
+        console.log('song deleted');
+        getSongs();
+
+      });
+    });
+  }
 
 
   self.logIn = function(){
@@ -56,7 +72,6 @@ app.controller('TextController', function($firebaseAuth, $http) {
       console.log('Logging the user out!');
     });
   }
-
 
   auth.$onAuthStateChanged(function(firebaseUser){
     console.log('authentication state changed');
@@ -76,27 +91,30 @@ app.controller('TextController', function($firebaseAuth, $http) {
           console.log('response:', response);
         });
       });
-
-      currentUser.getToken().then(function(idToken){
-        console.log('getting song list');
-        $http({
-          method: 'GET',
-          url: '/songs/titles',
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response){
-          self.songList = response.data;
-          console.log('self.songList', self.songList);
-        });
-      });
+      getSongs();
     } else {
       console.log('Not logged in or not authorized.');
       self.songList = [];
       currentUser = {};
     }
-
   });
+
+  function getSongs(){
+    currentUser.getToken().then(function(idToken){
+      console.log('getting song list');
+      $http({
+        method: 'GET',
+        url: '/songs/titles',
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        self.songList = response.data;
+        console.log('self.songList', self.songList);
+      });
+    });
+
+  }
 
   self.plus = function() {
     changeChords();

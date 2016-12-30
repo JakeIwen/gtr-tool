@@ -16,7 +16,7 @@ router.get("/titles", function(req, res){
       console.log(user);
       if(user == null) {
         // If the user is not in the database, return a forbidden error status
-        console.log('No user found with that email. Have you added this person to the database? Email: ', req.decodedToken.email);
+        console.log('Invalid user. permission denied.', req.decodedToken.email);
         res.sendStatus(403);
       } else {
         // Based on the clearance level of the individual, give them access to different information
@@ -80,6 +80,36 @@ router.post("/", function(req, res){
     } else {
       //res.send(data);
       res.sendStatus(201);
+    }
+  });
+});
+
+router.delete("/title/:id", function(req, res){
+  var userEmail = req.decodedToken.email;
+  var songId = req.params.id;
+  console.log('songid', req.params.id);
+  // Check the user's exitence based on their email
+  User.findOne({ email: userEmail }, function (err, user) {
+    if (err) {
+      console.log('Error COMPLETING user query task', err);
+      res.sendStatus(500);
+    } else {
+      console.log(user);
+      if(user == null) {
+        // If the user is not in the database, return a forbidden error status
+        console.log('Invalid user. Permission denied -', req.decodedToken.email);
+        res.sendStatus(403);
+      } else {
+        // Based on the clearance level of the individual, give them access to different information
+        Song.find( { _id: songId } ).remove( function (err){
+          if (err) {
+            console.log('Error COMPLETING song query task', err);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(202);
+          }
+        });
+      }
     }
   });
 });

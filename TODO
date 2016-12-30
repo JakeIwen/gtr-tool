@@ -1,14 +1,13 @@
 
 CAGED Position filter
 Hide CAGED sliders
-Reorder Scales
-Figure out homepage situation
+get proper #'s and flats
+Figure out homepage situation - login?
 Reactive Triad Tool
-SHow which nav item was selected - CSS how???
+Show which nav item is selected - CSS how???
 set min width
-reorganize file tree
-key bindings
-heroku deploy
+search feature for songs
+
 
 Transposer
 Optimize regex
@@ -21,5 +20,5 @@ how can I best separate my code - several very similar functions are in both Tri
 What do you recommend for "home page"? Nothing?
 is using "onclick" in nav.html bad practice? - theres hashtags inserted into the urls....
 should i be checking firebase authorization every time something with permissions is done, or is there a safe way to store the authentication status?
-upload text files
-get firebase login to exist across controller
+how to allow uploading of text files (and save as string in table)
+get firebase login to exist across all controllers

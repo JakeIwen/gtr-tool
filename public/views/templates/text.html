@@ -1,10 +1,6 @@
 <section>
-  <div class="row">
+  <div class="top row">
     <div class="col-md-12">
-      <input type="text" ng-model="text.title" placeholder="Title - Artist">
-      <button class="button addSong" ng-click="text.addToDb()">
-        <strong>Save Song</strong>
-      </button>
       <button class="customBtn" ng-click="text.plus()">Transpose Up</button>
       <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
       <button class="customBtn" ng-click="text.logIn()">Log In</button>
@@ -14,12 +10,20 @@
   <div class="row">
 
     <div class="song col-md-9">
+      <div class="row shtHeader">
+
+      <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
+      <div class="col-md-1 addHolder">
+        <img ng-click="text.addToDb()" src="./img/save.png" alt="add" />
+      </div>
+    </div>
+
       <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
     </div>
 
     <div class="col-md-3 list">
       <h4>Saved Songs</h4>
-      <table class="table">
+      <table class="table songList">
         <thead>
           <tr>
             <th>Key</th>
@@ -30,6 +34,7 @@
           <tr class="songs" data-id="{{song._id}}" ng-repeat="song in text.songList">
             <td>{{song.key}}</td>
             <td ng-click="text.getSong(song._id)">{{song.title}}</td>
+            <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
           </tr>
         </tbody>
       </table>

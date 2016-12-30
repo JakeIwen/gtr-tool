@@ -15,6 +15,11 @@ admin.initializeApp({
   databaseURL: "https://gtr-tool.firebaseio.com"
 });
 
+// admin.initializeApp({
+//   credential: admin.credential.cert("./server/firebase-service-account.json"),
+//   databaseURL: "https://gtr-tool.firebaseio.com" // replace this line with your URL
+// });
+
 var tokenDecoder = function(req, res, next){
   if (req.headers.id_token) {
     admin.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {

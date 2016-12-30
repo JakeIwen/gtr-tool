@@ -332,18 +332,59 @@ td {
 
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
 /* line 243, ../sass/screen.scss */
-#source {
+#source, #songName {
   font-family: "Courier New", courier;
 }
 
 /* line 246, ../sass/screen.scss */
 textarea {
-  margin-top: 22px;
   border-radius: 16px;
+  margin-top: -10px;
+  padding-top: 55px;
+}
+
+/* line 251, ../sass/screen.scss */
+.shtHeader {
+  margin-bottom: -50px;
+  z-index: 5;
+  position: relative;
+}
+
+/* line 256, ../sass/screen.scss */
+.addHolder {
+  padding-left: 5px;
+}
+
+/* line 259, ../sass/screen.scss */
+#songName {
+  font-size: 1.6em;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* line 265, ../sass/screen.scss */
+.top {
+  margin-bottom: 30px;
+}
+
+/* line 268, ../sass/screen.scss */
+.del {
+  height: 20px;
+}
+
+/* line 271, ../sass/screen.scss */
+.songList > tbody > tr > td {
+  font-size: 1em;
+  padding: 3px;
+}
+
+/* line 275, ../sass/screen.scss */
+img:hover {
+  cursor: pointer;
 }
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 253, ../sass/screen.scss */
+/* line 280, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -353,13 +394,13 @@ textarea {
 }
 
 /* Hide default HTML checkbox */
-/* line 262, ../sass/screen.scss */
+/* line 289, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 265, ../sass/screen.scss */
+/* line 292, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -372,7 +413,7 @@ textarea {
   transition: .4s;
 }
 
-/* line 277, ../sass/screen.scss */
+/* line 304, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -385,29 +426,29 @@ textarea {
   transition: .4s;
 }
 
-/* line 289, ../sass/screen.scss */
+/* line 316, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 293, ../sass/screen.scss */
+/* line 320, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 297, ../sass/screen.scss */
+/* line 324, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 304, ../sass/screen.scss */
+/* line 331, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 306, ../sass/screen.scss */
+/* line 333, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;

@@ -11,7 +11,6 @@ var mongoConnection = require('./modules/mongo-connection');
 var songs = require('./routes/songs');
 var users = require('./routes/users');
 var mongoose = require('mongoose');
-console.log('process env', process.env);
 
 // serve static files
 app.use(express.static('public'));

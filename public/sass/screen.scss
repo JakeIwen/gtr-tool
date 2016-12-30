@@ -240,14 +240,41 @@ td {
 }
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
 
-#source {
+#source, #songName {
   font-family: "Courier New", courier;
 }
 textarea {
-  margin-top: 22px;
   border-radius: 16px;
+  margin-top:-10px;
+  padding-top: 55px;
 }
+.shtHeader {
+  margin-bottom: -50px;
+  z-index: 5;
+  position: relative;
+}
+.addHolder {
+  padding-left: 5px;
+}
+#songName {
+  font-size: 1.6em;
+  text-align: center;
 
+  border-radius: 10px;
+}
+.top {
+  margin-bottom: 30px;
+}
+.del {
+  height: 20px;
+}
+.songList>tbody>tr>td {
+  font-size: 1em;
+  padding:3px;
+}
+img:hover {
+  cursor: pointer;
+}
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
 .switch {
