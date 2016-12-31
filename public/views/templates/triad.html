@@ -25,8 +25,8 @@
         <br>
         <h5 ng-if="triad.variations">Variation {{triad.triadIndex + 1}} of {{triad.variations}} </h5>
         <h5 id="noMatch" ng-if="!triad.variations">NO MATCHES!</h5>
-        <button class="customBtn" type="submit" ng-click="triad.prevVar()">Previous</button>
-        <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next</button>
+        <button class="customBtn" type="submit" ng-click="triad.prevVar()">[←] Previous</button>
+        <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next [→]</button>
       </div>
 
     </div>
@@ -35,14 +35,14 @@
       <h4>Show Inversions:</h4>
       <ul ng-model="triad.allowedInversions">
         <li ng-repeat="invName in triad.inversionNames track by $index" ng-if="triad.numNotes > $index">
-          <input type="checkbox" ng-model="triad.allowedInversions[$index]" ng-click="triad.filter()" /> {{invName}}</li>
+          <input type="checkbox" ng-model="triad.allowedInversions[$index]" ng-click="triad.filter()" /> {{invName}} [{{$index}}]</li>
       </ul>
     </div>
 
     <div class="col-md-3">
       <select ng-options="span as span for span in [1,2,3,4,5]" ng-model="triad.maxSpan"
       ng-change="triad.filter()"></select>
-      <span>Max Fret-Stretch</span><br>
+      <span>Max Fret-Stretch [↑/↓]</span><br>
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen" />
       <span>Allow open strings</span><br>
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.onlyClusters" />

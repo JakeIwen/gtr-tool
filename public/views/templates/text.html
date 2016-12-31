@@ -10,15 +10,15 @@
   <div class="row">
 
     <div class="song col-md-9">
-      <div class="row shtHeader">
+      <div class="row textContainer">
 
-      <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
-      <div class="col-md-1 addHolder">
-        <img ng-click="text.addToDb()" src="./img/save.png" alt="add" />
+        <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
+        <div class="col-md-1 addHolder">
+          <img ng-click="text.addToDb()" src="./img/save.png" alt="add" />
+        </div>
+        <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
       </div>
-    </div>
 
-      <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
     </div>
 
     <div class="col-md-3 list">

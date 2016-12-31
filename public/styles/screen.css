@@ -28,40 +28,41 @@ body {
   background-color: #c6d5c8;
   font-family: "Roboto", Times, Helvetica;
   letter-spacing: 1px;
+  min-width: 900px;
 }
 
-/* line 31, ../sass/screen.scss */
+/* line 32, ../sass/screen.scss */
 ul {
   list-style: none;
 }
 
 /*----------------------------- NAV STYLING------------------------------*/
-/* line 36, ../sass/screen.scss */
+/* line 37, ../sass/screen.scss */
 h2 {
   font-size: 17pt;
   margin-bottom: 10px;
 }
 
-/* line 40, ../sass/screen.scss */
+/* line 41, ../sass/screen.scss */
 h4 {
   font-size: 13pt;
   margin-bottom: 5px;
 }
 
-/* line 44, ../sass/screen.scss */
+/* line 45, ../sass/screen.scss */
 .sitePage > h2 {
   text-align: center;
   margin-top: 10px;
 }
 
-/* line 48, ../sass/screen.scss */
+/* line 49, ../sass/screen.scss */
 .navMenu {
   border-bottom: 6px solid black;
   background-color: #3f3120;
   color: #e9b576;
 }
 
-/* line 55, ../sass/screen.scss */
+/* line 56, ../sass/screen.scss */
 .sitePage:hover {
   background-color: #69442d;
   color: #e9b576;
@@ -71,13 +72,13 @@ h4 {
   text-align: center;
 }
 
-/* line 64, ../sass/screen.scss */
+/* line 65, ../sass/screen.scss */
 .sitePage {
   margin-right: -2px;
   margin-left: -2px;
 }
 
-/* line 68, ../sass/screen.scss */
+/* line 69, ../sass/screen.scss */
 #siteName > h2 {
   font-weight: 700;
   font-size: 18pt;
@@ -85,7 +86,7 @@ h4 {
   letter-spacing: 2px;
 }
 
-/* line 75, ../sass/screen.scss */
+/* line 76, ../sass/screen.scss */
 #siteName {
   border-right: solid black 6px;
   margin-right: -4px;
@@ -93,18 +94,18 @@ h4 {
 }
 
 /*------------------------------ CAGED OPTIONS STYLING -------------------------------*/
-/* line 83, ../sass/screen.scss */
+/* line 84, ../sass/screen.scss */
 .options {
   margin: 25px;
 }
 
-/* line 86, ../sass/screen.scss */
+/* line 87, ../sass/screen.scss */
 .select {
   margin-top: 10px;
 }
 
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
-/* line 95, ../sass/screen.scss */
+/* line 96, ../sass/screen.scss */
 #nonlinear {
   margin-top: -55px;
   margin-bottom: 40px;
@@ -113,7 +114,7 @@ h4 {
   width: 94%;
 }
 
-/* line 103, ../sass/screen.scss */
+/* line 104, ../sass/screen.scss */
 .fretboardContainer {
   margin: 15px;
   padding: 17px 20px 0 0;
@@ -126,7 +127,7 @@ h4 {
   /*align-self: center;*/
 }
 
-/* line 116, ../sass/screen.scss */
+/* line 117, ../sass/screen.scss */
 .strings {
   padding-top: 3px;
   /*width: 100%;*/
@@ -134,7 +135,7 @@ h4 {
   z-index: 1000;
 }
 
-/* line 123, ../sass/screen.scss */
+/* line 124, ../sass/screen.scss */
 .fretRow {
   /*display: flex;
   text-align: justify;
@@ -144,25 +145,25 @@ h4 {
   white-space: nowrap;
 }
 
-/* line 131, ../sass/screen.scss */
+/* line 132, ../sass/screen.scss */
 .markerContainer {
   position: relative;
   width: 30px;
 }
 
-/* line 135, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 .markerMap {
   position: absolute;
   bottom: 3px;
   left: 0;
 }
 
-/* line 140, ../sass/screen.scss */
+/* line 141, ../sass/screen.scss */
 .horizMarker {
   display: inline-block;
 }
 
-/* line 152, ../sass/screen.scss */
+/* line 153, ../sass/screen.scss */
 .fret {
   /*margin-bottom: -50%;*/
   display: inline-block;
@@ -172,104 +173,99 @@ h4 {
   padding: 0;
 }
 
-/* line 161, ../sass/screen.scss */
+/* line 162, ../sass/screen.scss */
 .preFret {
   display: inline-block;
   overflow: none;
 }
 
-/* line 167, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 .fretNum0 {
   width: 20px;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum1 {
   width: 8.79744%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum2 {
   width: 8.33997%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum3 {
   width: 7.90629%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum4 {
   width: 7.49517%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum5 {
   width: 7.10542%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum6 {
   width: 6.73594%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum7 {
   width: 6.38567%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum8 {
   width: 6.05361%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum9 {
   width: 5.73883%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum10 {
   width: 5.44041%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum11 {
   width: 5.15751%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum12 {
   width: 4.88932%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum13 {
   width: 4.63507%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum14 {
   width: 4.39405%;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .fretNum15 {
   width: 4.16556%;
 }
 
-/* line 182, ../sass/screen.scss */
+/* line 184, ../sass/screen.scss */
 .borderString {
   /*same height as tr*/
   height: 18px;
   padding-top: 2px;
   border-top: 2px, solid #bdc19d;
   margin-right: -3px;
-}
-
-/* line 189, ../sass/screen.scss */
-.fretNum0 {
-  border-right: 9px solid #e0e2c9;
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
@@ -338,53 +334,53 @@ td {
 
 /* line 246, ../sass/screen.scss */
 textarea {
+  border: none;
+}
+
+/* line 249, ../sass/screen.scss */
+.textContainer {
+  background-color: #FFFFFF;
   border-radius: 16px;
-  margin-top: -10px;
-  padding-top: 55px;
+  border: 1px solid black;
 }
 
-/* line 251, ../sass/screen.scss */
-.shtHeader {
-  margin-bottom: -50px;
-  z-index: 5;
-  position: relative;
-}
-
-/* line 256, ../sass/screen.scss */
+/* line 254, ../sass/screen.scss */
 .addHolder {
-  padding-left: 5px;
+  padding-left: 10px;
+  padding-top: 8px;
 }
 
-/* line 259, ../sass/screen.scss */
+/* line 258, ../sass/screen.scss */
 #songName {
   font-size: 1.6em;
   text-align: center;
+  margin-top: 12px;
   border-radius: 10px;
 }
 
-/* line 265, ../sass/screen.scss */
+/* line 264, ../sass/screen.scss */
 .top {
   margin-bottom: 30px;
 }
 
-/* line 268, ../sass/screen.scss */
+/* line 267, ../sass/screen.scss */
 .del {
   height: 20px;
 }
 
-/* line 271, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 .songList > tbody > tr > td {
   font-size: 1em;
   padding: 3px;
 }
 
-/* line 275, ../sass/screen.scss */
+/* line 274, ../sass/screen.scss */
 img:hover {
   cursor: pointer;
 }
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 280, ../sass/screen.scss */
+/* line 279, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -394,13 +390,13 @@ img:hover {
 }
 
 /* Hide default HTML checkbox */
-/* line 289, ../sass/screen.scss */
+/* line 288, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 292, ../sass/screen.scss */
+/* line 291, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -413,7 +409,7 @@ img:hover {
   transition: .4s;
 }
 
-/* line 304, ../sass/screen.scss */
+/* line 303, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -426,29 +422,29 @@ img:hover {
   transition: .4s;
 }
 
-/* line 316, ../sass/screen.scss */
+/* line 315, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 320, ../sass/screen.scss */
+/* line 319, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 324, ../sass/screen.scss */
+/* line 323, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 331, ../sass/screen.scss */
+/* line 330, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 333, ../sass/screen.scss */
+/* line 332, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;

@@ -27,6 +27,7 @@ body {
   background-color: #c6d5c8;
   font-family: "Roboto", Times, Helvetica;
   letter-spacing: 1px;
+  min-width: 900px;
 }
 ul {
   list-style: none;
@@ -162,6 +163,7 @@ h4 {
   display: inline-block;
   overflow: none;
 }
+
 $zero-fret: 20px;
 $used-length: 0%;
 .fretNum0 {
@@ -186,9 +188,7 @@ $old-len: 9.28%;
   border-top: 2px, solid #bdc19d;
   margin-right: -3px;
 }
-.fretNum0 {
-  border-right: 9px solid #e0e2c9;
-}
+
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
 
@@ -244,22 +244,21 @@ td {
   font-family: "Courier New", courier;
 }
 textarea {
-  border-radius: 16px;
-  margin-top:-10px;
-  padding-top: 55px;
+  border: none;
 }
-.shtHeader {
-  margin-bottom: -50px;
-  z-index: 5;
-  position: relative;
+.textContainer {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid black;
 }
 .addHolder {
-  padding-left: 5px;
+  padding-left: 10px;
+  padding-top: 8px;
 }
 #songName {
   font-size: 1.6em;
   text-align: center;
-
+  margin-top: 12px;
   border-radius: 10px;
 }
 .top {

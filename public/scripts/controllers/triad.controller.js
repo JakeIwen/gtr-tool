@@ -239,13 +239,35 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
   }
   //arrow-key bindings
   $( "body" ).keydown(function() {
-    switch (event.keyCode) {
+    var key = event.keyCode;
+    switch (key) {
       case 37:
+        event.preventDefault();
         self.prevVar();
         break;
       case 39:
+        event.preventDefault();
         self.nextVar();
         break;
+      case 38:
+        if(self.maxSpan < 5) {
+          event.preventDefault();
+          self.maxSpan++;
+          self.filter();
+        }
+        break;
+      case 40:
+        if(self.maxSpan > 1) {
+          event.preventDefault();
+          self.maxSpan--;
+          self.filter();
+        }
+        break;
+      }
+      console.log(key);
+      if (key >=48 && key <=52) {
+        self.allowedInversions[key - 48] = !self.allowedInversions[key - 48];
+        self.filter();
       }
       $scope.$apply();
     });
