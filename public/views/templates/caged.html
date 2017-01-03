@@ -5,7 +5,7 @@
       <div ng-if="caged.scale" class="horizMarker" ng-repeat="num in caged.scale.degrees">
         <img ng-src="../img/{{num}}.svg" alt="*" height="20" width="30" />
         <br>
-        <h5 class="map">{{caged.noteName(num-1, true)}}</h5>
+        <h5 class="map">{{caged.noteName($index, true)}}</h5>
       </div>
     </div>
     <div class="col-sm-6 dropdowns">

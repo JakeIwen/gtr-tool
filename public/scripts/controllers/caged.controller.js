@@ -53,22 +53,23 @@ app.controller('CagedController', ["$http", function($http) {
   }
 
   self.noteName = function(pos, notation) {
-    //relative cof positions to determine if # or flat
-    var root = Note.fromNotation(tonic);
-    console.log('root', root, root.cofPosition());
-    if (root.cofPosition() < 6) {
-      var ret = MUSIQ.sharpNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
-    } else {
-      var ret = MUSIQ.flatNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
-    }
-    if(notation){
-      ret = ret.replace("b","♭").replace("#","♯");
-    }
-    return ret;
+    //relative circle of fifths positions to determine if # or flat is correct notation
+      var root = Note.fromNotation(tonic);
+      console.log('root', root, root.cofPosition());
+      console.log('pos ', pos,  self.scale.notes);
+      if (root.cofPosition() < 6) {
+        var ret = MUSIQ.sharpNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
+      } else {
+        var ret = MUSIQ.flatNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
+      }
+      if(notation){
+        ret = ret.replace("b","♭").replace("#","♯");
+      }
+      return ret;
   }
 
   function getScales() {
-    //ajax call to get scales from MongoDb
+    //ajax call to get scales from JSON
     $http.get('/scales/')
     .then(function(response) {
       convertList(response.data);

@@ -33,7 +33,7 @@
 
     <div class="col-md-2">
       <h4>Show Inversions:</h4>
-      <ul ng-model="triad.allowedInversions">
+      <ul class="inversions" ng-model="triad.allowedInversions">
         <li ng-repeat="invName in triad.inversionNames track by $index" ng-if="triad.numNotes > $index">
           <input type="checkbox" ng-model="triad.allowedInversions[$index]" ng-click="triad.filter()" /> {{invName}} [{{$index}}]</li>
       </ul>

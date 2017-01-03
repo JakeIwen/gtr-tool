@@ -9,7 +9,7 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, ol, ul, li,
+dl, dt, dd, ol, ul,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
@@ -29,9 +29,30 @@ body {
   letter-spacing: 1px;
   min-width: 900px;
 }
-ul {
-  list-style: none;
+
+.siteSection {
+  border-radius: 10px;
+  padding: 3px;
+  border: solid black 4px;
+  padding: 10px;
+  background-color: #69442d;
+  color: rgb(233, 181, 118);
 }
+
+.secContainer{
+  padding-top: 15px;
+
+}
+ul {
+  list-style-type:square;
+}
+li {
+  margin-left: 15px;
+}
+.footer {
+  padding-top: 20px;
+}
+
 /*----------------------------- NAV STYLING------------------------------*/
 
 h2 {
@@ -90,6 +111,9 @@ h4 {
   position: absolute;
   bottom: 3px;
   left: 0;
+}
+.inversions {
+  list-style-type: none;
 }
 
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
@@ -222,27 +246,23 @@ td {
 }
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
 
+fieldset {
+  margin-top: 10px;
+}
 #source, #songName {
   font-family: "Courier New", courier;
-}
-textarea {
   border: none;
+}
+#source {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  width: 98%;
 }
 #songList {
   position:relative;
 }
-#table-scroll {
-  height:15px;
-  overflow:auto;
-  margin-top:20px;
-}
-#songList table {
-  width:100%;
-}
-
-.upper {
-  border: solid black 3px;
-  border-radius: 8px;
+.name{
+  padding-top: 30px;
 }
 .textContainer {
   background-color: #FFFFFF;
@@ -277,7 +297,9 @@ img:hover {
 /*--------------------------------- SONG TABLE STYLE -----------------------------*/
 .tabTitle {
   text-align: center;
+  font-size: 1.4em
 }
+
 .scrollingtable {
 	box-sizing: border-box;
 	display: inline-block;
@@ -287,16 +309,23 @@ img:hover {
 	height: 600px; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-size: 12px;
-	padding-top: 40px; /*this determines top caption height*/
+	padding-top: 15px; /*this determines top caption height*/
 	padding-bottom: 40px; /*this determines bottom caption height*/
 	text-align: left;
-  border-radius: 3px;
 }
-.scrollingtable * {box-sizing: border-box;}
+.scrollingtable * {
+  box-sizing: border-box;
+  color: rgb(233, 181, 118);
+}
 .scrollingtable > div {
+  background-color: #3f3120;
+
 	position: relative;
-	border-top: 3px solid black; /*top table border*/
+	border-top: 0px solid black; /*top table border*/
 	height: 100%;
+  padding: 4px;
+  border-radius: 6px;
+
 	padding-top: 20px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
@@ -314,25 +343,16 @@ img:hover {
 .scrollingtable > div > div {
 	/*min-height: 43px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows*/
 	max-height: 100%;
-	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
+	overflow: auto; /*set to auto if using fixed or % width; else scroll*/
 	overflow-x: hidden;
-	border: 3px solid black; /*border around table body*/
+	border-top: 2px solid rgb(233, 181, 118);; /*border around table body*/
 }
-.scrollingtable > div > div:after {background: #c6d5c8;} /*match page background color*/
+.scrollingtable > div > div:after {background: #3f3120;} /*match page background color*/
 .scrollingtable > div > div > table {
 	width: 100%;
 	border-spacing: 0;
 	margin-top: -20px; /*inverse of column header height*/
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
-}
-.scrollingtable > div > div > table > caption {
-	position: absolute;
-	top: -20px; /*inverse of caption height*/
-	margin-top: -1px; /*inverse of border-width*/
-	width: 100%;
-	font-weight: bold;
-	text-align: center;
-  font-size: 20px;
 }
 .scrollingtable > div > div > table > * > tr > * {padding: 0;}
 .scrollingtable > div > div > table > thead {
@@ -351,7 +371,7 @@ img:hover {
 	top: 0;
 	left: 0;
 	height: 20px; /*match column header height*/
-	border-left: 3px solid black; /*leftmost header border*/
+	border-left: 0px solid black; /*leftmost header border*/
 }
 .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
 .scrollingtable > div > div > table > thead > tr > * > div > div:first-child,
@@ -368,8 +388,8 @@ img:hover {
 	display: block;
 	min-height: 20px; /*match column header height*/
 	padding-top: 1px;
-	border-left: 3px solid black; /*borders between header cells*/
-  border-right: 3px ;
+	border-left: 0px solid black; /*borders between header cells*/
+  border-right: opx ;
 
 }
 .scrollingtable .scrollbarhead {float: right;}
@@ -389,14 +409,14 @@ img:hover {
 	top: -1px; /*inverse of border width*/
 }
 .scrollingtable > div > div > table > tbody {vertical-align: top;}
-.scrollingtable > div > div > table > tbody > tr {background: white;}
+.scrollingtable > div > div > table > tbody > tr {background: #69442d;}
 .scrollingtable > div > div > table > tbody > tr > * {
 	border-bottom: 1px solid black;
 	padding: 0 6px 0 6px;
 	height: 20px; /*match column header height*/
 }
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
-.scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
+.scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: #3f3120;} /*alternate row color*/
 .scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;} /*borders between body cells*/
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/

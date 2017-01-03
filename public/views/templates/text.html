@@ -1,67 +1,60 @@
 <section>
-
   <div class="row">
-
     <div class="song col-md-9">
       <div class="top row">
-        <div class="upper col-md-2">
+        <div class="col-md-3">
           <button class="customBtn" ng-click="text.plus()">Transpose Up</button><br />
           <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
         </div>
-        <div class="col-md-6">
-          <h1>Chord-Text Transposer</h1>
+        <div class="col-md-9 name">
+          <h5>
+            Paste songs into form below and transpose with buttons on left. <br />
+            To save documents, login and use greeen "+" or upolad files from computer. <br / />
+            Saved documents will appear on table to the right. Open saved documents by clicking.
+          </h5>
         </div>
-
-        <div class="col-md-4">
+        </div>
+        <div class="row textContainer">
+          <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
+          <div class="col-md-1 addHolder">
+            <img ng-click="text.addToDb(text.title, text.songText)" src="./img/save.png" alt="add" />
+          </div>
+          <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
+        </div>
+      </div>
+      <div class="col-md-3 list">
+        <div class="col-md-8 col-md-offset-4">
           <button class="customBtn" ng-click="text.logIn()">Log In</button>
           <button class="customBtn" ng-click="text.logOut()">Log Out</button>
         </div>
-      </div>
-
-      <div class="row textContainer">
-        <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
-        <div class="col-md-1 addHolder">
-          <img ng-click="text.addToDb(text.title, text.songText)" src="./img/save.png" alt="add" />
-        </div>
-        <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
-      </div>
-    </div>
-    <div class="col-md-3 list">
-      <div class="scrollingtable">
-        <h2 class="tabTitle">Saved Songs</h2>
-        <div>
+        <fieldset class="col-md-3">
+          <form ng-submit="text.submit(text.obj)">
+            <input  type="file" ng-files-model model="text.obj" callback="function" data="data" multiple="mulplite" />
+            <input class="customBtn" type="submit"  value="Upload Files" />
+          </form>
+        </fieldset>
+        <div class="scrollingtable">
           <div>
-            <table>
-              <thead>
-                <tr>
-                  <th><div label="Title-artist"></div></th>
-                  <th><div label="Del"></div></th>
-                  <th class="scrollbarhead"></th> <!--ALWAYS ADD THIS EXTRA CELL AT END OF HEADER ROW-->
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="songs" data-id="{{song._id}}" ng-repeat="song in text.songList">
-                  <td ng-click="text.getSong(song._id)">{{song.title}}</td>
-                  <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th><div label="Saved Song Documents"></div></th>
+                    <th></th>
+                    <th class="scrollbarhead"></th> <!--ALWAYS ADD THIS EXTRA CELL AT END OF HEADER ROW-->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="songs" data-id="{{song._id}}" ng-repeat="song in text.songList">
+                    <td ng-click="text.getSong(song._id)">{{song.title}}</td>
+                    <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      <div>
-        <h2>Upload text files</h2>
-        <fieldset>
-          <form ng-submit="text.submit(text.obj)">
-          <input  type="file" ng-files-model model="text.obj" callback="function" data="data" multiple="mulplite" />
-          <input class="customBtn" type="submit"  value="submit" />
-          </form>
-        </fieldset>
-      </div>
-
     </div>
 
-
-  </div>
-
-</section>
+  </section>
