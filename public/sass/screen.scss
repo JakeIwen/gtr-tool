@@ -78,7 +78,6 @@ h4 {
   margin-right: -4px;
   background-color: #69442d;
 
-
 }
 /*------------------------------ CAGED OPTIONS STYLING -------------------------------*/
 .options {
@@ -87,8 +86,10 @@ h4 {
 .select {
   margin-top: 10px;
 }
-
-.map {
+.markerMap {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
 }
 
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
@@ -104,15 +105,12 @@ h4 {
 .fretboardContainer {
   margin:15px;
   padding: 17px 20px 0 0;
-  // background-color: #59442D;
   background-image:url('../img/neck.png');
   background-repeat: no-repeat;
   background-position: left 15px;
   background-size: 97.5% 85%;
   display:inline-block;
-  // background-color: black;
-  /*max-width: 1200px;*/
-  /*align-self: center;*/
+
 }
 .strings {
   padding-top: 3px;
@@ -122,9 +120,7 @@ h4 {
 }
 
 .fretRow {
-  /*display: flex;
-  text-align: justify;
-  justify-content: space-between;*/
+
   margin-top: -8px;
   margin-bottom: 8px;
   white-space: nowrap;
@@ -141,19 +137,8 @@ h4 {
 .horizMarker {
   display: inline-block;
 }
-.marker {
-  // background-image: url("../img/greencircle.svg");
-  // background-repeat: no-repeat;
-  // background-image-size: 16px;
-  // background-position: right;
-  // height: 16px;
-  // min-width: 16px
-
-}
 .fret {
-  /*margin-bottom: -50%;*/
   display: inline-block;
-  // border-right: 1px solid #c1c1c1;
   min-width: 19px;
   z-index: -1;
   text-align: right;
@@ -173,16 +158,13 @@ $used-length: 0%;
 $old-len: 9.28%;
 @for $i from 1 through 15 {
   $new-length: $old-len * (9.48/10);
-
   .fretNum#{$i} {
     width: $new-length;
   }
   $old-len: $new-length;
-
 }
 
 .borderString{
-  /*same height as tr*/
   height: 18px;
   padding-top: 2px;
   border-top: 2px, solid #bdc19d;
@@ -246,6 +228,22 @@ td {
 textarea {
   border: none;
 }
+#songList {
+  position:relative;
+}
+#table-scroll {
+  height:15px;
+  overflow:auto;
+  margin-top:20px;
+}
+#songList table {
+  width:100%;
+}
+
+.upper {
+  border: solid black 3px;
+  border-radius: 8px;
+}
 .textContainer {
   background-color: #FFFFFF;
   border-radius: 16px;
@@ -269,15 +267,140 @@ textarea {
 .del {
   height: 20px;
 }
-.songList>tbody>tr>td {
+#songList>tbody>tr>td {
   font-size: 1em;
   padding:3px;
 }
 img:hover {
   cursor: pointer;
 }
+/*--------------------------------- SONG TABLE STYLE -----------------------------*/
+.tabTitle {
+  text-align: center;
+}
+.scrollingtable {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	overflow: hidden;
+	min-width: 100%;
+	height: 600px; /*set table height here; can be fixed value or %*/
+	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
+	font-size: 12px;
+	padding-top: 40px; /*this determines top caption height*/
+	padding-bottom: 40px; /*this determines bottom caption height*/
+	text-align: left;
+  border-radius: 3px;
+}
+.scrollingtable * {box-sizing: border-box;}
+.scrollingtable > div {
+	position: relative;
+	border-top: 3px solid black; /*top table border*/
+	height: 100%;
+	padding-top: 20px; /*this determines column header height*/
+}
+.scrollingtable > div:before {
+	top: 0;
+}
+.scrollingtable > div:before,
+.scrollingtable > div > div:after {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 50%;
+	left: 0;
+}
+.scrollingtable > div > div {
+	/*min-height: 43px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows*/
+	max-height: 100%;
+	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
+	overflow-x: hidden;
+	border: 3px solid black; /*border around table body*/
+}
+.scrollingtable > div > div:after {background: #c6d5c8;} /*match page background color*/
+.scrollingtable > div > div > table {
+	width: 100%;
+	border-spacing: 0;
+	margin-top: -20px; /*inverse of column header height*/
+	/*margin-right: 17px;*/ /*uncomment if using % width*/
+}
+.scrollingtable > div > div > table > caption {
+	position: absolute;
+	top: -20px; /*inverse of caption height*/
+	margin-top: -1px; /*inverse of border-width*/
+	width: 100%;
+	font-weight: bold;
+	text-align: center;
+  font-size: 20px;
+}
+.scrollingtable > div > div > table > * > tr > * {padding: 0;}
+.scrollingtable > div > div > table > thead {
+	vertical-align: bottom;
+	white-space: nowrap;
+	text-align: center;
+
+}
+.scrollingtable > div > div > table > thead > tr > * > div {
+	display: inline-block;
+	padding: 0 6px 0 6px; /*header cell padding*/
+}
+.scrollingtable > div > div > table > thead > tr > :first-child:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px; /*match column header height*/
+	border-left: 3px solid black; /*leftmost header border*/
+}
+.scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+.scrollingtable > div > div > table > thead > tr > * > div > div:first-child,
+.scrollingtable > div > div > table > thead > tr > * + :before {
+	position: absolute;
+	top: 0;
+	white-space: pre-wrap;
+  font-size: 15px;
+}
+.scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+.scrollingtable > div > div > table > thead > tr > * > div[label]:after {content: attr(label);}
+.scrollingtable > div > div > table > thead > tr > * + :before {
+	content: "";
+	display: block;
+	min-height: 20px; /*match column header height*/
+	padding-top: 1px;
+	border-left: 3px solid black; /*borders between header cells*/
+  border-right: 3px ;
+
+}
+.scrollingtable .scrollbarhead {float: right;}
+.scrollingtable .scrollbarhead:before {
+	position: absolute;
+	width: 100px;
+	top: -3px; /*inverse border-width*/
+  border-top: 0;
+  border-left: none;
+}
+.scrollingtable > div > div > table > tbody > tr:after {
+	content: "";
+	display: table-cell;
+	position: relative;
+	padding: 0;
+	border-top: 3px solid black;
+	top: -1px; /*inverse of border width*/
+}
+.scrollingtable > div > div > table > tbody {vertical-align: top;}
+.scrollingtable > div > div > table > tbody > tr {background: white;}
+.scrollingtable > div > div > table > tbody > tr > * {
+	border-bottom: 1px solid black;
+	padding: 0 6px 0 6px;
+	height: 20px; /*match column header height*/
+}
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+.scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;} /*borders between body cells*/
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
+
 .switch {
   position: relative;
   display: inline-block;

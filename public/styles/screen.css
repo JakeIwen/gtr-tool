@@ -94,18 +94,25 @@ h4 {
 }
 
 /*------------------------------ CAGED OPTIONS STYLING -------------------------------*/
-/* line 84, ../sass/screen.scss */
+/* line 83, ../sass/screen.scss */
 .options {
   margin: 25px;
 }
 
-/* line 87, ../sass/screen.scss */
+/* line 86, ../sass/screen.scss */
 .select {
   margin-top: 10px;
 }
 
+/* line 89, ../sass/screen.scss */
+.markerMap {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+}
+
 /*------------------------------ FRETBOARD STYLING -------------------------------*/
-/* line 96, ../sass/screen.scss */
+/* line 97, ../sass/screen.scss */
 #nonlinear {
   margin-top: -55px;
   margin-bottom: 40px;
@@ -114,7 +121,7 @@ h4 {
   width: 94%;
 }
 
-/* line 104, ../sass/screen.scss */
+/* line 105, ../sass/screen.scss */
 .fretboardContainer {
   margin: 15px;
   padding: 17px 20px 0 0;
@@ -123,11 +130,9 @@ h4 {
   background-position: left 15px;
   background-size: 97.5% 85%;
   display: inline-block;
-  /*max-width: 1200px;*/
-  /*align-self: center;*/
 }
 
-/* line 117, ../sass/screen.scss */
+/* line 115, ../sass/screen.scss */
 .strings {
   padding-top: 3px;
   /*width: 100%;*/
@@ -135,37 +140,33 @@ h4 {
   z-index: 1000;
 }
 
-/* line 124, ../sass/screen.scss */
+/* line 122, ../sass/screen.scss */
 .fretRow {
-  /*display: flex;
-  text-align: justify;
-  justify-content: space-between;*/
   margin-top: -8px;
   margin-bottom: 8px;
   white-space: nowrap;
 }
 
-/* line 132, ../sass/screen.scss */
+/* line 128, ../sass/screen.scss */
 .markerContainer {
   position: relative;
   width: 30px;
 }
 
-/* line 136, ../sass/screen.scss */
+/* line 132, ../sass/screen.scss */
 .markerMap {
   position: absolute;
   bottom: 3px;
   left: 0;
 }
 
-/* line 141, ../sass/screen.scss */
+/* line 137, ../sass/screen.scss */
 .horizMarker {
   display: inline-block;
 }
 
-/* line 153, ../sass/screen.scss */
+/* line 140, ../sass/screen.scss */
 .fret {
-  /*margin-bottom: -50%;*/
   display: inline-block;
   min-width: 19px;
   z-index: -1;
@@ -173,95 +174,94 @@ h4 {
   padding: 0;
 }
 
-/* line 162, ../sass/screen.scss */
+/* line 147, ../sass/screen.scss */
 .preFret {
   display: inline-block;
   overflow: none;
 }
 
-/* line 169, ../sass/screen.scss */
+/* line 154, ../sass/screen.scss */
 .fretNum0 {
   width: 20px;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum1 {
   width: 8.79744%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum2 {
   width: 8.33997%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum3 {
   width: 7.90629%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum4 {
   width: 7.49517%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum5 {
   width: 7.10542%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum6 {
   width: 6.73594%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum7 {
   width: 6.38567%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum8 {
   width: 6.05361%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum9 {
   width: 5.73883%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum10 {
   width: 5.44041%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum11 {
   width: 5.15751%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum12 {
   width: 4.88932%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum13 {
   width: 4.63507%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum14 {
   width: 4.39405%;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .fretNum15 {
   width: 4.16556%;
 }
 
-/* line 184, ../sass/screen.scss */
+/* line 167, ../sass/screen.scss */
 .borderString {
-  /*same height as tr*/
   height: 18px;
   padding-top: 2px;
   border-top: 2px, solid #bdc19d;
@@ -269,7 +269,7 @@ h4 {
 }
 
 /*------------------------------ BUTTON STYLING ------------------------------*/
-/* line 195, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 nav ul {
   margin: 0 auto;
   width: 80%;
@@ -277,18 +277,18 @@ nav ul {
   text-align: center;
 }
 
-/* line 202, ../sass/screen.scss */
+/* line 184, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 204, ../sass/screen.scss */
+/* line 186, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
 }
 
-/* line 209, ../sass/screen.scss */
+/* line 191, ../sass/screen.scss */
 .customBtn {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
@@ -308,49 +308,72 @@ form {
   margin-top: 10px;
 }
 
-/* line 228, ../sass/screen.scss */
+/* line 210, ../sass/screen.scss */
 .customBtn:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-/* line 234, ../sass/screen.scss */
+/* line 216, ../sass/screen.scss */
 .customBtn:active {
   position: relative;
   top: 1px;
 }
 
-/* line 238, ../sass/screen.scss */
+/* line 220, ../sass/screen.scss */
 td {
   font-size: 1.2em;
 }
 
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
-/* line 243, ../sass/screen.scss */
+/* line 225, ../sass/screen.scss */
 #source, #songName {
   font-family: "Courier New", courier;
 }
 
-/* line 246, ../sass/screen.scss */
+/* line 228, ../sass/screen.scss */
 textarea {
   border: none;
 }
 
-/* line 249, ../sass/screen.scss */
+/* line 231, ../sass/screen.scss */
+#songList {
+  position: relative;
+}
+
+/* line 234, ../sass/screen.scss */
+#table-scroll {
+  height: 15px;
+  overflow: auto;
+  margin-top: 20px;
+}
+
+/* line 239, ../sass/screen.scss */
+#songList table {
+  width: 100%;
+}
+
+/* line 243, ../sass/screen.scss */
+.upper {
+  border: solid black 3px;
+  border-radius: 8px;
+}
+
+/* line 247, ../sass/screen.scss */
 .textContainer {
   background-color: #FFFFFF;
   border-radius: 16px;
   border: 1px solid black;
 }
 
-/* line 254, ../sass/screen.scss */
+/* line 252, ../sass/screen.scss */
 .addHolder {
   padding-left: 10px;
   padding-top: 8px;
 }
 
-/* line 258, ../sass/screen.scss */
+/* line 256, ../sass/screen.scss */
 #songName {
   font-size: 1.6em;
   text-align: center;
@@ -358,31 +381,249 @@ textarea {
   border-radius: 10px;
 }
 
-/* line 264, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .top {
   margin-top: 15px;
   margin-bottom: 15px;
   vertical-align: middle;
 }
 
-/* line 269, ../sass/screen.scss */
+/* line 267, ../sass/screen.scss */
 .del {
   height: 20px;
 }
 
-/* line 272, ../sass/screen.scss */
-.songList > tbody > tr > td {
+/* line 270, ../sass/screen.scss */
+#songList > tbody > tr > td {
   font-size: 1em;
   padding: 3px;
 }
 
-/* line 276, ../sass/screen.scss */
+/* line 274, ../sass/screen.scss */
 img:hover {
   cursor: pointer;
 }
 
-/*--------------------------------- SLIDER STYLE -----------------------------*/
+/*--------------------------------- SONG TABLE STYLE -----------------------------*/
+/* line 278, ../sass/screen.scss */
+.tabTitle {
+  text-align: center;
+}
+
 /* line 281, ../sass/screen.scss */
+.scrollingtable {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  min-width: 100%;
+  height: 600px;
+  /*set table height here; can be fixed value or %*/
+  /*min-height: 104px;*/
+  /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
+  font-size: 12px;
+  padding-top: 40px;
+  /*this determines top caption height*/
+  padding-bottom: 40px;
+  /*this determines bottom caption height*/
+  text-align: left;
+  border-radius: 3px;
+}
+
+/* line 295, ../sass/screen.scss */
+.scrollingtable * {
+  box-sizing: border-box;
+}
+
+/* line 296, ../sass/screen.scss */
+.scrollingtable > div {
+  position: relative;
+  border-top: 3px solid black;
+  /*top table border*/
+  height: 100%;
+  padding-top: 20px;
+  /*this determines column header height*/
+}
+
+/* line 302, ../sass/screen.scss */
+.scrollingtable > div:before {
+  top: 0;
+}
+
+/* line 305, ../sass/screen.scss */
+.scrollingtable > div:before,
+.scrollingtable > div > div:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 50%;
+  left: 0;
+}
+
+/* line 314, ../sass/screen.scss */
+.scrollingtable > div > div {
+  /*min-height: 43px;*/
+  /*if using % height, make this at least large enough to fit scrollbar arrows*/
+  max-height: 100%;
+  overflow: scroll;
+  /*set to auto if using fixed or % width; else scroll*/
+  overflow-x: hidden;
+  border: 3px solid black;
+  /*border around table body*/
+}
+
+/* line 321, ../sass/screen.scss */
+.scrollingtable > div > div:after {
+  background: #c6d5c8;
+}
+
+/*match page background color*/
+/* line 322, ../sass/screen.scss */
+.scrollingtable > div > div > table {
+  width: 100%;
+  border-spacing: 0;
+  margin-top: -20px;
+  /*inverse of column header height*/
+  /*margin-right: 17px;*/
+  /*uncomment if using % width*/
+}
+
+/* line 328, ../sass/screen.scss */
+.scrollingtable > div > div > table > caption {
+  position: absolute;
+  top: -20px;
+  /*inverse of caption height*/
+  margin-top: -1px;
+  /*inverse of border-width*/
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* line 337, ../sass/screen.scss */
+.scrollingtable > div > div > table > * > tr > * {
+  padding: 0;
+}
+
+/* line 338, ../sass/screen.scss */
+.scrollingtable > div > div > table > thead {
+  vertical-align: bottom;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* line 344, ../sass/screen.scss */
+.scrollingtable > div > div > table > thead > tr > * > div {
+  display: inline-block;
+  padding: 0 6px 0 6px;
+  /*header cell padding*/
+}
+
+/* line 348, ../sass/screen.scss */
+.scrollingtable > div > div > table > thead > tr > :first-child:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  /*match column header height*/
+  border-left: 3px solid black;
+  /*leftmost header border*/
+}
+
+/* line 356, ../sass/screen.scss */
+.scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+.scrollingtable > div > div > table > thead > tr > * > div > div:first-child,
+.scrollingtable > div > div > table > thead > tr > * + :before {
+  position: absolute;
+  top: 0;
+  white-space: pre-wrap;
+  font-size: 15px;
+}
+
+/* line 364, ../sass/screen.scss */
+.scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+.scrollingtable > div > div > table > thead > tr > * > div[label]:after {
+  content: attr(label);
+}
+
+/* line 366, ../sass/screen.scss */
+.scrollingtable > div > div > table > thead > tr > * + :before {
+  content: "";
+  display: block;
+  min-height: 20px;
+  /*match column header height*/
+  padding-top: 1px;
+  border-left: 3px solid black;
+  /*borders between header cells*/
+  border-right: 3px;
+}
+
+/* line 375, ../sass/screen.scss */
+.scrollingtable .scrollbarhead {
+  float: right;
+}
+
+/* line 376, ../sass/screen.scss */
+.scrollingtable .scrollbarhead:before {
+  position: absolute;
+  width: 100px;
+  top: -3px;
+  /*inverse border-width*/
+  border-top: 0;
+  border-left: none;
+}
+
+/* line 383, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody > tr:after {
+  content: "";
+  display: table-cell;
+  position: relative;
+  padding: 0;
+  border-top: 3px solid black;
+  top: -1px;
+  /*inverse of border width*/
+}
+
+/* line 391, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody {
+  vertical-align: top;
+}
+
+/* line 392, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody > tr {
+  background: white;
+}
+
+/* line 393, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody > tr > * {
+  border-bottom: 1px solid black;
+  padding: 0 6px 0 6px;
+  height: 20px;
+  /*match column header height*/
+}
+
+/* line 398, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {
+  border-bottom: none;
+}
+
+/* line 399, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody > tr:nth-child(even) {
+  background: gainsboro;
+}
+
+/*alternate row color*/
+/* line 400, ../sass/screen.scss */
+.scrollingtable > div > div > table > tbody > tr > * + * {
+  border-left: 1px solid black;
+}
+
+/*borders between body cells*/
+/*--------------------------------- SLIDER STYLE -----------------------------*/
+/* line 404, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -392,13 +633,13 @@ img:hover {
 }
 
 /* Hide default HTML checkbox */
-/* line 290, ../sass/screen.scss */
+/* line 413, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 293, ../sass/screen.scss */
+/* line 416, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -411,7 +652,7 @@ img:hover {
   transition: .4s;
 }
 
-/* line 305, ../sass/screen.scss */
+/* line 428, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -424,29 +665,29 @@ img:hover {
   transition: .4s;
 }
 
-/* line 317, ../sass/screen.scss */
+/* line 440, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 321, ../sass/screen.scss */
+/* line 444, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 325, ../sass/screen.scss */
+/* line 448, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 332, ../sass/screen.scss */
+/* line 455, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 334, ../sass/screen.scss */
+/* line 457, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;
