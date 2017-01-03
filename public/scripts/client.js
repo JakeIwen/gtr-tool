@@ -1,9 +1,4 @@
-
-
-var numFrets = 16;
-var zeroFretLength = 25;
-var fretWidth = 3;
-var app = angular.module('app', ['ngRoute', 'firebase']);
+var app = angular.module('app', ['ngRoute', 'firebase', 'ng-files-model']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider

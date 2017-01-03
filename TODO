@@ -10,15 +10,18 @@ search feature for songs
 
 
 Transposer
-Optimize regex
-song list and database
-firebase
 
 QUESTIONS
 SVG dynamic property editor
 how can I best separate my code - several very similar functions are in both Triad and CAGED controllers.
 What do you recommend for "home page"? Nothing?
+
+   - describe the side and what the functions do
 is using "onclick" in nav.html bad practice? - theres hashtags inserted into the urls....
+ - href nav menu lists
+
 should i be checking firebase authorization every time something with permissions is done, or is there a safe way to store the authentication status?
 how to allow uploading of text files (and save as string in table)
 get firebase login to exist across all controllers
+
+hashmap data structure - object key

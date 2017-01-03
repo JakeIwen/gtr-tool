@@ -360,27 +360,29 @@ textarea {
 
 /* line 264, ../sass/screen.scss */
 .top {
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  vertical-align: middle;
 }
 
-/* line 267, ../sass/screen.scss */
+/* line 269, ../sass/screen.scss */
 .del {
   height: 20px;
 }
 
-/* line 270, ../sass/screen.scss */
+/* line 272, ../sass/screen.scss */
 .songList > tbody > tr > td {
   font-size: 1em;
   padding: 3px;
 }
 
-/* line 274, ../sass/screen.scss */
+/* line 276, ../sass/screen.scss */
 img:hover {
   cursor: pointer;
 }
 
 /*--------------------------------- SLIDER STYLE -----------------------------*/
-/* line 279, ../sass/screen.scss */
+/* line 281, ../sass/screen.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -390,13 +392,13 @@ img:hover {
 }
 
 /* Hide default HTML checkbox */
-/* line 288, ../sass/screen.scss */
+/* line 290, ../sass/screen.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 291, ../sass/screen.scss */
+/* line 293, ../sass/screen.scss */
 .sliderBox {
   position: absolute;
   cursor: pointer;
@@ -409,7 +411,7 @@ img:hover {
   transition: .4s;
 }
 
-/* line 303, ../sass/screen.scss */
+/* line 305, ../sass/screen.scss */
 .sliderBox:before {
   position: absolute;
   content: "";
@@ -422,29 +424,29 @@ img:hover {
   transition: .4s;
 }
 
-/* line 315, ../sass/screen.scss */
+/* line 317, ../sass/screen.scss */
 input:checked + .sliderBox {
   background-color: #2196F3;
 }
 
-/* line 319, ../sass/screen.scss */
+/* line 321, ../sass/screen.scss */
 input:focus + .sliderBox {
   box-shadow: 0 0 1px #2196F3;
 }
 
-/* line 323, ../sass/screen.scss */
+/* line 325, ../sass/screen.scss */
 input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-/* line 330, ../sass/screen.scss */
+/* line 332, ../sass/screen.scss */
 form {
   display: inline-block;
 }
 
-/* line 332, ../sass/screen.scss */
+/* line 334, ../sass/screen.scss */
 .buttons {
   align-content: center;
   text-align: center;

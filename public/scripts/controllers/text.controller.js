@@ -1,14 +1,14 @@
-app.controller('TextController', function($firebaseAuth, $http) {
+app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( $firebaseAuth, $http, $scope) {
   var self = this;
-
   var auth = $firebaseAuth();
   var currentUser = {};
+  self.obj = {};
 
-  self.addToDb = function(song) {
-    if (self.songText && self.title) {
+  self.addToDb = function(title, song) {
+    if (title && song) {
       var songData = {
-        title: self.title,
-        song: self.songText
+        title: title,
+        song: song
       }
       currentUser.getToken().then(function(idToken){
         console.log('getting song list');
@@ -22,11 +22,10 @@ app.controller('TextController', function($firebaseAuth, $http) {
         }).then(function(response){
           console.log('song added to DB');
           getSongs();
-
         });
       });
     } else {
-      //ng-if flip: message about requiring text in fields
+      alert('invalid song title or data');
     }
   }
   self.getSong = function(songId){
@@ -54,7 +53,6 @@ app.controller('TextController', function($firebaseAuth, $http) {
       }).then(function(response){
         console.log('song deleted');
         getSongs();
-
       });
     });
   }
@@ -115,6 +113,12 @@ app.controller('TextController', function($firebaseAuth, $http) {
     });
 
   }
+  self.submit = function(){
+    for (var i = 0; i < self.obj.length; i++) {
+      self.addToDb(self.obj[i].name, self.obj[i].file);
+    }
+    console.log('submitting');
+  }
 
   self.plus = function() {
     changeChords();
@@ -125,8 +129,16 @@ app.controller('TextController', function($firebaseAuth, $http) {
      }
   }
 
+
+
   function changeChords () {
     var chordDoc = $('#source').val()
+      // notes = ['Bb', 'A#'];
+      //
+      // for(note in notes) {
+      //   .replace(/note[0]/g, note[1])
+      //   };
+
       .replace(/Bb/g, 'A#')
       .replace(/Db/g, 'C#')
       .replace(/Eb/g, 'D#')
@@ -219,4 +231,4 @@ app.controller('TextController', function($firebaseAuth, $http) {
 
     $('#source').val(chordDoc);
   }
-});
+}]);

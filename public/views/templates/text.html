@@ -1,8 +1,22 @@
 <section>
   <div class="top row">
-    <div class="col-md-12">
-      <button class="customBtn" ng-click="text.plus()">Transpose Up</button>
+    <div class="col-md-3">
+      <button class="customBtn" ng-click="text.plus()">Transpose Up</button><br />
       <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
+    </div>
+    <div class="col-md-5">
+      <h1>Chord-Text Transposer</h1>
+    </div>
+    <div class="col-md-3">
+      <h2>Upload text files</h2>
+      <fieldset>
+        <form ng-submit="text.submit(text.obj)">
+        <input  type="file" ng-files-model model="text.obj" callback="function" data="data" multiple="mulplite" />
+        <input class="customBtn" type="submit"  value="submit" />
+        </form>
+      </fieldset>
+    </div>
+    <div class="col-md-1">
       <button class="customBtn" ng-click="text.logIn()">Log In</button>
       <button class="customBtn" ng-click="text.logOut()">Log Out</button>
     </div>
@@ -11,14 +25,12 @@
 
     <div class="song col-md-9">
       <div class="row textContainer">
-
         <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
         <div class="col-md-1 addHolder">
-          <img ng-click="text.addToDb()" src="./img/save.png" alt="add" />
+          <img ng-click="text.addToDb(text.title, text.songText)" src="./img/save.png" alt="add" />
         </div>
         <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
       </div>
-
     </div>
 
     <div class="col-md-3 list">
@@ -26,18 +38,17 @@
       <table class="table songList">
         <thead>
           <tr>
-            <th>Key</th>
             <th>Title - Artist</th>
           </tr>
         </thead>
         <tbody>
           <tr class="songs" data-id="{{song._id}}" ng-repeat="song in text.songList">
-            <td>{{song.key}}</td>
             <td ng-click="text.getSong(song._id)">{{song.title}}</td>
             <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
           </tr>
         </tbody>
       </table>
+
     </div>
   </div>
 
