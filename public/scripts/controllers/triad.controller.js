@@ -131,7 +131,6 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
         inversion: notes.indexOf(Math.min(...midis) % 12)
       });
     }
-    console.log('masterset', masterSet);
     self.filter();
   };
 
@@ -152,7 +151,6 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
     }
     //DOM binding listing number of chord variations
     self.variations = activeList.length;
-    console.log('updated sortedConfigs:', sortedConfigs);
     displayTriad();
   };
 
@@ -264,7 +262,6 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
         }
         break;
       }
-      console.log(key);
       if (key >=48 && key <=52) {
         self.allowedInversions[key - 48] = !self.allowedInversions[key - 48];
         self.filter();
