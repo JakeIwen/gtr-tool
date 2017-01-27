@@ -13,7 +13,49 @@
             Saved documents will appear on table to the right. Open saved documents by clicking.
           </h5>
         </div>
+      </div>
+      <div layout="col-md-3">
+      </div>
+      <div class="row">
+        <div>
+          <button class="custombtn" ng-click="text.addSong()">
+            Add
+          </button>
+          <input class="col-md-6" id="songSearch">
+          <label>Search Surveys</label>
+          <input ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)"/>
+          <div class="errors-spacer"></div>
+          <!-- <h3 class="col-md-3" id="songSearchResults">Results: {{text.songList  | filter: query}} </h3> -->
         </div>
+
+        <div id="filterBoxes">
+        </div>
+        <div class="row">
+          <div class="scrollingtable">
+
+          <table cellspacing="0">
+            <thead>
+              <tr id="headerRow">
+                <th class="columnSort" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Date Added
+                  <span ng-class="{'fa fa-caret-down': text.sortType == 'date_added' && !text.sortReverse, 'fa fa-caret-up': text.sortType == 'date_added' && text.sortReverse}"></span>
+                </th>
+                <th class="columnSort" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse">Song
+                  <span ng-class="{'fa fa-caret-down': text.sortType == title && !text.sortReverse, 'fa fa-caret-up': text.sortType == title && text.sortReverse}"></span>
+                </th>
+              </tr>
+              <tbody class="tableBody">
+                <tr class="tableBodyRow" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query" data-ng-class="{toastColorRed: text.redId == result.id, noToastColor: text.redId != result.id}">
+                  <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
+                <td ng-click="text.getSong(song._id)">{{song.title}}</td>
+                <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
+
+                <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
         <div class="row textContainer">
           <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
           <div class="col-md-1 addHolder">
@@ -34,25 +76,6 @@
           </form>
         </fieldset>
         <div class="scrollingtable">
-          <div>
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th><div label="Saved Song Documents"></div></th>
-                    <th></th>
-                    <th class="scrollbarhead"></th> <!--ALWAYS ADD THIS EXTRA CELL AT END OF HEADER ROW-->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="songs" data-id="{{song._id}}" ng-repeat="song in text.songList">
-                    <td ng-click="text.getSong(song._id)">{{song.title}}</td>
-                    <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </div>
     </div>

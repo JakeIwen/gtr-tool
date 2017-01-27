@@ -68,6 +68,7 @@ router.get("/title/:id", function(req, res){
 router.post("/", function(req, res){
   var songData = req.body;
   songData.email = req.decodedToken.email;
+  songData.date_added = new Date();
   // Check the user's exitence based on their email
   var NewSong = new Song(songData);
   NewSong.save(function(err, data) {

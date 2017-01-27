@@ -231,4 +231,41 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
 
     $('#source').val(chordDoc);
   }
+
+  /***************************ANGULAR SEARCH FILTER ***************************/
+  self.currentPage = 0;
+  self.pageSize = 212
+  self.filtered = [];
+  self.loading = false;
+  self.sortType = 'id'; // set the default sort type
+  self.sortReverse = true;  // set the default sort order
+  // self.show = {
+  //   options: ['Pending', 'Dispatched', 'Completed', 'Declined'],
+  //   statuses: [true, true, true, true],
+  //   text: function () {
+  //     var ret = [];
+  //     var pendBool = (!this.statuses[0] && this.options[0]);
+  //     var dispBool = (!this.statuses[1] && this.options[1]);
+  //     var compBool = (!this.statuses[2] && this.options[2]);
+  //     var decBool = (!this.statuses[3] && this.options[3]);
+  //     if (compBool) { ret.push(compBool) }
+  //     if (decBool) { ret.push(decBool) }
+  //     if (dispBool) { ret.push(dispBool) }
+  //     if (pendBool) { ret.push(pendBool) }
+  //     return ret;
+  //   }
+  // }
+  self.pageCheck = function(numResults) {
+    var total = self.totalPages(numResults);
+    if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
+      self.currentPage = total -1 ;
+    }
+  }
+  self.totalPages = function (num) {
+    var total = 0;
+    if (num) {
+      total = parseInt(((num - 1) / self.pageSize) + 1);
+    }
+    return total;
+  }
 }]);

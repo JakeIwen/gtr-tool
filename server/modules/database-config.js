@@ -1,3 +1,3 @@
-module.exports = process.env.MONGODB_URI;
+// module.exports = process.env.MONGODB_URI;
 
-// module.exports = 'mongodb://localhost:27017/gtr-tool';
+module.exports = 'mongodb://localhost:27017/gtr-tool';
