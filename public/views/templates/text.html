@@ -30,8 +30,9 @@
 
         <div id="filterBoxes">
         </div>
-        <div class="row">
-          <div class="scrollingtable">
+        <div class="row scrollingtable">
+          <div>
+            <div>
 
           <table cellspacing="0">
             <thead>
@@ -46,7 +47,7 @@
               <tbody class="tableBody">
                 <tr class="tableBodyRow" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query" data-ng-class="{toastColorRed: text.redId == result.id, noToastColor: text.redId != result.id}">
                   <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
-                <td ng-click="text.getSong(song._id)">{{song.title}}</td>
+                <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
                 <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
 
                 <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
@@ -54,6 +55,7 @@
             </tbody>
           </table>
         </div>
+      </div>
       </div>
 
         <div class="row textContainer">

@@ -489,6 +489,9 @@ img:hover {
   height: 50%;
   left: 0;
 }
+.columnSort:hover, .song-name:hover {
+  cursor: pointer;
+}
 
 /* line 343, ../sass/screen.scss */
 .scrollingtable > div > div {
