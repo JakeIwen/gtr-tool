@@ -430,6 +430,18 @@ img:hover {
 }
 
 /*--------------------------------- SONG TABLE STYLE -----------------------------*/
+.logInOut{
+  position: absolute;
+  right:20px;
+}
+
+#transposeButtons {
+  position: fixed;
+  bottom: 50%;
+  right: 25px;
+  z-index: 5;
+}
+
 /* line 298, ../sass/screen.scss */
 #headerRow th {
   text-align: center;
@@ -443,7 +455,7 @@ img:hover {
   vertical-align: middle;
   overflow: hidden;
   /*min-width: 70%;*/
-  height: 400px;
+  /*height: 400px;*/
   /*set table height here; can be fixed value or %*/
   /*min-height: 104px;*/
   /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
@@ -516,7 +528,7 @@ img:hover {
 .scrollingtable > div > div > table {
   width: 100%;
   border-spacing: 0;
-  margin-top: -40px;
+  margin-top: -50px;
   /*inverse of column header height*/
   /*margin-right: 17px;*/
   /*uncomment if using % width*/
