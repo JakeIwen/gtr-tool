@@ -1,52 +1,48 @@
 <section>
-  <div class="row">
-    <div class="song col-md-9">
-      <div class="top row">
-        <div class="col-md-3">
-          <button class="customBtn" ng-click="text.plus()">Transpose Up</button><br />
-          <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
-        </div>
-        <div class="col-md-9 name">
-          <h5>
-            Paste songs into form below and transpose with buttons on left. <br />
-            To save documents, login and use greeen "+" or upolad files from computer. <br / />
-            Saved documents will appear on table to the right. Open saved documents by clicking.
-          </h5>
-        </div>
-      </div>
-      <div layout="col-md-3">
-      </div>
-      <div class="row">
-        <div>
-          <button class="custombtn" ng-click="text.addSong()">
-            Add
-          </button>
-          <input class="col-md-6" id="songSearch">
-          <label>Search Surveys</label>
-          <input ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)"/>
-          <div class="errors-spacer"></div>
-          <!-- <h3 class="col-md-3" id="songSearchResults">Results: {{text.songList  | filter: query}} </h3> -->
-        </div>
+  <div class="top row">
+    <div class="col-md-3">
+      <button class="customBtn" ng-click="text.plus()">Transpose Up</button><br />
+      <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
+    </div>
+    <div class="col-md-6 name">
+      <h5>
+        Paste songs into form below and transpose with buttons on left. <br />
+        To save documents, login and use greeen "+" or upolad files from computer. <br / />
+        Saved documents will appear on table to the right. Open saved documents by clicking.
+      </h5>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div>
+      <button class="custombtn" ng-click="text.addSong()">
+        Add
+      </button>
+      <input class="col-md-6" id="songSearch">
+      <label>Search Surveys</label>
+      <input ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)"/>
+      <div class="errors-spacer"></div>
+      <!-- <h3 class="col-md-3" id="songSearchResults">Results: {{text.songList  | filter: query}} </h3> -->
+    </div>
+  </div>
 
-        <div id="filterBoxes">
-        </div>
-        <div class="row scrollingtable">
-          <div>
-            <div>
+<div class="row">
 
-          <table cellspacing="0">
-            <thead>
-              <tr id="headerRow">
-                <th class="columnSort" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Date Added
-                  <span ng-class="{'fa fa-caret-down': text.sortType == 'date_added' && !text.sortReverse, 'fa fa-caret-up': text.sortType == 'date_added' && text.sortReverse}"></span>
-                </th>
-                <th class="columnSort" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse">Song
-                  <span ng-class="{'fa fa-caret-down': text.sortType == title && !text.sortReverse, 'fa fa-caret-up': text.sortType == title && text.sortReverse}"></span>
-                </th>
-              </tr>
-              <tbody class="tableBody">
-                <tr class="tableBodyRow" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query" data-ng-class="{toastColorRed: text.redId == result.id, noToastColor: text.redId != result.id}">
-                  <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
+  <div class="col-md-8 scrollingtable">
+    <div>
+      <div>
+        <table cellspacing="0">
+          <thead>
+            <tr id="headerRow">
+              <th class="columnSort" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse"><div label="Songs"></div>
+                <span ng-class="{'fa fa-caret-down': text.sortType == 'date_added' && !text.sortReverse, 'fa fa-caret-up': text.sortType == 'date_added' && text.sortReverse}"></span>
+              </th>
+              <th class="columnSort" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse"><div label="Date Added"></div>
+                <span ng-class="{'fa fa-caret-down': text.sortType == title && !text.sortReverse, 'fa fa-caret-up': text.sortType == title && text.sortReverse}"></span>
+              </th>
+            </tr>
+            <tbody class="tableBody">
+              <tr class="tableBodyRow" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query" data-ng-class="{toastColorRed: text.redId == result.id, noToastColor: text.redId != result.id}">
+                <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
                 <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
                 <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
 
@@ -56,30 +52,30 @@
           </table>
         </div>
       </div>
-      </div>
-
-        <div class="row textContainer">
-          <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
-          <div class="col-md-1 addHolder">
-            <img ng-click="text.addToDb(text.title, text.songText)" src="./img/save.png" alt="add" />
-          </div>
-          <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
-        </div>
-      </div>
-      <div class="col-md-3 list">
-        <div class="col-md-8 col-md-offset-4">
-          <button class="customBtn" ng-click="text.logIn()">Log In</button>
-          <button class="customBtn" ng-click="text.logOut()">Log Out</button>
-        </div>
-        <fieldset class="col-md-3">
-          <form ng-submit="text.submit(text.obj)">
-            <input  type="file" ng-files-model model="text.obj" callback="function" data="data" multiple="mulplite" />
-            <input class="customBtn" type="submit"  value="Upload Files" />
-          </form>
-        </fieldset>
-        <div class="scrollingtable">
-        </div>
-      </div>
     </div>
+  </div>
 
-  </section>
+
+    <div class="row textContainer">
+      <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
+      <div class="col-md-1 addHolder">
+        <img ng-click="text.addToDb(text.title, text.songText)" src="./img/save.png" alt="add" />
+      </div>
+      <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
+    </div>
+    <!-- <div class="col-md-3 list">
+    <div class="col-md-8 col-md-offset-4">
+    <button class="customBtn" ng-click="text.logIn()">Log In</button>
+    <button class="customBtn" ng-click="text.logOut()">Log Out</button>
+  </div>
+  <fieldset class="col-md-3">
+  <form ng-submit="text.submit(text.obj)">
+  <input  type="file" ng-files-model model="text.obj" callback="function" data="data" multiple="mulplite" />
+  <input class="customBtn" type="submit"  value="Upload Files" />
+</form>
+</fieldset>
+<div class="scrollingtable">
+</div>
+</div> -->
+
+</section>
