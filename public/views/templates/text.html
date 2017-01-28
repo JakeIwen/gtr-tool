@@ -10,9 +10,6 @@
     </div>
 
   <div class="col-md-3">
-
-
-
     <fieldset>
       <form ng-submit="text.submit(text.obj)">
         <input  type="file" ng-files-model model="text.obj" callback="function" data="data" multiple="mulplite" />
@@ -26,12 +23,10 @@
       <!-- <h3 class="col-md-3" id="songSearchResults">Results: {{text.songList  | filter: query}} </h3> -->
     </div>
   </div>
-
-
     <div class="logInOut">
-        <button class="customBtn" ng-click="text.logIn()">Log In</button>
-        <button class="customBtn" ng-click="text.logOut()">Log Out</button>
-      </div>
+      <button class="customBtn" ng-click="text.logIn()">Log In</button>
+      <button class="customBtn" ng-click="text.logOut()">Log Out</button>
+    </div>
 </div>
 
 <div class="row">
@@ -39,21 +34,23 @@
   <div class="col-md-8 scrollingtable">
     <div>
       <div>
-        <table cellspacing="0" ng-init="collapsed = true">
+        <table cellspacing="0" ng-init="collapsed = false">
           <thead>
             <tr id="headerRow">
-              <th class="columnSort" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse"><div label="Songs"></div>
+              <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse"><div label="Songs"></div>
               </th>
-              <th class="columnSort" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse"><div label="Date Added"></div>
+              <th class="columnSort" id= "dateCol" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse"><div label="Date Added"></div>
               </th>
-                <th class="columnSort" ng-click="collapsed = !collapsed">
-                  <div label="&#xf150;" ng-show="collapsed"></div>
-                  <div label="&#xf151;" ng-hide="collapsed"></div>
-                </th>
+              <th class="columnSort" id="collapseCol" ng-click="collapsed = !collapsed">
+                <div label="&#xf150;" ng-show="collapsed"></div>
+                <div label="&#xf151;" ng-hide="collapsed"></div>
+              </th>
+              <th class="scrollbarhead"></th>
+
             </tr>
 
             <tbody class="tableBody" ng-hide="collapsed">
-              <tr class="tableBodyRow"  data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query" data-ng-class="{toastColorRed: text.redId == result.id, noToastColor: text.redId != result.id}">
+              <tr class="tableBodyRow"  data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query">
                 <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
                 <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
                 <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>

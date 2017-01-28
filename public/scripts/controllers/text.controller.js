@@ -8,7 +8,8 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
     if (title && song) {
       var songData = {
         title: title,
-        song: song
+        song: song,
+        date_added: new Date()
       }
       currentUser.getToken().then(function(idToken){
         console.log('getting song list');
@@ -21,7 +22,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
           }
         }).then(function(response){
           console.log('song added to DB');
-          getSongs();
+          self.songList.push(songData);
         });
       });
     } else {
@@ -108,6 +109,9 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
         }
       }).then(function(response){
         self.songList = response.data;
+        for (var i = 0; i < self.songList.length; i++) {
+          self.songList[i].date_added = moment(self.songList[i].date_added).fromNow();
+        }
         console.log('self.songList', self.songList);
       });
     });

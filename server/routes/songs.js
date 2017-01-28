@@ -25,7 +25,7 @@ router.get("/titles", function(req, res){
             res.sendStatus(500);
           } else {
             // return all of the results where a specific user has permission
-            console.log('titles', titles);
+            console.log('title get success');
             res.send(titles);
           }
         });
@@ -56,7 +56,8 @@ router.get("/title/:id", function(req, res){
             console.log('Error COMPLETING song query task', err);
             res.sendStatus(500);
           } else {
-            console.log('song', song);
+            // console.log('song', song);
+            console.log('success');
             res.send(song);
           }
         });
@@ -68,11 +69,10 @@ router.get("/title/:id", function(req, res){
 router.post("/", function(req, res){
   var songData = req.body;
   songData.email = req.decodedToken.email;
-  songData.date_added = new Date();
   // Check the user's exitence based on their email
   var NewSong = new Song(songData);
   NewSong.save(function(err, data) {
-    console.log('save data:', data);
+    console.log('saved song');
     if(err) {
       console.log('ERR: ', err);
       res.sendStatus(500);

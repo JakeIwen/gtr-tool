@@ -31,6 +31,7 @@ body {
   min-width: 900px;
 }
 
+
 /* line 33, ../sass/screen.scss */
 .siteSection {
   border-radius: 10px;
@@ -383,6 +384,8 @@ fieldset {
 /* line 264, ../sass/screen.scss */
 .name {
   padding-top: 30px;
+  display: flex;
+  flex-direction: row;
 }
 
 /* line 267, ../sass/screen.scss */
@@ -434,6 +437,15 @@ img:hover {
   position: absolute;
   right:20px;
 }
+#nameCol {
+  width: 70%;
+}
+#dateCol {
+  width: 25%
+}
+#collapseCol {
+  width: 5%;
+}
 
 #transposeButtons {
   position: fixed;
@@ -456,6 +468,7 @@ img:hover {
   overflow: hidden;
   /*min-width: 70%;*/
   /*height: 400px;*/
+  height: 400px;
   /*set table height here; can be fixed value or %*/
   /*min-height: 104px;*/
   /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
@@ -530,7 +543,7 @@ img:hover {
   border-spacing: 0;
   margin-top: -50px;
   /*inverse of column header height*/
-  /*margin-right: 17px;*/
+  margin-right: 17px;
   /*uncomment if using % width*/
 }
 
@@ -724,3 +737,6 @@ form {
   align-content: center;
   text-align: center;
 }
+
+
+  flex direction
