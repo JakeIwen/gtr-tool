@@ -16,53 +16,58 @@
         <input class="customBtn" type="submit"  value="Upload Files" />
       </form>
     </fieldset>
-    <div>
-      <label>Search Songs</label>
-      <input ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)"/>
-      <div class="errors-spacer"></div>
-      <!-- <h3 class="col-md-3" id="songSearchResults">Results: {{text.songList  | filter: query}} </h3> -->
-    </div>
+
   </div>
-    <div class="logInOut">
-      <button class="customBtn" ng-click="text.logIn()">Log In</button>
-      <button class="customBtn" ng-click="text.logOut()">Log Out</button>
-    </div>
+  <div class="logInOut">
+    <button class="customBtn" ng-click="text.logIn()">Log In</button>
+    <button class="customBtn" ng-click="text.logOut()">Log Out</button>
+  </div>
 </div>
 
 <div class="row">
 
-  <div class="col-md-8 scrollingtable">
-    <div>
-      <div>
-        <table cellspacing="0" ng-init="collapsed = false">
-          <thead>
-            <tr id="headerRow">
-              <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse"><div label="Song"></div>
-              </th>
-              <th class="columnSort" id= "dateCol" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse"><div label="Added"></div>
-              </th>
-              <th class="columnSort" id="collapseCol" ng-click="collapsed = !collapsed">
-                <div label="&#xf150;" ng-show="collapsed"></div>
-                <div label="&#xf151;" ng-hide="collapsed"></div>
-              </th>
-              <th class="scrollbarhead"></th>
+  <div class="col-md-8">
+      <table id="songTable" cellspacing="0" ng-init="collapsed = false">
+        <thead>
+          <tr id="headerRow">
+            <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Song
+            </th>
+            <th class="columnSort" id= "dateCol" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse">Added
+            </th>
+            <th class="columnSort" id="collapseCol" ng-click="collapsed = !collapsed">
+              <div  ng-show="collapsed">&#xf150;</div>
+              <div ng-hide="collapsed">&#xf151;</div>
+            </th>
+            <th class="scrollbarhead"></th>
+          </tr>
+        </thead>
+        <tbody class="tableBody" >
+          <tr class="tableBodyRow" ng-hide="collapsed" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query">
+            <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
+            <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
+            <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
 
-            </tr>
-
-            <tbody class="tableBody" >
-              <tr class="tableBodyRow" ng-hide="collapsed" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query">
-                <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
-                <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
-                <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
-
-                <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-md-4">
+        <label>Search Songs: </label>
+        <input ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)"/>
+        <div class="errors-spacer"></div>
+        <span id="songSearchResults">Results: {{(text.songList | filter: query).length}} </span>
       </div>
     </div>
   </div>
+  <div class="row" ng-show="admin.totalPages((admin.filtered  | filter: query |  excludeByStatus: admin.show.text()).length)" layout-align="center center" layout-wrap>
+      <md-button ng-class="md-mini" ng-disabled="admin.currentPage == 0" ng-click="admin.currentPage=admin.currentPage-1">
+        Previous
+      </md-button>
+        {{admin.currentPage+1}}/{{admin.totalPages((admin.filtered  | filter: query | excludeByStatus: admin.show.text()).length)}}
+      <md-button ng-class="md-mini" ng-disabled="admin.currentPage >= ((admin.filtered  | filter: query | excludeByStatus: admin.show.text()).length / admin.pageSize - 1)" ng-click="admin.currentPage=admin.currentPage+1">
+        Next
+      </md-button>
+    </div>
 
 
   <div class="row textContainer">
