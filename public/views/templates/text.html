@@ -37,9 +37,9 @@
         <table cellspacing="0" ng-init="collapsed = false">
           <thead>
             <tr id="headerRow">
-              <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse"><div label="Songs"></div>
+              <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse"><div label="Song"></div>
               </th>
-              <th class="columnSort" id= "dateCol" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse"><div label="Date Added"></div>
+              <th class="columnSort" id= "dateCol" ng-click="text.sortType = title; text.sortReverse = !text.sortReverse"><div label="Added"></div>
               </th>
               <th class="columnSort" id="collapseCol" ng-click="collapsed = !collapsed">
                 <div label="&#xf150;" ng-show="collapsed"></div>
@@ -49,8 +49,8 @@
 
             </tr>
 
-            <tbody class="tableBody" ng-hide="collapsed">
-              <tr class="tableBodyRow"  data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query">
+            <tbody class="tableBody" >
+              <tr class="tableBodyRow" ng-hide="collapsed" data-id="{{song._id}}" data-ng-repeat="song in text.songList | filter:query">
                 <!-- | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize -->
                 <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
                 <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>

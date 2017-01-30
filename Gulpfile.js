@@ -30,13 +30,13 @@ gulp.task('nodemon', ['browserSync'], function () {
 })
 
 gulp.task('sass', function () {
-  return gulp.src('public/styles/sass/*.scss')
+  return gulp.src('public/sass/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(gulp.dest('public/styles/'))
+    .pipe(gulp.dest('public/styles'))
     .pipe(bs.stream())
 })
 
@@ -55,4 +55,4 @@ gulp.task('sass:watch', ['sass'], function () {
   gulp.watch('public/sass/*.scss', ['sass'])
 })
 
-gulp.task('default', ['nodemon', 'sass:watch'])
+gulp.task('default', ['nodemon', 'sass:watch', ])
