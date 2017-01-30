@@ -1,2 +1,4 @@
 .env
 firebase-service.json
+node_modules/
+.DS*

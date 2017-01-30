@@ -18,7 +18,7 @@ var admin = require("firebase-admin");
 
 //for local use
 admin.initializeApp({
-  credential: admin.credential.cert("./server/firebase-service-account.json"),
+  credential: admin.credential.cert("./server/firebase-service.json"),
   databaseURL: "https://gtr-tool.firebaseio.com" // replace this line with your URL
 });
 
