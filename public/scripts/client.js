@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'firebase', 'ng-files-model']);
+var app = angular.module('app', ['ngRoute', 'firebase', 'ng-files-model', 'angularModalService']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -34,7 +34,7 @@ app.config(['$routeProvider', function($routeProvider) {
 /***************************ANGULAR SEARCH FILTERS***************************/
 app.filter('startFrom', function() {
   return function(input, start) {
-    console.log('input, start', input, start);
+    // console.log('input, start', input, start);
     start = +start; //parse to int
     return input.slice(start);
   }

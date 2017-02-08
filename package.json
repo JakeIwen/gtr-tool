@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "angular": "^1.5.9",
+    "angular-modal-service": "^0.10.1",
     "angular-route": "^1.5.9",
     "angularfire": "^2.1.0",
     "body-parser": "^1.15.2",

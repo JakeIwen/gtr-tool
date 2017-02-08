@@ -1,4 +1,4 @@
-app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( $firebaseAuth, $http, $scope) {
+app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalService", function( $firebaseAuth, $http, $scope, ModalService ) {
   const self = this;
   var auth = $firebaseAuth();
   var currentUser = {};
@@ -11,7 +11,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
         date_added: new Date(),
         private: privateBool
       }
-      currentUser.getToken().then(function(idToken){
+      currentUser.getToken().then(function(idToken) {
         console.log('getting song list');
         $http({
           method: 'POST',
@@ -20,7 +20,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
           headers: {
             id_token: idToken
           }
-        }).then(function(response){
+        }).then(function(response) {
           console.log('song added to DB');
           songData.date_added = moment(songData.date_added).fromNow();
           self.songList.push(songData);
@@ -32,16 +32,17 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
       alert('invalid song title or data');
     }
   }
-  self.getSong = function(songId){
+  self.getSong = function(songId) {
     console.log('songid', songId);
-    currentUser.getToken().then(function(idToken){
+    currentUser.getToken().then(function(idToken) {
       console.log('getting song list');
       $http({
         method: 'GET',
         url: '/songs/title/' + songId,
         headers: { id_token: idToken }
-      }).then(function(response){
+      }).then(function(response) {
         console.log('reponee ', response.data);
+        showModal(response.data.song, response.data.title);
         self.songText = response.data.song;
         self.title = response.data.title;
       }).catch(function(err) {
@@ -49,14 +50,39 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
       });
     });
   }
-  self.deleteSong = function(songId){
+  function showModal(song, title) {
+    console.log('showing modal');
+    ModalService.showModal({
+      templateUrl: "/views/templates/text-modal.html",
+      controller: "ModalController",
+      controllerAs: 'modal',
+      inputs: {
+        song: song,
+        title: title
+      }
+      // resolve: {
+      //   items: function () {
+      //     return $scope.items;
+      //   },
+      //   size: function() {
+      //     console.log('size: ', size);
+      //     return size;
+      //   }
+    }).then(function(modal) {
+      modal.close.then(function(result) {
+        console.log('closed');
+      });
+    });
+  }
+
+  self.deleteSong = function(songId) {
     console.log('delete songid', songId);
-    currentUser.getToken().then(function(idToken){
+    currentUser.getToken().then(function(idToken) {
       $http({
         method: 'DELETE',
         url: '/songs/title/' + songId,
         headers: { id_token: idToken }
-      }).then(function(response){
+      }).then(function(response) {
         console.log('song deleted');
         getSongs();
       });
@@ -64,26 +90,26 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
   }
 
 
-  self.logIn = function(){
+  self.logIn = function() {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
   };
-  self.logOut = function(){
-    auth.$signOut().then(function(){
+  self.logOut = function() {
+    auth.$signOut().then(function() {
       console.log('Logging the user out!');
     });
   }
 
-  auth.$onAuthStateChanged(function(firebaseUser){
+  auth.$onAuthStateChanged(function(firebaseUser) {
     console.log('authentication state changed');
     // firebaseUser will be null if not logged in
     if(firebaseUser) {
       currentUser = firebaseUser;
       // This is where we make our call to our server
-      currentUser.getToken().then(function(idToken){
+      currentUser.getToken().then(function(idToken) {
         $http({
           method: 'POST',
           url: '/users',
@@ -91,7 +117,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
           headers: {
             id_token: idToken
           }
-        }).then(function(response){
+        }).then(function(response) {
           console.log('response:', response);
         }).catch(function(err) {
           console.log("Error in user creation");
@@ -105,8 +131,8 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
     }
   });
 
-  function getSongs(){
-    currentUser.getToken().then(function(idToken){
+  function getSongs() {
+    currentUser.getToken().then(function(idToken) {
       console.log('getting song list');
       $http({
         method: 'GET',
@@ -114,7 +140,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
         headers: {
           id_token: idToken
         }
-      }).then(function(response){
+      }).then(function(response) {
         self.songList = response.data;
         for (var i = 0; i < self.songList.length; i++) {
           self.songList[i].date_added = moment(self.songList[i].date_added).fromNow();
@@ -124,7 +150,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
     });
 
   }
-  self.submit = function(textFiles, privateBool){
+  self.submit = function(textFiles, privateBool) {
     for (var i = 0; i < textFiles.length; i++) {
       addToDb(textFiles[i].name, textFiles[i].file, privateBool);
     }
