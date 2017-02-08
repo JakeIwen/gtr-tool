@@ -1,15 +1,15 @@
 app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( $firebaseAuth, $http, $scope) {
-  var self = this;
+  const self = this;
   var auth = $firebaseAuth();
   var currentUser = {};
-  self.obj = {};
 
-  self.addToDb = function(title, song) {
+  function addToDb(title, song, privateBool) {
     if (title && song) {
       var songData = {
         title: title,
         song: song,
-        date_added: new Date()
+        date_added: new Date(),
+        private: privateBool
       }
       currentUser.getToken().then(function(idToken){
         console.log('getting song list');
@@ -22,7 +22,10 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
           }
         }).then(function(response){
           console.log('song added to DB');
+          songData.date_added = moment(songData.date_added).fromNow();
           self.songList.push(songData);
+        }).catch(function(err) {
+          console.log("Error in song creation");
         });
       });
     } else {
@@ -41,6 +44,8 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
         console.log('reponee ', response.data);
         self.songText = response.data.song;
         self.title = response.data.title;
+      }).catch(function(err) {
+        console.log("Error getting songs:", err);
       });
     });
   }
@@ -88,8 +93,10 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
           }
         }).then(function(response){
           console.log('response:', response);
-        });
-      });
+        }).catch(function(err) {
+          console.log("Error in user creation");
+      })
+    });
       getSongs();
     } else {
       console.log('Not logged in or not authorized.');
@@ -103,7 +110,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
       console.log('getting song list');
       $http({
         method: 'GET',
-        url: '/songs/titles',
+        url: '/songs/public',
         headers: {
           id_token: idToken
         }
@@ -117,131 +124,36 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
     });
 
   }
-  self.submit = function(){
-    for (var i = 0; i < self.obj.length; i++) {
-      self.addToDb(self.obj[i].name, self.obj[i].file);
+  self.submit = function(textFiles, privateBool){
+    for (var i = 0; i < textFiles.length; i++) {
+      addToDb(textFiles[i].name, textFiles[i].file, privateBool);
     }
     console.log('submitting');
   }
 
   self.plus = function() {
-    changeChords();
+    self.songText = changeChords(self.songText);
   }
+
   self.minus = function() {
     for (var i = 0; i < 11; i++) {
-       changeChords();
+       self.songText = changeChords(self.songText);
      }
   }
 
-
-
-  function changeChords () {
-    var chordDoc = $('#source').val()
-      // notes = ['Bb', 'A#'];
-      //
-      // for(note in notes) {
-      //   .replace(/note[0]/g, note[1])
-      //   };
-
-      .replace(/Bb/g, 'A#')
-      .replace(/Db/g, 'C#')
-      .replace(/Eb/g, 'D#')
-      .replace(/Gb/g, 'F#')
-
-      .replace(/G# /g, 'K@ ')
-      .replace(/G /g, 'G# @')
-      .replace(/F# /g, 'G@ ')
-      .replace(/F /g, 'F# @')
-      .replace(/E /g, 'F@ ')
-      .replace(/D# /g, 'E@ ')
-      .replace(/D /g, 'D# @')
-      .replace(/C# /g, 'D@ ')
-      .replace(/C /g, 'C# @')
-      .replace(/B /g, 'C@ ')
-      .replace(/A# /g, 'B@ ')
-      .replace(/A /g, 'A# @')
-      .replace(/G#m/g, 'Km@ ')
-      .replace(/Gm /g, 'G#m@')
-      .replace(/F#m/g, 'Gm@ ')
-      .replace(/Fm /g, 'F#m@')
-      .replace(/Em /g, 'Fm@ ')
-      .replace(/D#m/g, 'Em@ ')
-      .replace(/Dm /g, 'D#m@')
-      .replace(/C#m/g, 'Dm@ ')
-      .replace(/Cm /g, 'C#m@')
-      .replace(/Bm /g, 'Cm@ ')
-      .replace(/A#m/g, 'Bm@ ')
-      .replace(/Am /g, 'A#m@')
-
-
-      .replace(/G# \n/g, 'K\n@')
-      .replace(/G\n/g, 'G# \n@')
-      .replace(/F# \n/g, 'G\n@')
-      .replace(/F\n/g, 'F# \n@')
-      .replace(/E\n/g, 'F\n@')
-      .replace(/D# \n/g, 'E\n@')
-      .replace(/D\n/g, 'D# \n@')
-      .replace(/C# \n/g, 'D\n@')
-      .replace(/C\n/g, 'C# \n@')
-      .replace(/B\n/g, 'C\n@')
-      .replace(/A# \n/g, 'B\n@')
-      .replace(/A\n/g, 'A# \n@')
-      .replace(/G#m\n/g, 'Km\n@')
-      .replace(/Gm\n/g, 'G#m\n@')
-      .replace(/F#m\n/g, 'Gm\n@')
-      .replace(/Fm\n/g, 'F#m\n@')
-      .replace(/Em\n/g, 'Fm\n@')
-      .replace(/D#m\n/g, 'Em\n@')
-      .replace(/Dm\n/g, 'D#m\n@')
-      .replace(/C#m\n/g, 'Dm\n@')
-      .replace(/Cm\n/g, 'C#m\n@')
-      .replace(/Bm\n/g, 'Cm\n@')
-      .replace(/A#m\n/g, 'Bm\n@')
-      .replace(/Am\n/g, 'A#m\n@')
-
-      .replace(/G#\t/g, 'K\t@')
-      .replace(/G\t/g, 'G#\t@')
-      .replace(/F#\t/g, 'G\t@')
-      .replace(/F\t/g, 'F#\t@')
-      .replace(/E\t/g, 'F\t@')
-      .replace(/D#\t/g, 'E\t@')
-      .replace(/D\t/g, 'D#\t@')
-      .replace(/C#\t/g, 'D\t@')
-      .replace(/C\t/g, 'C#\t@')
-      .replace(/B\t/g, 'C\t@')
-      .replace(/A#\t/g, 'B\t@')
-      .replace(/A\t/g, 'A#\t@')
-      .replace(/G#m\t/g, 'Km\t@')
-      .replace(/Gm\t/g, 'G#m\t@')
-      .replace(/F#m\t/g, 'Gm\t@')
-      .replace(/Fm\t/g, 'F#m\t@')
-      .replace(/Em\t/g, 'Fm\t@')
-      .replace(/D#m\t/g, 'Em\t@')
-      .replace(/Dm\t/g, 'D#m\t@')
-      .replace(/C#m\t/g, 'Dm\t@')
-      .replace(/Cm\t/g, 'C#m\t@')
-      .replace(/Bm\t/g, 'Cm\t@')
-      .replace(/A#m\t/g, 'Bm\t@')
-      .replace(/Am\t/g, 'A#m\t@')
-
-      .replace(/@/g, '')
-
-      .replace(/K\t/g, 'A\t')
-      .replace(/Km\t/g, 'Am\t')
-      .replace(/K\n/g, 'A\n')
-      .replace(/Km\n/g, 'Am\n')
-      .replace(/K /g, 'A ')
-      .replace(/Km /g, 'Am ');
-
-    $('#source').val(chordDoc);
+  function changeChords (text) {
+    const tonics = ['A','Bb','B','C','C#','D','Eb','E','F','F#','G','Ab'];
+    const regEx = /([A-G](\#|b)?(?=(m|maj|dim)|(\d\d?)|(add)|(sus)|(\s|\n)))/g;
+    return text.replace(regEx, (match) =>
+      tonics[(tonics.indexOf(match) + 1) % 12]);
   }
 
   /***************************ANGULAR SEARCH FILTER ***************************/
   self.currentPage = 0;
-  self.pageSize = 212
+  self.pageSize = 12
   self.filtered = [];
   self.loading = false;
-  self.sortType = 'id'; // set the default sort type
+  self.sortType = 'id';
   self.sortReverse = true;  // set the default sort order
   // self.show = {
   //   options: ['Pending', 'Dispatched', 'Completed', 'Declined'],
@@ -263,6 +175,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", function( 
     var total = self.totalPages(numResults);
     if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
       self.currentPage = total -1 ;
+      console.log('changed startPage');
     }
   }
   self.totalPages = function (num) {

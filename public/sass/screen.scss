@@ -29,11 +29,11 @@ body {
   min-width: 900px;
 }
 
-// .row {
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// }
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .col {
   display: flex;
@@ -195,68 +195,19 @@ h4 {
   overflow: none;
 }
 
+$zero-fret: 20px;
+$used-length: 0%;
 .fretNum0 {
-  width: 20px;
+  width: $zero-fret;
 }
 
-.fretNum1 {
-  width: 8.79744%;
-}
-
-.fretNum2 {
-  width: 8.33997%;
-}
-
-.fretNum3 {
-  width: 7.90629%;
-}
-
-.fretNum4 {
-  width: 7.49517%;
-}
-
-.fretNum5 {
-  width: 7.10542%;
-}
-
-.fretNum6 {
-  width: 6.73594%;
-}
-
-.fretNum7 {
-  width: 6.38567%;
-}
-
-.fretNum8 {
-  width: 6.05361%;
-}
-
-.fretNum9 {
-  width: 5.73883%;
-}
-
-.fretNum10 {
-  width: 5.44041%;
-}
-
-.fretNum11 {
-  width: 5.15751%;
-}
-
-.fretNum12 {
-  width: 4.88932%;
-}
-
-.fretNum13 {
-  width: 4.63507%;
-}
-
-.fretNum14 {
-  width: 4.39405%;
-}
-
-.fretNum15 {
-  width: 4.16556%;
+$old-len: 9.28%;
+@for $i from 1 through 15 {
+  $new-length: $old-len * (9.48/10);
+  .fretNum#{$i} {
+    width: $new-length;
+  }
+  $old-len: $new-length;
 }
 
 .borderString {
@@ -367,7 +318,7 @@ fieldset {
   vertical-align: middle;
 }
 
-.del {
+.del, .lock {
   height: 20px;
 }
 
@@ -393,8 +344,9 @@ img:hover {
   z-index: 5;
 }
 
+
 #nameCol {
-  width: 70%;
+  width: 65%;
 }
 #dateCol {
   width: 25%
@@ -402,7 +354,9 @@ img:hover {
 #collapseCol {
   width: 5%;
 }
-
+#lockedCol {
+  width: 5%;
+}
 .columnSort:hover, .song-name:hover {
   cursor: pointer;
 }
@@ -414,11 +368,15 @@ img:hover {
   border: solid black 4px;
   display:block;
   thead {
-    th {
-      text-align: center;
-      font-size: 2em;
-      border-bottom: 2px solid black;
-    }
+    tr {
+      th {
+        text-align: center;
+        font-size: 1.5em;
+        border-bottom: 2px solid black;
+        }
+        width: 100%;
+        
+      }
   }
   tbody {
     tr {

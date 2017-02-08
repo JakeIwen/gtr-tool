@@ -27,6 +27,14 @@ body {
   letter-spacing: 1px;
   min-width: 900px; }
 
+.centered {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
 .col {
   display: -ms-flexbox;
   display: flex;
@@ -306,7 +314,7 @@ fieldset {
   margin-bottom: 15px;
   vertical-align: middle; }
 
-.del {
+.del, .lock {
   height: 20px; }
 
 #songList > tbody > tr > td {
@@ -328,12 +336,15 @@ img:hover {
   z-index: 5; }
 
 #nameCol {
-  width: 70%; }
+  width: 65%; }
 
 #dateCol {
   width: 25%; }
 
 #collapseCol {
+  width: 5%; }
+
+#lockedCol {
   width: 5%; }
 
 .columnSort:hover, .song-name:hover {
@@ -345,10 +356,12 @@ img:hover {
   border-radius: 18px;
   border: solid black 4px;
   display: block; }
-  #songTable thead th {
-    text-align: center;
-    font-size: 2em;
-    border-bottom: 2px solid black; }
+  #songTable thead tr {
+    width: 100%; }
+    #songTable thead tr th {
+      text-align: center;
+      font-size: 1.5em;
+      border-bottom: 2px solid black; }
   #songTable tbody tr {
     background: #69442d;
     border-bottom: 1px solid black; }

@@ -49,4 +49,4 @@ app.listen(portDecision, function() {
 });
 app.use(decoder.token);
 app.use('/users', users);
-app.use('/songs', songs);
+app.use('/songs/', songs);

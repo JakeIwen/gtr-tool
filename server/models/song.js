@@ -6,6 +6,7 @@ var songSchema = new Schema({
   song: { type: String, required: true },
   email: { type: String, required: true },
   date_added: { type: Date, required: true },
+  private: { type: Boolean, required: false },
   key: { type: String, required: false }
 });
 
