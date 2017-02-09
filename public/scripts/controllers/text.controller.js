@@ -56,6 +56,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       templateUrl: "/views/templates/text-modal.html",
       controller: "ModalController",
       controllerAs: 'modal',
+      scope: $scope,
       inputs: {
         song: song,
         title: title
@@ -156,24 +157,6 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     }
     console.log('submitting');
   }
-
-  self.plus = function() {
-    self.songText = changeChords(self.songText);
-  }
-
-  self.minus = function() {
-    for (var i = 0; i < 11; i++) {
-       self.songText = changeChords(self.songText);
-     }
-  }
-
-  function changeChords (text) {
-    const tonics = ['A','Bb','B','C','C#','D','Eb','E','F','F#','G','Ab'];
-    const regEx = /([A-G](\#|b)?(?=(m|maj|dim)|(\d\d?)|(add)|(sus)|(\s|\n)))/g;
-    return text.replace(regEx, (match) =>
-      tonics[(tonics.indexOf(match) + 1) % 12]);
-  }
-
   /***************************ANGULAR SEARCH FILTER ***************************/
   self.currentPage = 0;
   self.pageSize = 12

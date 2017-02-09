@@ -1,14 +1,36 @@
 <div class="modal">
 
 <div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <div class="modal-content" ng-init="textEdit = false">
+    <!-- <div class="modal-header">
       <h4 class="modal-title">{{modal.title}}</h4>
+    </div> -->
+    <!-- <div class="modal-body"> -->
+    <button class="customBtn" ng-hide="textEdit" ng-click="textEdit=true">Edit</button>
+    <button class="customBtn" ng-show="textEdit" ng-click="textEdit=false; text.submit([{name:modal.title, file:modal.song}], false)">Save</button>
+    <!-- <button class="customBtn" ng-show="textEdit" ng-click="text.submit([{name:modal.title, file:modal.song}], false)">Cancel</button> -->
+
+
+    <button class="customBtn" ng-click="modal.plus()">Transpose Up</button>
+    <button class="customBtn" ng-click="modal.minus()">Transpose Down</button>
+    <pre class='modalText' ng-hide="textEdit">
+      <h4>{{modal.title}}</h4>
+      {{modal.song}}</pre>
+
+      <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="modal.title" placeholder="Title - Artist">
+
+    <textarea class='modalText' ng-model="modal.song" ng-show="textEdit">
+    </textarea>
+    <!-- <a href ng-click="modal.close()">Close</a> -->
     </div>
-    <div class="modal-body">
-      <textarea id='modalText'>{{modal.song}}</textarea>
-      <a href ng-click="modal.close()">Close</a>
-  </div>
+
+<!-- </div> -->
 </div>
+<div id="transposeButtons">
+
+</div>
+<div id="close">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+
+
 </div>

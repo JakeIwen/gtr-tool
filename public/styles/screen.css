@@ -275,6 +275,9 @@ td {
 fieldset {
   margin-top: 10px; }
 
+.modal-header {
+  padding: 7px; }
+
 .modal-dialog {
   position: fixed;
   margin: 0;
@@ -290,15 +293,17 @@ fieldset {
   left: 0;
   border: 2px solid #3c7dcf;
   border-radius: 0;
-  box-shadow: none; }
+  box-shadow: none;
+  overflow: scroll; }
 
-#modalText {
-  width: 100%;
-  height: 100%;
+.modalText {
+  padding: 15px;
   box-sizing: border-box;
   font-family: "Courier New", courier;
   border: none;
-  display: block; }
+  display: block;
+  white-space: pre;
+  word-break: break-all; }
 
 .modal-body {
   height: 80%; }
@@ -362,6 +367,14 @@ img:hover {
   bottom: 50%;
   right: 25px;
   z-index: 5; }
+
+#close {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 5; }
+  #close .close {
+    font-size: 35px; }
 
 #nameCol {
   width: 65%; }

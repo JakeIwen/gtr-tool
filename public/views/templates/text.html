@@ -26,7 +26,7 @@
 <div class="row">
 
   <div class="col-md-8">
-      <table id="songTable" cellspacing="0" ng-init="collapsed = false">
+      <table id="songTable" cellspacing="0" >
         <thead>
           <tr>
             <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Song
@@ -35,19 +35,17 @@
             </th>
             <th id="lockedCol"></th>
 
-            <th class="columnSort" id="collapseCol" ng-click="collapsed = !collapsed">
-              <div  ng-show="collapsed">&#xf150;</div>
-              <div ng-hide="collapsed">&#xf151;</div>
+            <th>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-hide="collapsed" data-id="{{song._id}}" data-ng-repeat="song in text.songList | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize">
+          <tr data-id="{{song._id}}" data-ng-repeat="song in text.songList | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize">
             <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
             <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
             <td>
-              <img class="lock" ng-show="song.private" src="./img/locked.png" alt="X" />
-              <img class="lock" ng-hide="song.private" src="./img/unlocked.png" alt="X" />
+              <img class="lock" ng-hide="song.private" src="./img/locked.png" alt="X" />
+              <img class="lock" ng-show="song.private" src="./img/unlocked.png" alt="X" />
             </td>
             <td ng-click="text.deleteSong(song._id)"><img class="del" src="./img/delete.png" alt="X" /></td>
           </tr>
@@ -70,16 +68,13 @@
       <span id="songSearchResults">Results: {{(text.songList | filter: query).length}} </span>
     </div>
   </div>
-  <div class="row textContainer">
+  <!-- <div class="row textContainer">
     <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
     <div class="col-md-1 addHolder">
       <img ng-click="text.submit([{name:text.title, file:text.songText}], false)" src="./img/save.png" alt="add" />
     </div>
     <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
-  </div>
+  </div> -->
 
-  <div id="transposeButtons">
-    <button class="customBtn" ng-click="text.plus()">Transpose Up</button><br />
-    <button class="customBtn" ng-click="text.minus()">Transpose Down</button>
-  </div>
+
 </section>
