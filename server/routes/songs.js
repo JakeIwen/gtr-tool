@@ -123,6 +123,24 @@ router.post("/", function(req, res){
   });
 });
 
+router.put("/title/:id", function(req, res){
+  var songData = req.body;
+  var id = req.params.id;
+  songData.email = req.decodedToken.email;
+  // Check the user's exitence based on their email
+  var UpdateSong = new Song(songData);
+  Song.update( {_id: id }, {song: songData.song}, function(err, data) {
+    console.log('saved song');
+    if(err) {
+      console.log('ERR: ', err);
+      res.sendStatus(500);
+    } else {
+      //res.send(data);
+      res.sendStatus(201);
+    }
+  });
+});
+
 router.delete("/title/:id", function(req, res){
   var userEmail = req.decodedToken.email;
   var songId = req.params.id;

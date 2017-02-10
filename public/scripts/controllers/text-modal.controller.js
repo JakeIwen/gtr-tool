@@ -1,10 +1,14 @@
 
-app.controller('ModalController', function($scope, song, title, close) {
+app.controller('ModalController', function($scope, songData, close) {
   const self = this;
-  self.song = song;
-  self.title = title;
-  console.log('song', title);
+  self.songData = songData;
+  self.title = songData.title;
+  console.log('song', songData);
   self.close = close;
+  if (self.songData == {}) {
+    self.edit = true;
+    self.update = false;
+  }
 
 
 
@@ -23,9 +27,8 @@ app.controller('ModalController', function($scope, song, title, close) {
   }
 
   function changeChords (text) {
-    console.log('chgchord');
     const tonics = ['A','Bb','B','C','C#','D','Eb','E','F','F#','G','Ab'];
-    const regEx = /([A-G](\#|b)?(?=(m|maj|dim)|(\d\d?)|(add)|(sus)|(\s|\n)))/g;
+    const regEx = /([A-G](\#|b)?(?=((m|maj|dim)|(\d\d?)|(add\d)|(sus)|(\s|\n))))/g;
     return text.replace(regEx, (match) =>
       tonics[(tonics.indexOf(match) + 1) % 12]);
   }

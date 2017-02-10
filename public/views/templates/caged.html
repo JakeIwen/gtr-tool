@@ -29,12 +29,12 @@
       <div class="fretRow">
         <div class="preFret">
           <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" ng-init="caged.active[string.pos]=true" ng-model="caged.active[string.pos]" ng-click="caged.show()">
             <div class="sliderBox"></div>
           </label>
         </div>
         <div class="fret" ng-class="'fretNum' + fret.pos" ng-repeat="fret in caged.neck.frets">
-          <img src="../img/empty.svg" alt="*" class="marker" data-midi="{{string.base + fret.pos}}" height="18" width="27"/>
+          <img src="../img/empty.svg" alt="*" class="marker" data-string="{{string.pos}}" data-midi="{{string.base + fret.pos}}" height="18" width="27"/>
         </div>
       </div>
     </div>

@@ -7,29 +7,32 @@ app.controller('CagedController', ["$http", function($http) {
   self.neck.frets_shown = 15;
   var a = Scale.fromTonicAndType('C', 'Major');
   console.log('a', a);
+  console.log('neck', self.neck);
 
   getScales();
   self.tonic = 'C';
   self.init = function(){
     if (self.scale && self.tonic) {
-      show();
+      self.show();
     }
   }
 
-  function show() {
+
+
+  self.show = function() {
     tonic = self.tonic.replace("♭","b").replace("♯", "#");
     console.log('caged.tonic', tonic);
     var scale = self.scale.notes;
     var degrees = self.scale.degrees;
     //cycle through all fretboard elements and comare midi note to calculated scale notes
     $('.marker').attr('src', "../img/empty.svg");
-    console.log('scale, degrees', scale, degrees);
     $('.marker').each(function() {
       $fret = $(this);
       $fretMidiNote = $(this).data('midi');
+      $string = $(this).data('string');
       for (var i = 0; i < scale.length; i++) {
         var thisNote = (scale[i] + note(tonic).pos) % 12;
-        if (thisNote == $fretMidiNote % 12) {
+        if ((thisNote == $fretMidiNote % 12) && self.active[$string]) {
           $fret.attr('src', "../img/" + degrees[i] + ".svg");
         }
       }
@@ -49,7 +52,7 @@ app.controller('CagedController', ["$http", function($http) {
     }  //set default scale
     self.scale = self.scales[0];
     console.log('self.scalenames', obj);
-    show();
+    self.show();
   }
 
   self.noteName = function(pos, notation) {

@@ -12,8 +12,9 @@
   <div class="col-md-3">
     <fieldset>
         <input  type="file" ng-files-model model="textFiles" callback="function" data="data" multiple="mulplite" />
-        <input class="customBtn" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload Files (Private)" />
-        <input class="customBtn" ng-click="text.submit(textFiles, false)" type="submit"  value="Upload Files (Public)" />
+        <input class="customBtn" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload (Private)" />
+        <input class="customBtn" ng-click="text.submit(textFiles, false)" type="submit"  value="Upload (Public)" />
+        <input class="customBtn" ng-click="text.showModal({})" type="submit"  value="New Song Document" />
     </fieldset>
 
   </div>

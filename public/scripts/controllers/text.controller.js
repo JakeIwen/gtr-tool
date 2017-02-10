@@ -33,16 +33,15 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     }
   }
   self.getSong = function(songId) {
-    console.log('songid', songId);
+    console.log('get songid', songId);
     currentUser.getToken().then(function(idToken) {
-      console.log('getting song list');
       $http({
         method: 'GET',
         url: '/songs/title/' + songId,
         headers: { id_token: idToken }
       }).then(function(response) {
         console.log('reponee ', response.data);
-        showModal(response.data.song, response.data.title);
+        self.showModal(response.data);
         self.songText = response.data.song;
         self.title = response.data.title;
       }).catch(function(err) {
@@ -50,16 +49,31 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       });
     });
   }
-  function showModal(song, title) {
-    console.log('showing modal');
+
+  self.updateSong = function(songId) {
+    console.log(' update songid', songId);
+    currentUser.getToken().then(function(idToken) {
+      $http({
+        method: 'PUT',
+        url: '/songs/title/' + songId,
+        headers: { id_token: idToken }
+      }).then(function(response) {
+        console.log('reponese ', response);
+      }).catch(function(err) {
+        console.log("Error getting songs:", err);
+      });
+    });
+  }
+
+  self.showModal = function(songData) {
+    console.log('showing modal', songData);
     ModalService.showModal({
       templateUrl: "/views/templates/text-modal.html",
       controller: "ModalController",
       controllerAs: 'modal',
       scope: $scope,
       inputs: {
-        song: song,
-        title: title
+        songData: songData,
       }
       // resolve: {
       //   items: function () {
