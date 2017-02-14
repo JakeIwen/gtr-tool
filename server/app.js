@@ -1,5 +1,5 @@
 
-require('dotenv').config();
+// require('dotenv').config();
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -10,8 +10,9 @@ var chords = require('../public/data/chords');
 var mongoConnection = require('./modules/mongo-connection');
 var songs = require('./routes/songs');
 var users = require('./routes/users');
-var pubSongs = require('./routes/songs/public');
+var pubSongs = require('./routes/public');
 var mongoose = require('mongoose');
+app.use('/public/', pubSongs);
 
 // serve static files
 app.use(express.static('public'));
@@ -48,7 +49,6 @@ var portDecision = process.env.PORT || 3000;
 app.listen(portDecision, function() {
   console.log("listening on port", portDecision);
 });
-app.use('/songs/public', pubSongs);
 app.use(decoder.token);
 app.use('/users', users);
 app.use('/songs/', songs);

@@ -1,8 +1,8 @@
 
 <section>
   <div class="logInOut top row">
-    <button ng-show="text.loggedIn" class="customBtn" ng-click="text.logIn()">Log In</button>
-    <button ng-hide="text.loggedIn" class="customBtn" ng-click="text.logOut()">Log Out</button>
+    <button ng-hide="text.loggedIn" class="customBtn" ng-click="text.logIn()">Log In</button>
+    <button ng-show="text.loggedIn" class="customBtn" ng-click="text.logOut()">Log Out</button>
   </div>
   <div class="row">
     <div class="col-md-4">
@@ -14,9 +14,10 @@
       </div>
       <div class="upload">
         <div class="addSongs">
+          <span ng-hide="text.loggedIn">Log In To</span>
           <span>Add Songs!</span>
         </div>
-        <fieldset class="btnContainer">
+        <fieldset ng-show="text.loggedIn" class="btnContainer">
           <label for="file-upload" class="customBtn">Select Text Files</label>
           <input id="file-upload" type="file" ng-files-model model="textFiles" callback="function" data="data" multiple="mulplite" />
           <input ng-show="textFiles.length" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload (Private)" />

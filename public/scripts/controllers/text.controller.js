@@ -3,6 +3,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
   var auth = $firebaseAuth();
   var currentUser = {};
   self.loggedIn = false;
+
   function addToDb(title, song, privateBool) {
     if (title && song) {
       var songData = {
@@ -119,6 +120,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
   self.logOut = function() {
     auth.$signOut().then(function() {
       console.log('Logging the user out!');
+      self.loggedIn = false;
     });
   }
 
@@ -126,6 +128,8 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     console.log('authentication state changed');
     // firebaseUser will be null if not logged in
     if(firebaseUser) {
+      self.loggedIn = true;
+
       currentUser = firebaseUser;
       // This is where we make our call to our server
       currentUser.getToken().then(function(idToken) {
@@ -142,32 +146,44 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
           console.log("Error in user creation");
       })
     });
-      getSongs();
     } else {
       console.log('Not logged in or not authorized.');
-      self.songList = [];
       currentUser = {};
+      self.loggedIn = false;
     }
+    getSongs();
   });
+  function dateFormat(objArr) {
+    for (var i = 0; i < objArr.length; i++) {
+      objArr[i].date_added = moment(objArr[i].date_added).fromNow();
+    }
+    return objArr;
+  }
 
   function getSongs() {
-    currentUser.getToken().then(function(idToken) {
-      console.log('getting song list');
-      $http({
-        method: 'GET',
-        url: '/songs/public',
-        headers: {
-          id_token: idToken
-        }
-      }).then(function(response) {
-        self.songList = response.data;
-        for (var i = 0; i < self.songList.length; i++) {
-          self.songList[i].date_added = moment(self.songList[i].date_added).fromNow();
-        }
-        console.log('self.songList', self.songList);
-      });
+    if (!self.loggedIn) {
+    $http({
+      method: 'GET',
+      url: '/public/'
+    }).then(function(response) {
+      self.songList = dateFormat(response.data);
+      console.log('self.songList', self.songList);
     });
-
+    } else {
+      currentUser.getToken().then(function(idToken) {
+        console.log('getting song list');
+        $http({
+          method: 'GET',
+          url: '/songs/all',
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log('get response', response.data);
+          self.songList = dateFormat(response.data);
+        });
+      });
+    }
   }
   self.submit = function(textFiles, privateBool) {
     for (var i = 0; i < textFiles.length; i++) {
