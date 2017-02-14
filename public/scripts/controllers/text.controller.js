@@ -25,6 +25,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
           songData.date_added = moment(songData.date_added).fromNow();
           self.songList.push(songData);
         }).catch(function(err) {
+          alert("Song not saved - possible duplicate or non existant title");
           console.log("Error in song creation");
         });
       });

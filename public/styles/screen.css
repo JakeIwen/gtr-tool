@@ -241,7 +241,7 @@ form {
   align-content: center;
   text-align: center; }
 
-.customBtn, .btnContainer > button {
+.customBtn, .btnContainer > button, .btnContainer > input {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
@@ -259,7 +259,7 @@ form {
   text-shadow: 0px -1px 0px #2b665e;
   margin-top: 10px; }
 
-.customBtn:active, .btnContainer > button:hover {
+.customBtn:active, .btnContainer > button:hover, .btnContainer > input:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c; }
@@ -267,6 +267,9 @@ form {
 .customBtn:active, .btnContainer > button:active {
   position: relative;
   top: 1px; }
+
+#file-upload {
+  display: none; }
 
 td {
   font-size: 1.2em; }
@@ -376,6 +379,26 @@ img:hover {
 
 .columnSort:hover, .song-name:hover {
   cursor: pointer; }
+
+.searchParent {
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -ms-flex-line-pack: end;
+  align-content: flex-end; }
+
+.songSearch {
+  background: #3f3120;
+  color: #e9b576;
+  text-align: center;
+  padding: 10px 10px;
+  border-radius: 18px;
+  margin-bottom: 10px;
+  border: 3px solid black; }
+
+#songSearchField {
+  background: #69442d;
+  border-radius: 10px; }
 
 #songTable {
   background: #3f3120;

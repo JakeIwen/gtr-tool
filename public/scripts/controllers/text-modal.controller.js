@@ -4,7 +4,8 @@ app.controller('ModalController', function($scope, songData, close) {
   self.songData = songData;
   console.log('song', songData);
   self.close = close;
-  if (self.songData == {}) {
+  if (self.songData == 'new') {
+    console.log('new');
     self.edit = true;
     self.update = false;
   }

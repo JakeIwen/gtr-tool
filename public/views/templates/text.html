@@ -1,32 +1,34 @@
+
 <section>
-  <div class="top row">
-
-    <div class="col-md-6 name">
-      <h5>
-        Paste songs into form below and transpose with buttons on left. <br />
-        To save documents, login and use greeen "+" or upolad files from computer. <br / />
-        Saved documents will appear on table to the right. Open saved documents by clicking.
-      </h5>
-    </div>
-
-  <div class="col-md-3">
-    <fieldset>
-        <input  type="file" ng-files-model model="textFiles" callback="function" data="data" multiple="mulplite" />
-        <input class="customBtn" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload (Private)" />
-        <input class="customBtn" ng-click="text.submit(textFiles, false)" type="submit"  value="Upload (Public)" />
-        <input class="customBtn" ng-click="text.showModal({})" type="submit"  value="New Song Document" />
-    </fieldset>
-
-  </div>
   <div class="logInOut">
     <button class="customBtn" ng-click="text.logIn()">Log In</button>
     <button class="customBtn" ng-click="text.logOut()">Log Out</button>
   </div>
-</div>
+  <div class="top row">
+    <div class="col-md-3">
+      <fieldset class="btnContainer">
+        <label for="file-upload" class="customBtn">Select Text Files</label>
+        <input id="file-upload" type="file" ng-files-model model="textFiles" callback="function" data="data" multiple="mulplite" />
+        <input ng-show="textFiles.length" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload (Private)" />
+        <input ng-show="textFiles.length" ng-click="text.submit(textFiles, false)" type="submit"  value="Upload (Public)" />
+        <input ng-click="text.showModal('new')" type="submit"  value="New Song Document" />
+      </fieldset>
+      <span ng-show="textFiles.length==1">File: {{textFiles[0].name}}</span>
+      <span ng-show="textFiles.length>1">{{textFiles.length}} files selected</span>
+    </div>
+    <div class="col-md-8 searchParent">
+      <div class="songSearch">
+        <input id="songSearchField" ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)" placeholder="Search Songs"/>
+        <span id="songSearchResults">Results: {{(text.songList | filter: query).length}} </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
 
-<div class="row">
 
-  <div class="col-md-8">
+  </div>
+  <div class="row">
+    <div class="col-md-8">
       <table id="songTable" cellspacing="0" >
         <thead>
           <tr>
@@ -35,7 +37,6 @@
             <th class="columnSort" id= "dateCol" ng-click="text.sortType = 'title'; text.sortReverse = !text.sortReverse">Added
             </th>
             <th id="lockedCol"></th>
-
             <th>
             </th>
           </tr>
@@ -56,26 +57,11 @@
         <button class="customBtn" ng-disabled="text.currentPage == 0" ng-click="text.currentPage=text.currentPage-1">
           Previous
         </button>
-          {{text.currentPage+1}}/{{text.totalPages((text.songList  | filter: query).length)}}
+        {{text.currentPage+1}}/{{text.totalPages((text.songList  | filter: query).length)}}
         <button class="customBtn" ng-disabled="text.currentPage >= ((text.songList  | filter: query).length / text.pageSize - 1)" ng-click="text.currentPage=text.currentPage+1">
           Next
         </button>
       </div>
     </div>
-    <div class="col-md-4">
-      <br>Search Songs: </br>
-      <input ng-model="query" ng-change="text.pageCheck(text.songList | filter: query)"/>
-      <div class="errors-spacer"></div>
-      <span id="songSearchResults">Results: {{(text.songList | filter: query).length}} </span>
-    </div>
   </div>
-  <!-- <div class="row textContainer">
-    <input type="text" id="songName" class="col-md-10 col-md-offset-1" ng-model="text.title" placeholder="Title - Artist">
-    <div class="col-md-1 addHolder">
-      <img ng-click="text.submit([{name:text.title, file:text.songText}], false)" src="./img/save.png" alt="add" />
-    </div>
-    <textarea ng-model="text.songText" class="col-md-12" id="source" rows="30" cols="160"></textarea>
-  </div> -->
-
-
 </section>
