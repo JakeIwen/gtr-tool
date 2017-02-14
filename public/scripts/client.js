@@ -65,6 +65,17 @@ app.filter('true_false', function() {
         return 'No';
     }
 });
+//
+// app.directive("dpEscape", function(ModalService) {
+//   return function(scope, element, attributes) {
+//     element.on("keyup", function(event) {
+//       if (event.keyCode == 27) {
+//         console.log("hello");
+//         close();
+//       }
+//     });
+//   };
+// });
 
 /***************************UTILITY FUNCTIONS***************************/
 function removeObjById(arr, id) {
@@ -94,7 +105,4 @@ function formatDates(aryOfObjs){
 app.controller('HomeController', function($http) {
   console.log('home controller running');
   var self = this;
-
-
-
 });

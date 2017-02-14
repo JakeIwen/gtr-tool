@@ -234,7 +234,7 @@ form {
   text-align: center;
 }
 
-.customBtn {
+.customBtn, .btnContainer > button {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
@@ -253,13 +253,13 @@ form {
   margin-top: 10px;
 }
 
-.customBtn:hover {
+.customBtn:active, .btnContainer > button:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-.customBtn:active {
+.customBtn:active, .btnContainer > button:active {
   position: relative;
   top: 1px;
 }
@@ -293,7 +293,7 @@ fieldset {
   box-shadow: none;
   overflow: scroll;
 }
-.modalText {
+.modalText * {
   padding: 15px;
   box-sizing: border-box;
   font-family: "Courier New", courier;
@@ -313,12 +313,6 @@ fieldset {
   border: none;
 }
 
-#source {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-  width: 98%;
-}
-
 #songList {
   position: relative;
 }
@@ -329,19 +323,13 @@ fieldset {
   flex-direction: row;
 }
 
-.textContainer {
-  background-color: #FFFFFF;
-  border-radius: 16px;
-  border: 1px solid black;
-}
-
 .addHolder {
   padding-left: 10px;
   padding-top: 8px;
 }
 
 #songName {
-  font-size: 1.6em;
+  font-size: 1.2em;
   text-align: center;
   margin-top: 12px;
   border-radius: 10px;
@@ -372,23 +360,15 @@ img:hover {
   right:20px;
 }
 
-#transposeButtons {
-  position: fixed;
-  bottom: 50%;
-  right: 25px;
-  z-index: 5;
-}
-
 #close {
   .close {
     font-size: 35px;
   }
-  position: fixed;
+  position: absolute;
   top: 10px;
-  right: 20px;
+  right: 10px;
   z-index: 5;
 }
-
 
 #nameCol {
   width: 65%;

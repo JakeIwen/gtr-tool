@@ -50,12 +50,13 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     });
   }
 
-  self.updateSong = function(songId) {
-    console.log(' update songid', songId);
+  self.updateSong = function(songData) {
+    console.log(' update songid', songData);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'PUT',
-        url: '/songs/title/' + songId,
+        url: '/songs/title/' + songData._id,
+        data: songData,
         headers: { id_token: idToken }
       }).then(function(response) {
         console.log('reponese ', response);

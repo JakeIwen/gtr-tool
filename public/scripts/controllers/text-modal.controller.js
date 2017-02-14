@@ -2,7 +2,6 @@
 app.controller('ModalController', function($scope, songData, close) {
   const self = this;
   self.songData = songData;
-  self.title = songData.title;
   console.log('song', songData);
   self.close = close;
   if (self.songData == {}) {
@@ -10,29 +9,29 @@ app.controller('ModalController', function($scope, songData, close) {
     self.update = false;
   }
 
-
-
   self.plus = function() {
-    self.song = changeChords(self.song);
+    self.songData.song = changeChords(self.songData.song);
   }
 
   self.minus = function() {
     for (var i = 0; i < 11; i++) {
-       self.song = changeChords(self.song);
+       self.songData.song = changeChords(self.songData.song);
      }
-  }
-
-  self.saveSong = function() {
-
   }
 
   function changeChords (text) {
     const tonics = ['A','Bb','B','C','C#','D','Eb','E','F','F#','G','Ab'];
-    const regEx = /([A-G](\#|b)?(?=((m|maj|dim)|(\d\d?)|(add\d)|(sus)|(\s|\n))))/g;
+    const regEx = /([A-G](\#|b)?(?=((m\s|maj|dim)|(\d\d?)|(add\d)|(sus)|(\s|\n))))/g;
     return text.replace(regEx, (match) =>
       tonics[(tonics.indexOf(match) + 1) % 12]);
   }
 
+  $( "body" ).keydown(function() {
+    if (event.keyCode == 27) {
+      console.log('close');
+        close();
+    }
+  });
 
 
 
