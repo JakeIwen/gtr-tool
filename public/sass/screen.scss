@@ -8,8 +8,7 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, ol, ul,
-fieldset, form, label, legend,
+dl, dt, dd, ol, ul, form, label,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
@@ -273,9 +272,7 @@ td {
 }
 
 /*--------------------------------- TRANSPOSER STYLE -----------------------------*/
-fieldset {
-  margin-top: 10px;
-}
+
 .modal-header {
   padding: 7px;
 }
@@ -340,8 +337,8 @@ fieldset {
 }
 
 .top {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   vertical-align: middle;
 }
 
@@ -349,19 +346,28 @@ fieldset {
   height: 20px;
 }
 
-#songList > tbody > tr > td {
-  font-size: 1em;
-  padding: 3px;
-}
-
 img:hover {
   cursor: pointer;
+}
+.addSongs {
+  text-align: center;
+}
+.upload {
+  border: 3px solid black;
+  border-radius: 18px;
+  padding: 8px;
+  background: #3f3120;
+  color: #e9b576;
+  margin-bottom: 10px;
+  
 }
 
 /*--------------------------------- SONG TABLE STYLE -----------------------------*/
 .logInOut{
-  position: absolute;
-  right:20px;
+  position: relative;
+  right: 20px;
+  z-index: 5;
+  text-align: right;
 }
 
 #close {
@@ -391,9 +397,6 @@ img:hover {
 }
 .searchParent {
   display:flex;
-  position: relative;
-  align-content: flex-end;
-  
 }
 .songSearch {
   background: #3f3120;
@@ -403,11 +406,11 @@ img:hover {
   border-radius: 18px;
   margin-bottom: 10px;
   border: 3px solid black;
-
-}
-#songSearchField {
-  background: #69442d;
-  border-radius: 10px;
+  input {
+    background: #69442d;
+    border-radius: 10px;
+    padding-left: 7px;
+  }
 }
 #songTable {
   background: #3f3120;
@@ -419,7 +422,7 @@ img:hover {
     tr {
       th {
         text-align: center;
-        font-size: 1.5em;
+        font-size: 1.2em;
         border-bottom: 2px solid black;
         }
         width: 100%;
@@ -431,6 +434,7 @@ img:hover {
       background: #69442d;
       border-bottom: 1px solid black;
       td {
+        font-size: 1em;
         padding: 0 10px;
       }
     }

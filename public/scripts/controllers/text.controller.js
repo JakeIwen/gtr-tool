@@ -2,7 +2,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
   const self = this;
   var auth = $firebaseAuth();
   var currentUser = {};
-
+  self.loggedIn = false;
   function addToDb(title, song, privateBool) {
     if (title && song) {
       var songData = {
@@ -109,8 +109,10 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
 
   self.logIn = function() {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
+      self.loggedIn = true;
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
     }).catch(function(error) {
+      self.loggedIn = false;
       console.log("Authentication failed: ", error);
     });
   };
@@ -175,7 +177,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
   }
   /***************************ANGULAR SEARCH FILTER ***************************/
   self.currentPage = 0;
-  self.pageSize = 12
+  self.pageSize = 20
   self.filtered = [];
   self.loading = false;
   self.sortType = 'id';

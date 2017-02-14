@@ -2,6 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content container">
       <div class="row btnContainer">
+        <button ng-click="modal.close()">Go Back</button>
         <button ng-hide="modal.edit" ng-click="modal.edit=true">Edit</button>
         <button ng-show="modal.edit" ng-click="modal.edit=false; text.submit([{name:modal.songData.title, file:modal.songData.song}], false)">Save New</button>
         <button ng-show="modal.edit" ng-click="modal.edit=false; text.updateSong(modal.songData, false)">Update Existing</button>
