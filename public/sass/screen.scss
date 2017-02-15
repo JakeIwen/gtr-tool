@@ -210,13 +210,13 @@ $old-len: 9.28%;
   margin-top: 10px;
 }
 
-.customBtn:active, .btnContainer > button:hover, .btnContainer > input:hover {
+.customBtn:hover, .btnContainer > button:hover, .btnContainer > input:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
   background-color: #6c7c7c;
 }
 
-.customBtn:active, .btnContainer > button:active {
+.customBtn:active, .btnContainer > button:active, .btnContainer > input:active  {
   position: relative;
   top: 1px;
 }
