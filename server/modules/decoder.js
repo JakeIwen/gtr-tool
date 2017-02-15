@@ -1,5 +1,5 @@
 var admin = require("firebase-admin");
-for heroku mLab
+// for heroku mLab
 admin.initializeApp({
   credential: admin.credential.cert({
     "type": process.env.FIREBASE_TYPE,
