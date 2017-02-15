@@ -1,6 +1,5 @@
 <section id="triad" class="row">
   <div class="options row">
-
     <div class="col-xs-3">
       <h4>{{triad.tonic + ' ' + triad.type.name}} composition</h4>
       <table class="noteMap">
@@ -9,7 +8,7 @@
             <td class="markerContainer">
               <img class="markerMap" ng-src="../img/{{triad.intervalName(n)}}.svg" alt="*" height="20" width="30" />
             </td>
-            <td class="map">{{triad.noteName(n, true)}}</td>
+            <td>{{triad.noteName(n, true)}}</td>
             <td>:{{triad.intervalName(n)}}</td>
           </tr>
         </tbody>
@@ -53,7 +52,7 @@
   </div>
 
   <div class="fretboardContainer col-xs-11">
-    <div id="nonlinear" class="noUi-target noUi-ltr noUi-horizontal"></div>
+    <div id="nonlinear"></div>
     <div class="strings" ng-repeat="string in triad.neck.strings | orderBy:'':true">
       <div class="fretRow">
         <div class="preFret">
