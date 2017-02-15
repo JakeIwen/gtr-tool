@@ -19,7 +19,7 @@ admin.initializeApp({
 //for local use
 // admin.initializeApp({
 //   credential: admin.credential.cert("./server/firebase-service.json"),
-//   databaseURL: "https://gtr-tool.firebaseio.com" // replace this line with your URL
+//   databaseURL: "https://gtr-tool.firebaseio.com"
 // });
 
 var tokenDecoder = function(req, res, next){
