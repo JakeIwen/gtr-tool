@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 
 router.get("/all", function(req, res){
   console.log('getting all');
-  var songlist;
   var userEmail = req.decodedToken.email;
   // Check the user's exitence based on their email
   Song.find( {private: false}, function (err, publicTitles){
@@ -115,7 +114,7 @@ router.put("/title/:id", function(req, res){
 router.delete("/title/:id", function(req, res){
   var userEmail = req.decodedToken.email;
   var songId = req.params.id;
-  console.log('songid', req.params.id);
+  console.log('songId', req.params.id);
   // Check the user's exitence based on their email
   User.findOne({ email: userEmail }, function (err, user) {
     if (err) {

@@ -68,31 +68,6 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     });
   }
 
-  self.showModal = function(songData) {
-    console.log('showing modal', songData);
-    ModalService.showModal({
-      templateUrl: "/views/templates/text-modal.html",
-      controller: "ModalController",
-      controllerAs: 'modal',
-      scope: $scope,
-      inputs: {
-        songData: songData,
-      }
-      // resolve: {
-      //   items: function () {
-      //     return $scope.items;
-      //   },
-      //   size: function() {
-      //     console.log('size: ', size);
-      //     return size;
-      //   }
-    }).then(function(modal) {
-      modal.close.then(function(result) {
-        console.log('closed');
-      });
-    });
-  }
-
   self.deleteSong = function(songId) {
     console.log('delete songid', songId);
     currentUser.getToken().then(function(idToken) {
@@ -107,6 +82,22 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     });
   }
 
+  self.showModal = function(songData) {
+    console.log('showing modal', songData);
+    ModalService.showModal({
+      templateUrl: "/views/templates/text-modal.html",
+      controller: "ModalController",
+      controllerAs: 'modal',
+      scope: $scope,
+      inputs: {
+        songData: songData,
+      }
+    }).then(function(modal) {
+      modal.close.then(function(result) {
+        console.log('closed');
+      });
+    });
+  }
 
   self.logIn = function() {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
@@ -117,6 +108,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       console.log("Authentication failed: ", error);
     });
   };
+  
   self.logOut = function() {
     auth.$signOut().then(function() {
       console.log('Logging the user out!');
@@ -129,7 +121,6 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     // firebaseUser will be null if not logged in
     if(firebaseUser) {
       self.loggedIn = true;
-
       currentUser = firebaseUser;
       // This is where we make our call to our server
       currentUser.getToken().then(function(idToken) {
@@ -144,8 +135,8 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
           console.log('response:', response);
         }).catch(function(err) {
           console.log("Error in user creation");
-      })
-    });
+        })
+      });
     } else {
       console.log('Not logged in or not authorized.');
       currentUser = {};
@@ -153,22 +144,16 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     }
     getSongs();
   });
-  function dateFormat(objArr) {
-    for (var i = 0; i < objArr.length; i++) {
-      objArr[i].date_added = moment(objArr[i].date_added).fromNow();
-    }
-    return objArr;
-  }
 
   function getSongs() {
     if (!self.loggedIn) {
-    $http({
-      method: 'GET',
-      url: '/public/'
-    }).then(function(response) {
-      self.songList = dateFormat(response.data);
-      console.log('self.songList', self.songList);
-    });
+      $http({
+        method: 'GET',
+        url: '/public/'
+      }).then(function(response) {
+        self.songList = dateFormat(response.data);
+        console.log('self.songList', self.songList);
+      });
     } else {
       currentUser.getToken().then(function(idToken) {
         console.log('getting song list');
@@ -185,12 +170,21 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       });
     }
   }
+
   self.submit = function(textFiles, privateBool) {
     for (var i = 0; i < textFiles.length; i++) {
       addToDb(textFiles[i].name, textFiles[i].file, privateBool);
     }
     console.log('submitting');
   }
+
+  function dateFormat(objArr) {
+    for (var i = 0; i < objArr.length; i++) {
+      objArr[i].date_added = moment(objArr[i].date_added).fromNow();
+    }
+    return objArr;
+  }
+
   /***************************ANGULAR SEARCH FILTER ***************************/
   self.currentPage = 0;
   self.pageSize = 20
