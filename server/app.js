@@ -1,4 +1,4 @@
-
+// 
 require('dotenv').config();
 var express = require('express');
 var app = express();
@@ -32,7 +32,7 @@ app.get('/chords', function(req, res) {
 // var databaseUri = 'mongodb://localhost:27017/gtr-tool';
 var databaseUri = 'mongodb://heroku_7b95z3d5:8b1s5ahe1fsi85sfb16lsvc1mf@ds149268.mlab.com:49268/heroku_7b95z3d5';
 
-mongoose.connect(databaseUri);
+// mongoose.connect(databaseUri);
 mongoConnection.connect();
 
 
