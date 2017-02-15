@@ -1,7 +1,6 @@
-<section class="row">
+<section id="triad" class="row">
   <div class="options row">
-
-    <div class="col-md-4">
+    <div class="col-xs-3">
       <h4>{{triad.tonic + ' ' + triad.type.name}} composition</h4>
       <table class="noteMap">
         <tbody>
@@ -9,14 +8,14 @@
             <td class="markerContainer">
               <img class="markerMap" ng-src="../img/{{triad.intervalName(n)}}.svg" alt="*" height="20" width="30" />
             </td>
-            <td class="map">{{triad.noteName(n, true)}}</td>
+            <td>{{triad.noteName(n, true)}}</td>
             <td>:{{triad.intervalName(n)}}</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-xs-3">
       <form class="row">
         <select ng-model="triad.tonic" ng-options="tonic as tonic for tonic in triad.tonicList" ng-change="triad.newChord()"></select>
         <select ng-options="types as types.name for types in triad.types" ng-model="triad.type" ng-change="triad.newChord()"></select>
@@ -28,10 +27,9 @@
         <button class="customBtn" type="submit" ng-click="triad.prevVar()">[←] Previous</button>
         <button class="customBtn" type="submit" ng-click="triad.nextVar()">Next [→]</button>
       </div>
-
     </div>
 
-    <div class="col-md-2">
+    <div class="col-xs-2">
       <h4>Show Inversions:</h4>
       <ul class="inversions" ng-model="triad.allowedInversions">
         <li ng-repeat="invName in triad.inversionNames track by $index" ng-if="triad.numNotes > $index">
@@ -39,24 +37,22 @@
       </ul>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-xs-3">
       <select ng-options="span as span for span in [1,2,3,4,5]" ng-model="triad.maxSpan"
       ng-change="triad.filter()"></select>
-      <span>Max Fret-Stretch [↑/↓]</span><br>
+      <span>Max Stretch [↑/↓]</span><br>
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.allowOpen" />
       <span>Allow open strings</span><br>
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.onlyClusters" />
       <span>Consecutive strings only</span><br>
       <input type="checkbox" ng-click="triad.filter()" ng-model="triad.octaves" />
       <span>Allow octave-duplicates</span><br>
-      Fret Range:
-      <span id="lower-value">{{triad.range[0]}} to {{triad.range[1]}}</span>
+      <span>Fret Range: {{triad.range[0]}} to {{triad.range[1]}}</span>
     </div>
-
   </div>
 
   <div class="fretboardContainer col-xs-11">
-    <div id="nonlinear" class="noUi-target noUi-ltr noUi-horizontal"></div>
+    <div id="nonlinear"></div>
     <div class="strings" ng-repeat="string in triad.neck.strings | orderBy:'':true">
       <div class="fretRow">
         <div class="preFret">

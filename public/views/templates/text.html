@@ -1,8 +1,8 @@
 
-<section>
-  <div class="logInOut top row">
-    <button ng-hide="text.loggedIn" class="customBtn" ng-click="text.logIn()">Log In</button>
-    <button ng-show="text.loggedIn" class="customBtn" ng-click="text.logOut()">Log Out</button>
+<section id="text">
+  <div class="logInOut top row btnContainer">
+    <button ng-hide="text.loggedIn" ng-click="text.logIn()">Log In</button>
+    <button ng-show="text.loggedIn" ng-click="text.logOut()">Log Out</button>
   </div>
   <div class="row">
     <div class="col-md-4">
@@ -30,7 +30,7 @@
 
     </div>
     <div class="col-md-8">
-      <table id="songTable" cellspacing="0" >
+      <table id="songTable" cellspacing="0">
         <thead>
           <tr>
             <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Song
@@ -43,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-id="{{song._id}}" data-ng-repeat="song in text.songList | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize">
+          <tr data-ng-repeat="song in text.songList | orderBy:text.sortType:text.sortReverse | filter: query |  startFrom:text.currentPage*text.pageSize | limitTo:text.pageSize">
             <td class="song-name" ng-click="text.getSong(song._id)">{{song.title}}</td>
             <td ng-click="text.getSong(song._id)">{{song.date_added}}</td>
             <td>
@@ -54,12 +54,12 @@
           </tr>
         </tbody>
       </table>
-      <div class="row centered" ng-show="text.totalPages((text.songList | filter: query).length)">
-        <button class="customBtn" ng-disabled="text.currentPage == 0" ng-click="text.currentPage=text.currentPage-1">
+      <div class="row centered btnContainer" ng-show="text.totalPages((text.songList | filter: query).length)">
+        <button ng-disabled="text.currentPage == 0" ng-click="text.currentPage=text.currentPage-1">
           Previous
         </button>
         {{text.currentPage+1}}/{{text.totalPages((text.songList  | filter: query).length)}}
-        <button class="customBtn" ng-disabled="text.currentPage >= ((text.songList  | filter: query).length / text.pageSize - 1)" ng-click="text.currentPage=text.currentPage+1">
+        <button ng-disabled="text.currentPage >= ((text.songList  | filter: query).length / text.pageSize - 1)" ng-click="text.currentPage=text.currentPage+1">
           Next
         </button>
       </div>

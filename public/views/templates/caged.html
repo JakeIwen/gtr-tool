@@ -1,4 +1,4 @@
-<section class="row">
+<section id="caged" class="row">
   <div class="options row">
     <div class="noteMap col-md-4">
       <h2 ng-show="caged.tonic && caged.scale">{{caged.tonic}} {{caged.scale.name}}</h2>
@@ -8,14 +8,13 @@
         <h5 class="map">{{caged.noteName($index, true)}}</h5>
       </div>
     </div>
-    <div class="col-sm-6 dropdowns">
 
-      <form class="col-sm-6">
+    <div class="col-sm-6 dropdowns">
+      <div class="col-sm-6">
         <h4>Chord to map:</h4>
         <select ng-model="caged.tonic" ng-options="tonic as tonic for tonic in caged.tonicList" ng-change="caged.init()">
         </select>
-      </form>
-
+      </div>
       <div class="col-sm-6">
         <h4>Scale type:</h4>
         <select ng-options="scales as scales.name for scales in caged.scales" ng-model="caged.scale" ng-change="caged.init()">
@@ -39,5 +38,4 @@
       </div>
     </div>
   </div>
-
 </section>
