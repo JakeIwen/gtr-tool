@@ -72,24 +72,6 @@ function removeObjById(arr, id) {
   ~idx && arr.splice(idx, 1);
   return idx;
 }
-function formatDates(aryOfObjs){
-  //convert the ISO Dates to readable format
-  //expects array of objects
-  for (var i = 0; i < aryOfObjs.length; i++) {
-
-    if(moment(aryOfObjs[i].last_modified).isValid()) {
-      aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
-    }
-    if(moment(aryOfObjs[i].survey_date).isValid()) {
-      aryOfObjs[i].survey_date = moment(aryOfObjs[i].survey_date).format("YYYY/MM/DD");
-    }
-    if(moment(aryOfObjs[i].completion_date).isValid()) {
-      aryOfObjs[i].completion_date = moment(aryOfObjs[i].completion_date).format("YYYY/MM/DD");
-    }
-  }
-  return aryOfObjs;
-}
-
 // Home controller
 app.controller('HomeController', function($http) {
   console.log('home controller running');
