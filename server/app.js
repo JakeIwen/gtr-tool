@@ -1,4 +1,4 @@
-// 
+//
 require('dotenv').config();
 var express = require('express');
 var app = express();
@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var scales = require('../public/data/scales');
 var chords = require('../public/data/chords');
 var mongoConnection = require('./modules/mongo-connection');
+var databaseUri = require('./modules/database-config');
 var songs = require('./routes/songs');
 var users = require('./routes/users');
 var pubSongs = require('./routes/public');
@@ -29,11 +30,8 @@ app.get('/chords', function(req, res) {
 });
 
 /** ---------- MONGOOSE CONNECTION HANDLING ---------- **/
-// var databaseUri = 'mongodb://localhost:27017/gtr-tool';
-var databaseUri = 'mongodb://heroku_7b95z3d5:8b1s5ahe1fsi85sfb16lsvc1mf@ds149268.mlab.com:49268/heroku_7b95z3d5';
-
-// mongoose.connect(databaseUri);
-mongoConnection.connect();
+mongoose.connect(databaseUri);
+// mongoConnection.connect();
 
 
 mongoose.connection.on('connected', function() {
