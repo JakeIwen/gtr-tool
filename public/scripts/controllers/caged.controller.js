@@ -15,7 +15,7 @@ app.controller('CagedController', ["$http", function($http) {
     if (self.scale && self.tonic) {
       self.show();
     }
-  }
+  };
 
 
 
@@ -37,7 +37,7 @@ app.controller('CagedController', ["$http", function($http) {
         }
       }
     });
-  }
+  };
 
   function convertList(scaleArray) {
     //turn mongoDb data into array of scale objects
@@ -51,25 +51,25 @@ app.controller('CagedController', ["$http", function($http) {
       self.scales.push(obj);
     }  //set default scale
     self.scale = self.scales[0];
-    console.log('self.scalenames', obj);
     self.show();
   }
 
   self.noteName = function(pos, notation) {
     //relative circle of fifths positions to determine if # or flat is correct notation
-      var root = Note.fromNotation(tonic);
-      console.log('root', root, root.cofPosition());
-      console.log('pos ', pos,  self.scale.notes);
-      if (root.cofPosition() < 6) {
-        var ret = MUSIQ.sharpNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
-      } else {
-        var ret = MUSIQ.flatNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
-      }
-      if(notation){
-        ret = ret.replace("b","♭").replace("#","♯");
-      }
-      return ret;
-  }
+    var ret;
+    var root = Note.fromNotation(tonic);
+    console.log('root', root, root.cofPosition());
+    console.log('pos ', pos,  self.scale.notes);
+    if (root.cofPosition() < 6) {
+      ret = MUSIQ.sharpNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
+    } else {
+      ret = MUSIQ.flatNames[(self.scale.notes[pos] + note(tonic).pos) % 12];
+    }
+    if(notation){
+      ret = ret.replace("b","♭").replace("#","♯");
+    }
+    return ret;
+  };
 
   function getScales() {
     //ajax call to get scales from JSON

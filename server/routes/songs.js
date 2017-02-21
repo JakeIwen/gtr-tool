@@ -14,6 +14,7 @@ router.get("/all", function(req, res){
       res.sendStatus(500);
     } else {
       // return all of the results where a specific user has permission
+      //use token decoder to determine email for secuirty reasons
       User.findOne({ email: userEmail }, function (err, user) {
         if (err) {
           console.log('Error COMPLETING user query task', err);
@@ -26,7 +27,7 @@ router.get("/all", function(req, res){
             res.send(publicTitles);
           } else {
             // get all of the song data neded to pupulate DOM table
-            Song.find( {email: user.email}, '-song', {sort: {title: 1}}, function (err, privateTitles){
+            Song.find( {email: user.email, private: true}, '-song', {sort: {title: 1}}, function (err, privateTitles){
               if (err) {
                 console.log('Error COMPLETING song query task', err);
                 res.sendStatus(500);
