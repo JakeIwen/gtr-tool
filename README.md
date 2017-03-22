@@ -1,8 +1,8 @@
 GTRTool
 ====================
 
-A web application to help guitarists understand and identify any hundreds of chord & scale formations on any part of the guitar neck.
+A web application to help guitarists understand and identify any of several thousand potential chord & scale formations on any part of the guitar neck.
 
-Additionally, GTRTool a repository for uploaded chord-lyric text documents, enabling singer-songwriters to share and transpose songs, publicly or privately.
+Additionally, GTRTool is a repository for uploaded chord-lyric text documents, enabling singer-songwriters to share and transpose songs, both publicly and privately.
 
-[gtrtool.herokuapp.com](gtrtool.herokuapp.com)
+[gtrtool.herokuapp.com](http://gtrtool.herokuapp.com)
