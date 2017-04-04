@@ -7,4 +7,4 @@ Additionally, GTRTool is a repository for uploaded chord-lyric text documents, e
 
 ## Technologies Used
 
-HTML5 | CSS3 | AngularJS | Bootstap | jQuery | Firebase | MongoDB | Heroku | mLab
+HTML5 | CSS3 | Angular.js | Bootstrap | jQuery | Firebase | MongoDB | Heroku | mLab | [MUSIQ.js](https://github.com/studioludens/musiqjs)
