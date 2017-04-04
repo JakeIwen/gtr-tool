@@ -44,6 +44,6 @@ var tokenDecoder = function(req, res, next){
     // Will also be hit when user does not send back an idToken in the header
     res.sendStatus(403);
   }
-}
+};
 
 module.exports = { token: tokenDecoder };
