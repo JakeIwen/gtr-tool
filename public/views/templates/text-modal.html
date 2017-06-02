@@ -11,7 +11,7 @@
         <button ng-click="modal.minus()">Transpose Down</button>
       </div>
       <div class="row modalText">
-        <input type="text" id="songName" ng-model="modal.songData.title" placeholder="Title - Artist" ng-disabled="!modal.edit">
+        <input type="text" id="songName" ng-model="modal.songData.title" placeholder="Title - Artist">
         <pre ng-hide="modal.edit">{{modal.songData.song}}</pre>
         <pre contenteditable ng-show="modal.edit" >{{modal.songData.song || "Words go here"}}</pre>
       </div>
