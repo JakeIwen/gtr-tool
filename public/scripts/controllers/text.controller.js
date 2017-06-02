@@ -50,7 +50,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
         console.log("Error getting songs:", err);
       });
     });
-  }
+  };
 
   self.updateSong = function(songData) {
     console.log(' update songid', songData);
@@ -66,7 +66,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
         console.log("Error getting songs:", err);
       });
     });
-  }
+  };
 
   self.deleteSong = function(songId) {
     console.log('delete songid', songId);
@@ -80,24 +80,30 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
         getSongs();
       });
     });
-  }
+  };
 
   self.showModal = function(songData) {
+    var modalData = {
+      song: "",
+      
+    }
+    if (songData) {
+      console.log('songData exists');
+      modalData = songData;
+    }
     console.log('showing modal', songData);
     ModalService.showModal({
       templateUrl: "/views/templates/text-modal.html",
       controller: "ModalController",
       controllerAs: 'modal',
       scope: $scope,
-      inputs: {
-        songData: songData,
-      }
+      inputs: { songData: modalData }
     }).then(function(modal) {
       modal.close.then(function(result) {
         console.log('closed');
       });
     });
-  }
+  };
 
   self.logIn = function() {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
@@ -108,13 +114,13 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       console.log("Authentication failed: ", error);
     });
   };
-  
+
   self.logOut = function() {
     auth.$signOut().then(function() {
       console.log('Logging the user out!');
       self.loggedIn = false;
     });
-  }
+  };
 
   auth.$onAuthStateChanged(function(firebaseUser) {
     console.log('authentication state changed');
@@ -135,7 +141,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
           console.log('response:', response);
         }).catch(function(err) {
           console.log("Error in user creation");
-        })
+        });
       });
     } else {
       console.log('Not logged in or not authorized.');
@@ -176,7 +182,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       addToDb(textFiles[i].name, textFiles[i].file, privateBool);
     }
     console.log('submitting');
-  }
+  };
 
   function dateFormat(objArr) {
     for (var i = 0; i < objArr.length; i++) {
@@ -187,7 +193,7 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
 
   /***************************ANGULAR SEARCH FILTER ***************************/
   self.currentPage = 0;
-  self.pageSize = 20
+  self.pageSize = 20;
   self.filtered = [];
   self.loading = false;
   self.sortType = 'id';

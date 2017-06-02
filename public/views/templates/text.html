@@ -22,7 +22,7 @@
           <input id="file-upload" type="file" ng-files-model model="textFiles" callback="function" data="data" multiple="mulplite" />
           <input ng-show="textFiles.length" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload (Private)" />
           <input ng-show="textFiles.length" ng-click="text.submit(textFiles, false)" type="submit"  value="Upload (Public)" />
-          <input ng-click="text.showModal('new')" type="submit"  value="New Song Document" />
+          <input ng-click="text.showModal()" type="submit"  value="New Song Document" />
         </fieldset>
         <span ng-show="textFiles.length==1">File: {{textFiles[0].name}}</span>
         <span ng-show="textFiles.length>1">{{textFiles.length}} files selected</span>
@@ -33,13 +33,10 @@
       <table id="songTable" cellspacing="0">
         <thead>
           <tr>
-            <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Song
-            </th>
-            <th class="columnSort" id= "dateCol" ng-click="text.sortType = 'title'; text.sortReverse = !text.sortReverse">Added
-            </th>
+            <th class="columnSort" id="nameCol" ng-click="text.sortType = 'date_added'; text.sortReverse = !text.sortReverse">Song</th>
+            <th class="columnSort" id= "dateCol" ng-click="text.sortType = 'title'; text.sortReverse = !text.sortReverse">Added</th>
             <th id="lockedCol"></th>
-            <th>
-            </th>
+            <th />
           </tr>
         </thead>
         <tbody>

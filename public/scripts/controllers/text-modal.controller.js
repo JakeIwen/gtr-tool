@@ -12,13 +12,14 @@ app.controller('ModalController', function($scope, songData, close) {
 
   self.plus = function() {
     self.songData.song = changeChords(self.songData.song);
-  }
+    console.log('songdata', self.songData);
+  };
 
   self.minus = function() {
     for (var i = 0; i < 11; i++) {
        self.songData.song = changeChords(self.songData.song);
      }
-  }
+  };
 
   function changeChords (text) {
     const tonics = ['A','Bb','B','C','C#','D','Eb','E','F','F#','G','Ab'];
@@ -28,10 +29,8 @@ app.controller('ModalController', function($scope, songData, close) {
   }
 
   $( "body" ).keydown(function() {
-    if (event.keyCode == 27) {
-      console.log('close');
-        close();
-    }
+    if (event.keyCode == 27)
+      close();
   });
 
 
