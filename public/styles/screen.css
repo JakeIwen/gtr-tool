@@ -3,7 +3,7 @@
 * Import this file using the following HTML or equivalent:
 * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, textarea
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -291,6 +291,9 @@ img:hover {
 
 #file-upload {
   display: none; }
+
+#songText {
+  height: 90%; }
 
 /*--------------------------------- SONG TABLE STYLE -----------------------------*/
 .logInOut {

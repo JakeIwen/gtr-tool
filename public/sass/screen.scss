@@ -3,7 +3,7 @@
 * Import this file using the following HTML or equivalent:
 * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, textarea
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -182,14 +182,6 @@ $old-len: 9.28%;
   $old-len: $new-length;
 }
 
-
-// .borderString {
-//   height: 18px;
-//   padding-top: 2px;
-//   border-top: 2px, solid #bdc19d;
-//   margin-right: -3px;
-// }
-
 /*------------------------------ BUTTON STYLING ------------------------------*/
 .customBtn, .btnContainer > button, .btnContainer > input {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
@@ -248,7 +240,7 @@ $old-len: 9.28%;
 }
 .modalText * {
   padding: 15px;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   font-family: "Courier New", courier;
   border: none;
   display: block;
@@ -298,6 +290,10 @@ img:hover {
 #file-upload {
   display: none;
 }
+//
+// #songText {
+//   height: 90%;
+// }
 
 /*--------------------------------- SONG TABLE STYLE -----------------------------*/
 .logInOut{

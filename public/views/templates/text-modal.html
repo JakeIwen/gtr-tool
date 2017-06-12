@@ -3,17 +3,14 @@
     <div class="modal-content container">
       <div class="row btnContainer">
         <button ng-click="modal.close()">Go Back</button>
-        <button ng-hide="modal.edit" ng-click="modal.edit=true">Edit</button>
-        <button ng-show="modal.edit" ng-click="modal.edit=false; text.submit([{name:modal.songData.title, file:modal.songData.song}], false)">Save New</button>
-        <button ng-show="modal.edit" ng-click="modal.edit=false; text.updateSong(modal.songData, false)">Update Existing</button>
-        <button ng-show="modal.edit" ng-click="modal.edit=false">Cancel</button>
+        <button ng-click="text.submit([{name:modal.songData.title, file:modal.songData.song}], false)">Save New</button>
+        <button ng-hide="modal.newSong" ng-click="text.updateSong(modal.songData, false)">Update Existing</button>
         <button ng-click="modal.plus()">Transpose Up</button>
         <button ng-click="modal.minus()">Transpose Down</button>
       </div>
       <div class="row modalText">
-        <input type="text" id="songName" ng-model="modal.songData.title" placeholder="Title - Artist" ng-disabled="!modal.edit">
-        <pre ng-hide="modal.edit">{{modal.songData.song}}</pre>
-        <pre contenteditable ng-show="modal.edit" >{{modal.songData.song}}</pre>
+        <input type="text" id="songName" ng-model="modal.songData.title" placeholder="Title - Artist" />
+        <pre contenteditable ng-model="modal.songData.song"></pre>
       </div>
       <div id="close">
         <button type="button" class="close" ng-click="modal.close()">&times;</button>

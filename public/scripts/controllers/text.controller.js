@@ -11,17 +11,15 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
         song: song,
         date_added: new Date(),
         private: privateBool
-      }
+      };
       currentUser.getToken().then(function(idToken) {
         console.log('getting song list');
-        $http({
+        $http( {
           method: 'POST',
           url: '/songs/',
           data: songData,
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response) {
+          headers: { id_token: idToken }
+        } ).then(function(response) {
           console.log('song added to DB');
           songData.date_added = moment(songData.date_added).fromNow();
           self.songList.push(songData);
@@ -82,23 +80,16 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
     });
   };
 
-  self.showModal = function(songData) {
-    var modalData = {
-      song: "",
-      
-    }
-    if (songData) {
-      console.log('songData exists');
-      modalData = songData;
-    }
+  self.showModal = function(songData, newSong) {
     console.log('showing modal', songData);
-    ModalService.showModal({
+    ModalService.showModal( {
       templateUrl: "/views/templates/text-modal.html",
       controller: "ModalController",
       controllerAs: 'modal',
       scope: $scope,
-      inputs: { songData: modalData }
-    }).then(function(modal) {
+      inputs: { songData: songData,
+                newSong: newSong}
+    } ).then(function(modal) {
       modal.close.then(function(result) {
         console.log('closed');
       });
@@ -220,12 +211,12 @@ app.controller('TextController', ["$firebaseAuth", "$http", "$scope", "ModalServ
       self.currentPage = total -1 ;
       console.log('changed startPage');
     }
-  }
+  };
   self.totalPages = function (num) {
     var total = 0;
     if (num) {
       total = parseInt(((num - 1) / self.pageSize) + 1);
     }
     return total;
-  }
+  };
 }]);

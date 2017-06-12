@@ -1,24 +1,19 @@
 
-app.controller('ModalController', function($scope, songData, close) {
+app.controller('ModalController', function($scope, songData, newSong, close) {
   const self = this;
   self.songData = songData;
-  console.log('song', songData);
   self.close = close;
-  if (self.songData == 'new') {
-    console.log('new');
-    self.edit = true;
-    self.update = false;
-  }
+  self.newSong = newSong;
+
+  console.log('song', songData);
 
   self.plus = function() {
     self.songData.song = changeChords(self.songData.song);
-    console.log('songdata', self.songData);
   };
 
   self.minus = function() {
-    for (var i = 0; i < 11; i++) {
-       self.songData.song = changeChords(self.songData.song);
-     }
+    for (var i = 0; i < 11; i++)
+       self.plus();
   };
 
   function changeChords (text) {
@@ -29,10 +24,8 @@ app.controller('ModalController', function($scope, songData, close) {
   }
 
   $( "body" ).keydown(function() {
-    if (event.keyCode == 27)
+    if (event.keyCode == 27) //escape
       close();
   });
-
-
 
 });

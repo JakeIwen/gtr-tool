@@ -18,11 +18,11 @@
           <span>Add Songs!</span>
         </div>
         <fieldset ng-show="text.loggedIn" class="btnContainer">
-          <label for="file-upload" class="customBtn">Select Text Files</label>
-          <input id="file-upload" type="file" ng-files-model model="textFiles" callback="function" data="data" multiple="mulplite" />
+          <label for="file-upload" class="customBtn">Upload Text Files</label>
+          <input id="file-upload" type="file" ng-files-model model="textFiles" data="data" multiple="mulplite" />
           <input ng-show="textFiles.length" ng-click="text.submit(textFiles, true)" type="submit"  value="Upload (Private)" />
           <input ng-show="textFiles.length" ng-click="text.submit(textFiles, false)" type="submit"  value="Upload (Public)" />
-          <input ng-click="text.showModal()" type="submit"  value="New Song Document" />
+          <input ng-click="text.showModal({}, true)" type="submit"  value="New Song Document" />
         </fieldset>
         <span ng-show="textFiles.length==1">File: {{textFiles[0].name}}</span>
         <span ng-show="textFiles.length>1">{{textFiles.length}} files selected</span>

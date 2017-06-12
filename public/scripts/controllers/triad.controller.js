@@ -279,7 +279,7 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
   }
   function octaveFilt(config){
     //did the use allow octave suplicates and are they in this chord config?
-    return self.octaves || (config.count <= self.numNotes)
+    return self.octaves || (config.count <= self.numNotes);
   }
 
   function stringFilt(config) {
@@ -391,7 +391,7 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
       if (existingArray[i] && typeof existingArray[i] == "object") {
         newObj[i] = clone(existingArray[i]);
       } else {
-        newObj[i] = existingArray[i]
+        newObj[i] = existingArray[i];
       }
     }
     return newObj;

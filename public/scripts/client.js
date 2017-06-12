@@ -42,7 +42,7 @@ app.filter('startFrom', function() {
     // console.log('input, start', input, start);
     start = +start; //parse to int
     return input.slice(start);
-  }
+  };
 });
 
 app.filter('excludeByStatus', function () {
@@ -55,7 +55,7 @@ app.filter('excludeByStatus', function () {
     });
     return ret;
   };
-})
+});
 
 app.filter('true_false', function() {
     return function(text, length, end) {
@@ -63,7 +63,28 @@ app.filter('true_false', function() {
             return 'Yes';
         }
         return 'No';
+    };
+});
+/**********************CUSTOM ANGULAR DIRECTIVES******************************/
+app.directive("contenteditable", function() {
+  return {
+    restrict: "A",
+    require: "ngModel",
+    link: function(scope, element, attrs, ngModel) {
+
+      function read() {
+        ngModel.$setViewValue(element.html());
+      }
+
+      ngModel.$render = function() {
+        element.html(ngModel.$viewValue || "");
+      };
+
+      element.bind("blur keyup change", function() {
+        scope.$apply(read);
+      });
     }
+  };
 });
 
 /***************************UTILITY FUNCTIONS***************************/
