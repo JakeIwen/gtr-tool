@@ -5,18 +5,13 @@ app.controller('ModalController', function($scope, songData, newSong, close) {
   self.close = close;
   self.newSong = newSong;
 
-  function resizeIt() {
-    var text = document.getElementById("song-text");
-    var str = text.value;
-    var cols = text.cols;
+  function resizeIt(el) {
+    var str = el.value;
     var linecount = str.split(/\n/g).length;
-    // str.split(/\n/g).forEach( function(l) {
-    //     linecount += Math.ceil( l.length / cols ); // Take into account long lines
-    // });
-    text.rows = linecount + 1;
+    el.rows = linecount + 1;
   }
 
-  setTimeout(() => resizeIt(), 0); //set textarea height after ng vars have loaded
+  setTimeout(() => resizeIt(document.getElementById('song-text')), 0); //set textarea height after ng vars have loaded
 
   self.plus = function() {
     self.songData.song = changeChords(self.songData.song);
@@ -35,11 +30,40 @@ app.controller('ModalController', function($scope, songData, newSong, close) {
   }
 
   $( "body" ).keydown(function() {
-    if (event.keyCode == 27) //escape
+    elem = document.getElementById('song-text');
+    if (event.keyCode == 27) { //escape
       close();
-    else
-      resizeIt();
+    } else if (event.keyCode == 192) {
+      event.preventDefault();
+      insertText(elem, 'bars');
+    } else if (event.keyCode == 9) {
+      event.preventDefault();
+      insertText(elem, 'tab');
+    } else {
+      resizeIt(elem);
+    }
   });
 
+  function insertText(el, type) {
+    var cursorPos = el.selectionStart;
+    var offset = el.value.substring(0, el.selectionStart).split(/\n/g).length - 1;
+    var insertItem = '';
+    if (type == 'bars') {
+      insertItem = "|-------------|-------------|-------------|";
+    } else if (type == 'tab') {
+      insertItem = "     ";
+    }
+    self.songData.song = self.songData.song.insert(cursorPos + offset, insertItem);
+    $scope.$apply();
+    el.focus();
+    el.setSelectionRange(cursorPos + insertItem.length, cursorPos + insertItem.length);
+  }
+
+  String.prototype.insert = function (index, string) {
+  if (index > 0)
+    return this.substring(0, index) + string + this.substring(index, this.length);
+  else
+    return string + this;
+  };
 
 });
