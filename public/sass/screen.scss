@@ -239,13 +239,13 @@ $old-len: 9.28%;
   overflow: scroll;
 }
 .modalText * {
-  padding: 15px;
-  // box-sizing: border-box;
+  // padding: 15px;
+  box-sizing: border-box;
   font-family: "Courier New", courier;
   border: none;
   display: block;
-  white-space: pre;
-  word-break: break-all;
+  // white-space: pre;
+  // word-break: break-all;
   width: 100%;
   height: 100%;
 }

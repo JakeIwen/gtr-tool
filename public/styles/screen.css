@@ -248,12 +248,10 @@ ul {
 
 .modalText * {
   padding: 15px;
-  box-sizing: border-box;
   font-family: "Courier New", courier;
   border: none;
   display: block;
   white-space: pre;
-  word-break: break-all;
   width: 100%;
   height: 100%; }
 
@@ -291,9 +289,6 @@ img:hover {
 
 #file-upload {
   display: none; }
-
-#songText {
-  height: 90%; }
 
 /*--------------------------------- SONG TABLE STYLE -----------------------------*/
 .logInOut {

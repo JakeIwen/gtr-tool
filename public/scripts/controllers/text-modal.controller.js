@@ -5,7 +5,18 @@ app.controller('ModalController', function($scope, songData, newSong, close) {
   self.close = close;
   self.newSong = newSong;
 
-  console.log('song', songData);
+  function resizeIt() {
+    var text = document.getElementById("text-area");
+    var str = text.value;
+    // var cols = text.cols;
+    var linecount = str.split(/\n/g).length;
+    // str.split(/\n/g).each( function(l) {
+    //     linecount += Math.ceil( l.length / cols ); // Take into account long lines
+    // });
+    text.rows = linecount + 1;
+  }
+
+  setTimeout(() => resizeIt(), 0); //set textarea height after ng vars have loaded
 
   self.plus = function() {
     self.songData.song = changeChords(self.songData.song);
@@ -26,6 +37,9 @@ app.controller('ModalController', function($scope, songData, newSong, close) {
   $( "body" ).keydown(function() {
     if (event.keyCode == 27) //escape
       close();
+    else
+      resizeIt();
   });
+
 
 });

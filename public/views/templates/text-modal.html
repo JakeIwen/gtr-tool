@@ -10,7 +10,7 @@
       </div>
       <div class="row modalText">
         <input type="text" id="songName" ng-model="modal.songData.title" placeholder="Title - Artist" />
-        <pre contenteditable ng-model="modal.songData.song"></pre>
+        <textarea id="text-area" ng-model="modal.songData.song"></textarea>
       </div>
       <div id="close">
         <button type="button" class="close" ng-click="modal.close()">&times;</button>

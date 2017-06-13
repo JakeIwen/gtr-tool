@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     bs = require('browser-sync').create(),
     karma = require('gulp-karma-runner'),
     nodemon = require('gulp-nodemon'),
-    sass = require('gulp-sass')
+    sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps')
 
 gulp.task('browserSync', function () {
@@ -14,7 +14,7 @@ gulp.task('browserSync', function () {
     ui: {
       port: 5001
     }
-  })
+  }),
 })
 
 gulp.task('nodemon', ['browserSync'], function () {
