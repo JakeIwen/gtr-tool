@@ -6,11 +6,11 @@ app.controller('ModalController', function($scope, songData, newSong, close) {
   self.newSong = newSong;
 
   function resizeIt() {
-    var text = document.getElementById("text-area");
+    var text = document.getElementById("song-text");
     var str = text.value;
-    // var cols = text.cols;
+    var cols = text.cols;
     var linecount = str.split(/\n/g).length;
-    // str.split(/\n/g).each( function(l) {
+    // str.split(/\n/g).forEach( function(l) {
     //     linecount += Math.ceil( l.length / cols ); // Take into account long lines
     // });
     text.rows = linecount + 1;

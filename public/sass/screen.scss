@@ -238,6 +238,7 @@ $old-len: 9.28%;
   box-shadow: none;
   overflow: scroll;
 }
+
 .modalText * {
   // padding: 15px;
   box-sizing: border-box;
@@ -438,4 +439,15 @@ input:checked + .sliderBox:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
+}
+
+/*--------------------------------- PRINT STYLE -----------------------------*/
+@media print {
+  #text, nav, .footer, .btnContainer, .close {
+    display:none;
+  }
+  #modalText, #modalText * {
+    visibility:visible;
+    font-size: 16px;
+  }
 }
