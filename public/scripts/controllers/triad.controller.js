@@ -278,7 +278,7 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
     return fretSpan <= self.maxSpan;
   }
   function octaveFilt(config){
-    //did the use allow octave suplicates and are they in this chord config?
+    //did the use allow octave duplicates and are they in this chord config?
     return self.octaves || (config.count <= self.numNotes);
   }
 
@@ -321,6 +321,7 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
       }
     }
     function clusters(skips) {
+
       //get all clusters of a given string span
       for (var i = 0; i < allConfigs.length; i++) {
         if (findSpan(allConfigs[i].strings) == allConfigs[i].count - 1 + skips) {
@@ -328,7 +329,8 @@ app.controller('TriadController', ["$http", "$scope", function($http, $scope) {
         }
       }
     }
-    return sorted;
+
+    return sorted.filter(config => config.strings.length>3);
   }
   /************************************SLIDER***********************************/
   var nonLinearSlider = document.getElementById('nonlinear');
